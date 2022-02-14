@@ -1,0 +1,16 @@
+{
+  "CN": "system:node:$NODE",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "L": "Beijing",
+      "ST": "Beijing",
+      "O": "system:nodes",
+      "OU": "Kubernetes-manual"
+    }
+  ]
+}

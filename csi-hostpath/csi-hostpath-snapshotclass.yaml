@@ -1,0 +1,8 @@
+# Usage of the v1 API implies that the cluster must have
+# external-snapshotter v4.x installed.
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: csi-hostpath-snapclass
+driver: hostpath.csi.k8s.io #csi-hostpath
+deletionPolicy: Delete

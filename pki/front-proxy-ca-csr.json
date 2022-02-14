@@ -1,0 +1,10 @@
+{
+  "CN": "kubernetes",
+  "key": {
+     "algo": "rsa",
+     "size": 2048
+  },
+  "ca": {
+    "expiry": "876000h"
+  }
+}
