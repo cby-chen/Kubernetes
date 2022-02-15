@@ -1,5 +1,8 @@
 # 二进制安装Kubernetes（k8s） v1.23.3
 
+# 文档中所需的文件资料
+# 参考：https://github.com/cby-chen/Kubernetes/releases/tag/cby
+
 # 1.环境
 
 | 主机名称     | IP地址         | 说明       | 软件                                                                                             |
