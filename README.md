@@ -1,27 +1,28 @@
-# 二进制安装Kubernetes（k8s） v1.23.3
+# 1.环境
 
 # 文档中所需的文件资料
 # 参考：https://github.com/cby-chen/Kubernetes/releases/tag/cby
 
-# 1.环境
-
 | 主机名称     | IP地址         | 说明       | 软件                                                                                             |
 | -------- | ------------ | -------- | ---------------------------------------------------------------------------------------------- |
-| Master01 | 10.0.0.21    | master节点 | kube-apiserver、kube-controller-manager、kube-scheduler、etcd、<br />kubelet、kube-proxy、nfs-client |
-| Master02 | 10.0.0.22    | master节点 | kube-apiserver、kube-controller-manager、kube-scheduler、etcd、<br />kubelet、kube-proxy、nfs-client |
-| Master03 | 10.0.0.23    | master节点 | kube-apiserver、kube-controller-manager、kube-scheduler、etcd、<br />kubelet、kube-proxy、nfs-client |
-| Node01   | 10.0.0.24    | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
-| Node02   | 10.0.0.25    | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
-| Lb01     | 192.168.1.76 | Lb01节点   | haproxy、keepalived                                                                             |
-| Lb02     | 192.168.1.77 | Lb02节点   | haproxy、keepalived                                                                             |
-|          | 192.168.1.78 | VIP      |                                                                                                |
+| Master01 | 192.168.1.30 | master节点 | kube-apiserver、kube-controller-manager、kube-scheduler、etcd、<br />kubelet、kube-proxy、nfs-client |
+| Master02 | 192.168.1.31 | master节点 | kube-apiserver、kube-controller-manager、kube-scheduler、etcd、<br />kubelet、kube-proxy、nfs-client |
+| Master03 | 192.168.1.32 | master节点 | kube-apiserver、kube-controller-manager、kube-scheduler、etcd、<br />kubelet、kube-proxy、nfs-client |
+| Node01   | 192.168.1.33 | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
+| Node02   | 192.168.1.34 | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
+| Node03   | 192.168.1.35 | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
+| Node04   | 192.168.1.36 | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
+| Node05   | 192.168.1.37 | node节点   | kubelet、kube-proxy、nfs-client                                                                  |
+| Lb01     | 192.168.1.38 | Lb01节点   | haproxy、keepalived                                                                             |
+| Lb02     | 192.168.1.39 | Lb02节点   | haproxy、keepalived                                                                             |
+|          | 192.168.1.88 | VIP      |                                                                                                |
 |          |              |          |                                                                                                |
 
 | 软件                                                                       | 版本                         |
 |:------------------------------------------------------------------------ |:-------------------------- |
 | 内核                                                                       | 5.16.7-1.el8.elrepo.x86_64 |
 | CentOS 8                                                                 | v8                         |
-| kube-apiserver、kube-controller-manager、kube-scheduler、kubelet、kube-proxy | v1.23.3                    |
+| kube-apiserver、kube-controller-manager、kube-scheduler、kubelet、kube-proxy | v1.23.4                    |
 | etcd                                                                     | v3.5.2                     |
 | docker-ce                                                                | v20.10.9                   |
 | containerd                                                               | v1.6.0                     |
@@ -46,13 +47,16 @@ pod：172.16.0.0/12
 ### 1.2.配置IP
 
 ```shell
-ssh root@192.168.1.100 "nmcli con mod ens18 ipv4.addresses 192.168.1.76/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
-ssh root@192.168.1.125 "nmcli con mod ens18 ipv4.addresses 192.168.1.77/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
-ssh root@192.168.1.116 "nmcli con mod ens18 ipv4.addresses 192.168.1.78/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
-ssh root@192.168.1.108 "nmcli con mod ens18 ipv4.addresses 192.168.1.79/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
-ssh root@192.168.1.106 "nmcli con mod ens18 ipv4.addresses 192.168.1.80/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
-ssh root@192.168.1.154 "nmcli con mod ens18 ipv4.addresses 192.168.1.86/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
-ssh root@192.168.1.161 "nmcli con mod ens18 ipv4.addresses 192.168.1.87/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.76 "nmcli con mod ens18 ipv4.addresses 192.168.1.30/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.77 "nmcli con mod ens18 ipv4.addresses 192.168.1.31/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.78 "nmcli con mod ens18 ipv4.addresses 192.168.1.32/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.79 "nmcli con mod ens18 ipv4.addresses 192.168.1.33/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.80 "nmcli con mod ens18 ipv4.addresses 192.168.1.34/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.86 "nmcli con mod ens18 ipv4.addresses 192.168.1.35/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.87 "nmcli con mod ens18 ipv4.addresses 192.168.1.36/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.166 "nmcli con mod ens18 ipv4.addresses 192.168.1.37/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.100 "nmcli con mod ens18 ipv4.addresses 192.168.1.38/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
+ssh root@192.168.1.191 "nmcli con mod ens18 ipv4.addresses 192.168.1.39/24; nmcli con mod ens18 ipv4.gateway 192.168.1.99; nmcli con mod ens18 ipv4.method manual; nmcli con mod ens18 ipv4.dns "8.8.8.8"; nmcli con up ens18"
 ```
 
 ### 1.3.设置主机名
@@ -63,6 +67,9 @@ hostnamectl set-hostname k8s-master02
 hostnamectl set-hostname k8s-master03
 hostnamectl set-hostname k8s-node01
 hostnamectl set-hostname k8s-node02
+hostnamectl set-hostname k8s-node03
+hostnamectl set-hostname k8s-node04
+hostnamectl set-hostname k8s-node05
 hostnamectl set-hostname lb01
 hostnamectl set-hostname lb02
 ```
@@ -74,6 +81,9 @@ sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' \
          -e 's|^#baseurl=http://mirror.centos.org/$contentdir|baseurl=http://192.168.1.123/centos|g' \
          -i.bak \
          /etc/yum.repos.d/CentOS-*.repo
+
+
+sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://mirror.centos.org/\$contentdir|baseurl=http://192.168.1.123/centos|g' -i.bak  /etc/yum.repos.d/CentOS-*.repo
 ```
 
 ### 1.5.安装一些必备工具
@@ -124,8 +134,7 @@ systemctl start network && systemctl enable network
 服务端
 
 yum install chrony -y
-vim /etc/chrony.conf
-cat /etc/chrony.conf | grep -v  "^#" | grep -v "^$"
+cat > /etc/chrony.conf << EOF 
 pool ntp.aliyun.com iburst
 driftfile /var/lib/chrony/drift
 makestep 1.0 3
@@ -135,6 +144,7 @@ local stratum 10
 keyfile /etc/chrony.keys
 leapsectz right/UTC
 logdir /var/log/chrony
+EOF
 
 systemctl restart chronyd
 systemctl enable chronyd
@@ -144,7 +154,7 @@ systemctl enable chronyd
 yum install chrony -y
 vim /etc/chrony.conf
 cat /etc/chrony.conf | grep -v  "^#" | grep -v "^$"
-pool 10.0.0.21 iburst
+pool 192.168.1.30 iburst
 driftfile /var/lib/chrony/drift
 makestep 1.0 3
 rtcsync
@@ -155,7 +165,7 @@ logdir /var/log/chrony
 systemctl restart chronyd ; systemctl enable chronyd
 
 
-yum install chrony -y ; sed -i "s#2.centos.pool.ntp.org#10.0.0.21#g" /etc/chrony.conf ; systemctl restart chronyd ; systemctl enable chronyd
+yum install chrony -y ; sed -i "s#2.centos.pool.ntp.org#192.168.1.30#g" /etc/chrony.conf ; systemctl restart chronyd ; systemctl enable chronyd
 
 
 使用客户端进行验证
@@ -182,7 +192,7 @@ EOF
 ```shell
 yum install -y sshpass
 ssh-keygen -f /root/.ssh/id_rsa -P ''
-export IP="192.168.1.76 192.168.1.77 192.168.1.78 192.168.1.79 192.168.1.80 192.168.1.86 192.168.1.87"
+export IP="192.168.1.30 192.168.1.31 192.168.1.32 192.168.1.33 192.168.1.34 192.168.1.35 192.168.1.36 192.168.1.37 192.168.1.38 192.168.1.39"
 export SSHPASS=123123
 for HOST in $IP;do
      sshpass -e ssh-copy-id -o StrictHostKeyChecking=no $HOST
@@ -309,13 +319,16 @@ sysctl --system
 cat > /etc/hosts <<EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-192.168.1.76 k8s-master01
-192.168.1.77 k8s-master02
-192.168.1.78 k8s-master03
-192.168.1.79 k8s-node01
-192.168.1.80 k8s-node02
-192.168.1.86 lb01
-192.168.1.87 lb02
+192.168.1.30 k8s-master01
+192.168.1.31 k8s-master02
+192.168.1.32 k8s-master03
+192.168.1.33 k8s-node01
+192.168.1.34 k8s-node02
+192.168.1.35 k8s-node03
+192.168.1.36 k8s-node04
+192.168.1.37 k8s-node05
+192.168.1.38 lb01
+192.168.1.38 lb02
 192.168.1.88 lb-vip
 EOF
 ```
@@ -365,13 +378,16 @@ containerd config default | tee /etc/containerd/config.toml
 
 
 修改Containerd的配置文件
-vim /etc/containerd/config.toml
+sed -i '/containerd\.runtimes\.runc\.options/ a\\t\tSystemdCgroup\ =\ true' /etc/containerd/config.toml
+
+cat /etc/containerd/config.toml
 
 # 找到containerd.runtimes.runc.options，在其下加入SystemdCgroup = true
 
 [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
               SystemdCgroup = true
     [plugins."io.containerd.grpc.v1.cri".cni]
+
 
 # 将sandbox_image默认地址改为符合版本地址
 
@@ -404,7 +420,7 @@ EOF
 1.下载kubernetes1.23.+的二进制包
 github二进制包下载地址：https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md
 
-wget https://dl.k8s.io/v1.23.3/kubernetes-server-linux-amd64.tar.gz
+wget https://dl.k8s.io/v1.23.4/kubernetes-server-linux-amd64.tar.gz
 
 2.下载etcdctl二进制包
 github二进制包下载地址：https://github.com/etcd-io/etcd/releases
@@ -461,7 +477,7 @@ etcd  etcdctl  kube-apiserver  kube-controller-manager  kubectl  kubelet  kube-p
 
 ```shell
 [root@k8s-master01 ~]# kubelet --version
-Kubernetes v1.23.3
+Kubernetes v1.23.4
 [root@k8s-master01 ~]# etcdctl version
 etcdctl version: 3.5.1
 API version: 3.5
@@ -471,7 +487,7 @@ API version: 3.5
 
 ```shell
 Master='k8s-master02 k8s-master03'
-Work='k8s-node01 k8s-node02'
+Work='k8s-node01 k8s-node02 k8s-node03 k8s-node04 k8s-node05'
 for NODE in $Master; do echo $NODE; scp /usr/local/bin/kube{let,ctl,-apiserver,-controller-manager,-scheduler,-proxy} $NODE:/usr/local/bin/; scp /usr/local/bin/etcd* $NODE:/usr/local/bin/; done
 for NODE in $Work; do     scp /usr/local/bin/kube{let,-proxy} $NODE:/usr/local/bin/ ; done
 ```
@@ -520,7 +536,7 @@ cfssl gencert \
    -ca=/etc/etcd/ssl/etcd-ca.pem \
    -ca-key=/etc/etcd/ssl/etcd-ca-key.pem \
    -config=ca-config.json \
-   -hostname=127.0.0.1,k8s-master01,k8s-master02,k8s-master03,192.168.1.76,192.168.1.77,192.168.1.78 \
+   -hostname=127.0.0.1,k8s-master01,k8s-master02,k8s-master03,192.168.1.30,192.168.1.31,192.168.1.32 \
    -profile=kubernetes \
    etcd-csr.json | cfssljson -bare /etc/etcd/ssl/etcd
 ```
@@ -560,7 +576,7 @@ cfssl gencert   \
 -ca=/etc/kubernetes/pki/ca.pem   \
 -ca-key=/etc/kubernetes/pki/ca-key.pem   \
 -config=ca-config.json   \
--hostname=10.96.0.1,192.168.1.88,127.0.0.1,kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.default.svc.cluster.local,x.oiox.cn,k.oiox.cn,l.oiox.cn,o.oiox.cn,192.168.1.76,192.168.1.77,192.168.1.78   \
+-hostname=10.96.0.1,192.168.1.88,127.0.0.1,kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.default.svc.cluster.local,x.oiox.cn,k.oiox.cn,l.oiox.cn,o.oiox.cn,192.168.1.30,192.168.1.31,192.168.1.32,192.168.1.33,192.168.1.34,192.168.1.35,192.168.1.36,192.168.1.37,192.168.1.38,192.168.1.39,192.168.1.40,192.168.1.41   \
 -profile=kubernetes   apiserver-csr.json | cfssljson -bare /etc/kubernetes/pki/apiserver
 ```
 
@@ -705,18 +721,18 @@ snapshot-count: 5000
 heartbeat-interval: 100
 election-timeout: 1000
 quota-backend-bytes: 0
-listen-peer-urls: 'https://192.168.1.76:2380'
-listen-client-urls: 'https://192.168.1.76:2379,http://127.0.0.1:2379'
+listen-peer-urls: 'https://192.168.1.30:2380'
+listen-client-urls: 'https://192.168.1.30:2379,http://127.0.0.1:2379'
 max-snapshots: 3
 max-wals: 5
 cors:
-initial-advertise-peer-urls: 'https://192.168.1.76:2380'
-advertise-client-urls: 'https://192.168.1.76:2379'
+initial-advertise-peer-urls: 'https://192.168.1.30:2380'
+advertise-client-urls: 'https://192.168.1.30:2379'
 discovery:
 discovery-fallback: 'proxy'
 discovery-proxy:
 discovery-srv:
-initial-cluster: 'k8s-master01=https://192.168.1.76:2380,k8s-master02=https://192.168.1.77:2380,k8s-master03=https://192.168.1.78:2380'
+initial-cluster: 'k8s-master01=https://192.168.1.30:2380,k8s-master02=https://192.168.1.31:2380,k8s-master03=https://192.168.1.32:2380'
 initial-cluster-token: 'etcd-k8s-cluster'
 initial-cluster-state: 'new'
 strict-reconfig-check: false
@@ -758,18 +774,18 @@ snapshot-count: 5000
 heartbeat-interval: 100
 election-timeout: 1000
 quota-backend-bytes: 0
-listen-peer-urls: 'https://192.168.1.77:2380'
-listen-client-urls: 'https://192.168.1.77:2379,http://127.0.0.1:2379'
+listen-peer-urls: 'https://192.168.1.31:2380'
+listen-client-urls: 'https://192.168.1.31:2379,http://127.0.0.1:2379'
 max-snapshots: 3
 max-wals: 5
 cors:
-initial-advertise-peer-urls: 'https://192.168.1.77:2380'
-advertise-client-urls: 'https://192.168.1.77:2379'
+initial-advertise-peer-urls: 'https://192.168.1.31:2380'
+advertise-client-urls: 'https://192.168.1.31:2379'
 discovery:
 discovery-fallback: 'proxy'
 discovery-proxy:
 discovery-srv:
-initial-cluster: 'k8s-master01=https://192.168.1.76:2380,k8s-master02=https://192.168.1.77:2380,k8s-master03=https://192.168.1.78:2380'
+initial-cluster: 'k8s-master01=https://192.168.1.30:2380,k8s-master02=https://192.168.1.31:2380,k8s-master03=https://192.168.1.32:2380'
 initial-cluster-token: 'etcd-k8s-cluster'
 initial-cluster-state: 'new'
 strict-reconfig-check: false
@@ -811,18 +827,18 @@ snapshot-count: 5000
 heartbeat-interval: 100
 election-timeout: 1000
 quota-backend-bytes: 0
-listen-peer-urls: 'https://192.168.1.78:2380'
-listen-client-urls: 'https://192.168.1.78:2379,http://127.0.0.1:2379'
+listen-peer-urls: 'https://192.168.1.32:2380'
+listen-client-urls: 'https://192.168.1.32:2379,http://127.0.0.1:2379'
 max-snapshots: 3
 max-wals: 5
 cors:
-initial-advertise-peer-urls: 'https://192.168.1.78:2380'
-advertise-client-urls: 'https://192.168.1.78:2379'
+initial-advertise-peer-urls: 'https://192.168.1.32:2380'
+advertise-client-urls: 'https://192.168.1.32:2379'
 discovery:
 discovery-fallback: 'proxy'
 discovery-proxy:
 discovery-srv:
-initial-cluster: 'k8s-master01=https://192.168.1.76:2380,k8s-master02=https://192.168.1.77:2380,k8s-master03=https://192.168.1.78:2380'
+initial-cluster: 'k8s-master01=https://192.168.1.30:2380,k8s-master02=https://192.168.1.31:2380,k8s-master03=https://192.168.1.32:2380'
 initial-cluster-token: 'etcd-k8s-cluster'
 initial-cluster-state: 'new'
 strict-reconfig-check: false
@@ -892,13 +908,13 @@ systemctl enable --now etcd
 
 ```shell
 export ETCDCTL_API=3
-etcdctl --endpoints="192.168.1.78:2379,192.168.1.77:2379,192.168.1.76:2379" --cacert=/etc/kubernetes/pki/etcd/etcd-ca.pem --cert=/etc/kubernetes/pki/etcd/etcd.pem --key=/etc/kubernetes/pki/etcd/etcd-key.pem  endpoint status --write-out=table
+etcdctl --endpoints="192.168.1.32:2379,192.168.1.31:2379,192.168.1.30:2379" --cacert=/etc/kubernetes/pki/etcd/etcd-ca.pem --cert=/etc/kubernetes/pki/etcd/etcd.pem --key=/etc/kubernetes/pki/etcd/etcd-key.pem  endpoint status --write-out=table
 +-------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
 |     ENDPOINT      |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
 +-------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
-| 192.168.1.78:2379 | 56875ab4a12c94e8 |   3.5.1 |   25 kB |     false |      false |         2 |          8 |                  8 |        |
-| 192.168.1.77:2379 | 33df6a8fe708d3fd |   3.5.1 |   25 kB |      true |      false |         2 |          8 |                  8 |        |
-| 192.168.1.76:2379 | 58fbe5ec9743048f |   3.5.1 |   20 kB |     false |      false |         2 |          8 |                  8 |        |
+| 192.168.1.32:2379 | 56875ab4a12c94e8 |   3.5.1 |   25 kB |     false |      false |         2 |          8 |                  8 |        |
+| 192.168.1.31:2379 | 33df6a8fe708d3fd |   3.5.1 |   25 kB |      true |      false |         2 |          8 |                  8 |        |
+| 192.168.1.30:2379 | 58fbe5ec9743048f |   3.5.1 |   20 kB |     false |      false |         2 |          8 |                  8 |        |
 +-------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
 ```
 
@@ -909,6 +925,13 @@ etcdctl --endpoints="192.168.1.78:2379,192.168.1.77:2379,192.168.1.76:2379" --ca
 ### 5.1.1安装keepalived和haproxy服务
 
 ```shell
+
+systemctl disable --now firewalld
+
+setenforce 0
+sed -i 's#SELINUX=enforcing#SELINUX=disabled#g' /etc/sysconfig/selinux
+
+
 yum -y install keepalived haproxy
 ```
 
@@ -956,9 +979,9 @@ backend k8s-master
  option tcp-check
  balance roundrobin
  default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
- server  master01  192.168.1.76:6443 check
- server  master02  192.168.1.77:6443 check
- server  master03  192.168.1.78:6443 check
+ server  k8s-master01  192.168.1.30:6443 check
+ server  k8s-master02  192.168.1.31:6443 check
+ server  k8s-master03  192.168.1.32:6443 check
 EOF
 ```
 
@@ -983,7 +1006,7 @@ vrrp_script chk_apiserver {
 vrrp_instance VI_1 {
     state MASTER
     interface ens18
-    mcast_src_ip 192.168.1.86
+    mcast_src_ip 192.168.1.38
     virtual_router_id 51
     priority 100
     nopreempt
@@ -1024,7 +1047,7 @@ vrrp_script chk_apiserver {
 vrrp_instance VI_1 {
     state BACKUP
     interface ens18
-    mcast_src_ip 192.168.1.87
+    mcast_src_ip 192.168.1.39
     virtual_router_id 51
     priority 50
     nopreempt
@@ -1127,10 +1150,10 @@ ExecStart=/usr/local/bin/kube-apiserver \
       --bind-address=0.0.0.0  \
       --secure-port=6443  \
       --insecure-port=0  \
-      --advertise-address=192.168.1.76 \
+      --advertise-address=192.168.1.30 \
       --service-cluster-ip-range=10.96.0.0/12  \
       --service-node-port-range=30000-32767  \
-      --etcd-servers=https://192.168.1.76:2379,https://192.168.1.77:2379,https://192.168.1.78:2379 \
+      --etcd-servers=https://192.168.1.30:2379,https://192.168.1.31:2379,https://192.168.1.32:2379 \
       --etcd-cafile=/etc/etcd/ssl/etcd-ca.pem  \
       --etcd-certfile=/etc/etcd/ssl/etcd.pem  \
       --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem  \
@@ -1182,10 +1205,10 @@ ExecStart=/usr/local/bin/kube-apiserver \
       --bind-address=0.0.0.0  \
       --secure-port=6443  \
       --insecure-port=0  \
-      --advertise-address=192.168.1.77 \
+      --advertise-address=192.168.1.31 \
       --service-cluster-ip-range=10.96.0.0/12  \
       --service-node-port-range=30000-32767  \
-      --etcd-servers=https://192.168.1.76:2379,https://192.168.1.77:2379,https://192.168.1.78:2379 \
+      --etcd-servers=https://192.168.1.30:2379,https://192.168.1.31:2379,https://192.168.1.32:2379 \
       --etcd-cafile=/etc/etcd/ssl/etcd-ca.pem  \
       --etcd-certfile=/etc/etcd/ssl/etcd.pem  \
       --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem  \
@@ -1238,10 +1261,10 @@ ExecStart=/usr/local/bin/kube-apiserver \
       --bind-address=0.0.0.0  \
       --secure-port=6443  \
       --insecure-port=0  \
-      --advertise-address=192.168.1.78 \
+      --advertise-address=192.168.1.32 \
       --service-cluster-ip-range=10.96.0.0/12  \
       --service-node-port-range=30000-32767  \
-      --etcd-servers=https://192.168.1.76:2379,https://192.168.1.77:2379,https://192.168.1.78:2379 \
+      --etcd-servers=https://192.168.1.30:2379,https://192.168.1.31:2379,https://192.168.1.32:2379 \
       --etcd-cafile=/etc/etcd/ssl/etcd-ca.pem  \
       --etcd-certfile=/etc/etcd/ssl/etcd.pem  \
       --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem  \
@@ -1397,6 +1420,8 @@ mkdir -p /root/.kube ; cp /etc/kubernetes/admin.kubeconfig /root/.kube/config
 ## 7.2查看集群状态，没问题的话继续后续操作
 
 ```shell
+kubectl get cs
+
 Warning: v1 ComponentStatus is deprecated in v1.19+
 NAME                 STATUS    MESSAGE                         ERROR
 controller-manager   Healthy   ok                              
@@ -1415,7 +1440,7 @@ kubectl create -f bootstrap.secret.yaml
 ```shell
 cd /etc/kubernetes/
 
-for NODE in k8s-master02 k8s-master03 k8s-node01 k8s-node02; do
+for NODE in k8s-master02 k8s-master03 k8s-node01 k8s-node02 k8s-node03 k8s-node04 k8s-node05; do
      ssh $NODE mkdir -p /etc/kubernetes/pki
      for FILE in pki/ca.pem pki/ca-key.pem pki/front-proxy-ca.pem bootstrap-kubelet.kubeconfig; do
        scp /etc/kubernetes/$FILE $NODE:/etc/kubernetes/${FILE}
@@ -1557,12 +1582,16 @@ systemctl enable --now kubelet
 
 ```shell
 kubectl get node
-NAME           STATUS     ROLES    AGE   VERSION
-k8s-master01   NotReady   <none>   18m   v1.23.3
-k8s-master02   NotReady   <none>   18m   v1.23.3
-k8s-master03   NotReady   <none>   18m   v1.23.3
-k8s-node01     NotReady   <none>   18m   v1.23.3
-k8s-node02     NotReady   <none>   18m   v1.23.3
+NAME           STATUS   ROLES    AGE   VERSION
+k8s-master01   Ready    <none>   80s   v1.23.4
+k8s-master02   Ready    <none>   78s   v1.23.4
+k8s-master03   Ready    <none>   74s   v1.23.4
+k8s-node01     Ready    <none>   86s   v1.23.4
+k8s-node02     Ready    <none>   95s   v1.23.4
+k8s-node03     Ready    <none>   87s   v1.23.4
+k8s-node04     Ready    <none>   65s   v1.23.4
+k8s-node05     Ready    <none>   77s   v1.23.4
+
 ```
 
 ## 8.3.kube-proxy配置
@@ -1600,7 +1629,7 @@ for NODE in k8s-master02 k8s-master03; do
      scp /etc/kubernetes/kube-proxy.kubeconfig  $NODE:/etc/kubernetes/kube-proxy.kubeconfig
  done
 
-for NODE in k8s-node01 k8s-node02; do
+for NODE in k8s-node01 k8s-node02 k8s-node03 k8s-node04 k8s-node05; do
      scp /etc/kubernetes/kube-proxy.kubeconfig $NODE:/etc/kubernetes/kube-proxy.kubeconfig
  done
 ```
@@ -1698,17 +1727,18 @@ kubectl apply -f calico.yaml
 ### 9.1.2查看容器状态
 
 ```shell
-kubectl get po -n kube-system
-NAME                                       READY   STATUS    RESTARTS        AGE
-calico-kube-controllers-5dffd5886b-4blh6   1/1     Running   0               4m24s
-calico-node-fvbdq                          1/1     Running   1 (2m51s ago)   4m23s
-calico-node-g8nqd                          1/1     Running   0               4m23s
-calico-node-mdps8                          1/1     Running   0               4m24s
-calico-node-nf4nt                          1/1     Running   0               4m24s
-calico-node-sq2ml                          1/1     Running   0               4m24s
-calico-typha-8445487f56-mg6p8              1/1     Running   0               4m24s
-calico-typha-8445487f56-pxbpj              1/1     Running   0               4m24s
-calico-typha-8445487f56-tnssl              1/1     Running   0               4m24s
+kubectl  get pod -A
+NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
+kube-system   calico-kube-controllers-6f6595874c-cf2sf   1/1     Running   0          14m
+kube-system   calico-node-2xd2q                          1/1     Running   0          2m25s
+kube-system   calico-node-jtzfh                          1/1     Running   0          2m3s
+kube-system   calico-node-k4jkc                          1/1     Running   0          2m24s
+kube-system   calico-node-msxwp                          1/1     Running   0          2m15s
+kube-system   calico-node-tv849                          1/1     Running   0          2m12s
+kube-system   calico-node-wdbzt                          1/1     Running   0          2m18s
+kube-system   calico-node-x9sjr                          1/1     Running   0          2m33s
+kube-system   calico-node-z2mz5                          1/1     Running   0          2m16s
+kube-system   calico-typha-6b6cf8cbdf-gshvt              1/1     Running   0          14m
 ```
 
 # 10.安装CoreDNS
@@ -1859,27 +1889,27 @@ busybox   1/1     Running   0          17m   172.27.14.193   k8s-node02   <none>
  kubectl get po -n kube-system -owide
 NAME                                       READY   STATUS    RESTARTS      AGE   IP               NODE           NOMINATED NODE   READINESS GATES
 calico-kube-controllers-5dffd5886b-4blh6   1/1     Running   0             77m   172.25.244.193   k8s-master01   <none>           <none>
-calico-node-fvbdq                          1/1     Running   1 (75m ago)   77m   192.168.1.76     k8s-master01   <none>           <none>
-calico-node-g8nqd                          1/1     Running   0             77m   192.168.1.79     k8s-node01     <none>           <none>
-calico-node-mdps8                          1/1     Running   0             77m   192.168.1.80     k8s-node02     <none>           <none>
-calico-node-nf4nt                          1/1     Running   0             77m   192.168.1.78     k8s-master03   <none>           <none>
-calico-node-sq2ml                          1/1     Running   0             77m   192.168.1.77     k8s-master02   <none>           <none>
-calico-typha-8445487f56-mg6p8              1/1     Running   0             77m   192.168.1.80     k8s-node02     <none>           <none>
-calico-typha-8445487f56-pxbpj              1/1     Running   0             77m   192.168.1.76     k8s-master01   <none>           <none>
-calico-typha-8445487f56-tnssl              1/1     Running   0             77m   192.168.1.79     k8s-node01     <none>           <none>
+calico-node-fvbdq                          1/1     Running   1 (75m ago)   77m   192.168.1.30     k8s-master01   <none>           <none>
+calico-node-g8nqd                          1/1     Running   0             77m   192.168.1.33     k8s-node01     <none>           <none>
+calico-node-mdps8                          1/1     Running   0             77m   192.168.1.34     k8s-node02     <none>           <none>
+calico-node-nf4nt                          1/1     Running   0             77m   192.168.1.32     k8s-master03   <none>           <none>
+calico-node-sq2ml                          1/1     Running   0             77m   192.168.1.31     k8s-master02   <none>           <none>
+calico-typha-8445487f56-mg6p8              1/1     Running   0             77m   192.168.1.34     k8s-node02     <none>           <none>
+calico-typha-8445487f56-pxbpj              1/1     Running   0             77m   192.168.1.30     k8s-master01   <none>           <none>
+calico-typha-8445487f56-tnssl              1/1     Running   0             77m   192.168.1.33     k8s-node01     <none>           <none>
 coredns-5db5696c7-67h79                    1/1     Running   0             63m   172.25.92.65     k8s-master02   <none>           <none>
 metrics-server-6bf7dcd649-5fhrw            1/1     Running   0             61m   172.18.195.1     k8s-master03   <none>           <none>
 
 # 进入busybox ping其他节点上的pod
 
 kubectl exec -ti busybox -- sh
-/ # ping 192.168.1.79
-PING 192.168.1.79 (192.168.1.79): 56 data bytes
-64 bytes from 192.168.1.79: seq=0 ttl=63 time=0.358 ms
-64 bytes from 192.168.1.79: seq=1 ttl=63 time=0.668 ms
-64 bytes from 192.168.1.79: seq=2 ttl=63 time=0.637 ms
-64 bytes from 192.168.1.79: seq=3 ttl=63 time=0.624 ms
-64 bytes from 192.168.1.79: seq=4 ttl=63 time=0.907 ms
+/ # ping 192.168.1.33
+PING 192.168.1.33 (192.168.1.33): 56 data bytes
+64 bytes from 192.168.1.33: seq=0 ttl=63 time=0.358 ms
+64 bytes from 192.168.1.33: seq=1 ttl=63 time=0.668 ms
+64 bytes from 192.168.1.33: seq=2 ttl=63 time=0.637 ms
+64 bytes from 192.168.1.33: seq=3 ttl=63 time=0.624 ms
+64 bytes from 192.168.1.33: seq=4 ttl=63 time=0.907 ms
 
 # 可以连通证明这个pod是可以跨命名空间和跨主机通信的
 ```
@@ -2028,13 +2058,13 @@ namespace:  11 bytes
 
 ## 13.6登录dashboard
 
-https://192.168.1.76:31245/
+https://192.168.1.30:31245/
 
 eyJhbGciOiJSUzI1NiIsImtpZCI6InYzV2dzNnQzV3hHb2FQWnYzdnlOSmpudmtpVmNjQW5VM3daRi12SFM4dEEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWs1NDVrIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJjMzA4MDcxYy00Y2Y1LTQ1ODMtODNhMi1lYWY3ODEyNTEyYjQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.pshvZPi9ZJkXUWuWilcYs1wawTpzV-nMKesgF3d_l7qyTPaK2N5ofzIThd0SjzU7BFNb4_rOm1dw1Be5kLeHjY_YW5lDnM5TAxVPXmZQ0HJ2pAQ0pjQqCHFnPD0bZFIYkeyz8pZx0Hmwcd3ZdC1yztr0ADpTAmMgI9NC2ZFIeoFFo4Ue9ZM_ulhqJQjmgoAlI_qbyjuKCNsWeEQBwM6HHHAsH1gOQIdVxqQ83OQZUuynDQRpqlHHFIndbK2zVRYFA3GgUnTu2-VRQ-DXBFRjvZR5qArnC1f383jmIjGT6VO7l04QJteG_LFetRbXa-T4mcnbsd8XutSgO0INqwKpjw
 
 # 14.安装命令行自动补全功能
 
-```
+```shell
 yum install bash-completion -y
 source /usr/share/bash-completion/bash_completion
 source <(kubectl completion bash)
@@ -2094,4 +2124,3 @@ allowedUnsafeSysctls:
 ```
 
 数据盘要与系统盘分开；etcd使用ssd磁盘
-
