@@ -1,8 +1,4 @@
-# 二进制安装Kubernetes（k8s） v1.23.4
 # 1.环境
-
-# 文档中所需的文件资料
-# 参考：https://github.com/cby-chen/Kubernetes/releases/tag/cby
 
 | 主机名称     | IP地址         | 说明       | 软件                                                                                             |
 | -------- | ------------ | -------- | ---------------------------------------------------------------------------------------------- |
@@ -252,8 +248,7 @@ yum install https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm -y ; y
 ```shell
 yum install ipvsadm ipset sysstat conntrack libseccomp -y
 
-cat >> /etc/modules-load.d/ipvs.conf <<EOF
-cat 
+cat >> /etc/modules-load.d/ipvs.conf <<EOF 
 ip_vs
 ip_vs_rr
 ip_vs_wrr
@@ -329,7 +324,7 @@ cat > /etc/hosts <<EOF
 192.168.1.36 k8s-node04
 192.168.1.37 k8s-node05
 192.168.1.38 lb01
-192.168.1.38 lb02
+192.168.1.39 lb02
 192.168.1.88 lb-vip
 EOF
 ```
@@ -472,6 +467,9 @@ tar -xf etcd-v3.5.2-linux-amd64.tar.gz --strip-components=1 -C /usr/local/bin et
 
 ls /usr/local/bin/
 etcd  etcdctl  kube-apiserver  kube-controller-manager  kubectl  kubelet  kube-proxy  kube-scheduler
+
+已经整理好的：
+wget https://github.com/cby-chen/Kubernetes/releases/download/cby/Kubernetes.tar
 ```
 
 ### 2.2.2查看版本
