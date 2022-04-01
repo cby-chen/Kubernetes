@@ -24,7 +24,7 @@
 | docker-ce                                                                | v20.10.9                   |
 | containerd                                                               | v1.6.0                     |
 | cfssl                                                                    | v1.6.1                     |
-| cni                                                                      | v1.6.0                     |
+| cni                                                                      | v1.0.1                     |
 | crictl                                                                   | v1.23.0                    |
 | haproxy                                                                  | v1.8.27                    |
 | keepalived                                                               | v2.1.5                     |
