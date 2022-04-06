@@ -113,7 +113,7 @@ systemctl disable --now firewalld
 
 ```shell
 setenforce 0
-sed -i 's#SELINUX=enforcing#SELINUX=disabled#g' /etc/sysconfig/selinux
+sed -i 's#SELINUX=enforcing#SELINUX=disabled#g' /etc/selinux/config
 ```
 
 ### 1.9.关闭交换分区
@@ -936,7 +936,7 @@ systemctl enable --now etcd
 systemctl disable --now firewalld
 
 setenforce 0
-sed -i 's#SELINUX=enforcing#SELINUX=disabled#g' /etc/sysconfig/selinux
+sed -i 's#SELINUX=enforcing#SELINUX=disabled#g' /etc/selinux/config
 
 
 yum -y install keepalived haproxy
