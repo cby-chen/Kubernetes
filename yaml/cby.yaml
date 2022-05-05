@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chenby
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chenby
+  template:
+    metadata:
+      labels:
+        app: chenby
+    spec:
+      containers:
+      - name: chenby
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chenby
+spec:
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  type: NodePort
+  selector:
+    app: chenby
+  ports:
+  - port: 80
+    targetPort: 80

@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-server
+  template:
+    metadata:
+      labels:
+        app: hello-server
+    spec:
+      containers:
+      - name: hello-server
+        image: registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/hello-server
+        ports:
+        - containerPort: 9000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-demo
+  name: nginx-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-demo
+  template:
+    metadata:
+      labels:
+        app: nginx-demo
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-demo
+  name: nginx-demo
+spec:
+  selector:
+    app: nginx-demo
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-server
+  name: hello-server
+spec:
+  selector:
+    app: hello-server
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 9000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress  
+metadata:
+  name: ingress-host-bar
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "hello.chenby.cn"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: hello-server
+            port:
+              number: 8000
+  - host: "demo.chenby.cn"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/nginx"  
+        backend:
+          service:
+            name: nginx-demo
+            port:
+              number: 8000
