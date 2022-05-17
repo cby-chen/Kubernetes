@@ -2830,9 +2830,18 @@ NAME                   TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)         A
 kubernetes-dashboard   NodePort   10.98.201.22   <none>        443:31473/TCP   10m
 ```
 
+## 13.3创建token
+
+```shell
+kubectl -n kubernetes-dashboard create token admin-user
+eyJhbGciOiJSUzI1NiIsImtpZCI6IlV6b3NRbDRiTll4VEl1a1VGbU53M2Y2X044Wjdfa21mQ0dfYk5BWktHRjAifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjUyNzYzMjUzLCJpYXQiOjE2NTI3NTk2NTMsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiNDYxYjc4MDItNTgzMS00MTNmLTg2M2ItODdlZWVkOTI3MTdiIn19LCJuYmYiOjE2NTI3NTk2NTMsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.nFF729zlDxz4Ed3fcVk5BE8Akc6jod6akf2rksVGJHmfurY7NO1nHP4EekrMx1FRa2JfoPOHTdxcWDVaQAymDC4vgP5aW5RCEOURUY6YdTQUxleRiX-Bgp3eNRHNOcPvdedGm0w7M7gnZqCwy4tsgyiXkIM7zZpvCqdCA1vGJxf_UIck4R8Izua5NSacnG25miIvAmxNzOAEHDD_jDIDHnPVi3iVZzrjBkDwG6spYx_yJbbLy1XbJCYMMH44X4ajuQulV_NS-aiIHj_-PbxfrBRAJCVTZ8L3zD14BraeAAHFqSoiLXohmYHLLjshtraVu4XcvehJDfnRMi8Y4b6sqA
+```
+
 ## 13.3登录dashboard
 
 https://10.0.0.81:31245/
+
+
 
 # 14.ingress安装
 
