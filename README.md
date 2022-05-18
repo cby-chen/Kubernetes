@@ -1,5 +1,7 @@
 # 二进制安装Kubernetes（k8s） v1.24.0 IPv4/IPv6双栈
 
+[Kubernetes](https://github.com/cby-chen/Kubernetes) 开源不易，帮忙点个star，谢谢了🌹
+
 # 介绍
 
 kubernetes二进制安装
