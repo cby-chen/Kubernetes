@@ -2813,6 +2813,9 @@ nginx-deployment-9456bbbf9-dqv8s   1/1     Running   0          8s
 # 13.安装dashboard
 
 ```shell
+wget https://raw.githubusercontent.com/cby-chen/Kubernetes/main/yaml/dashboard.yaml
+wget https://raw.githubusercontent.com/cby-chen/Kubernetes/main/yaml/dashboard-user.yaml
+
 kubectl  apply -f dashboard.yaml
 kubectl  apply -f dashboard-user.yaml
 ```
