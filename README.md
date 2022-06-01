@@ -81,7 +81,16 @@ wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes
 
 - 关于小陈：https://www.oiox.cn/index.php/start-page.html
 
+# 技术交流
 
+作者：
+![avatar](./image/2.png)   加群：![avatar](./image/1.png)
+
+</br>
+</br>
+</br>
+</br>
+</br>
 
 其他文档请查看如下，欢迎关注微信公众号《Linux运维交流社区》：
 
