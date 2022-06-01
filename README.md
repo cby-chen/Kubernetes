@@ -84,11 +84,15 @@ wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes
 # 技术交流
 
 作者：
-![avatar](./image/2.png)   加群：![avatar](./image/1.png)
+</br>
+![avatar](./image/2.png)   
+</br>
 
+加群：
 </br>
-</br>
-</br>
+![avatar](./image/1.png)
+
+
 </br>
 </br>
 
