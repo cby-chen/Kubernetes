@@ -33,7 +33,7 @@ spec:
       serviceAccountName: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
-          image: registry.cn-hangzhou.aliyuncs.com/chenby/nfs-subdir-external-provisioner:4.0.2 
+          image: registry.cn-hangzhou.aliyuncs.com/chenby/nfs-subdir-external-provisioner:v4.0.2 
           # resources:
           #    limits:
           #      cpu: 10m
@@ -46,14 +46,14 @@ spec:
             - name: PROVISIONER_NAME
               value: k8s-sigs.io/nfs-subdir-external-provisioner
             - name: NFS_SERVER
-              value: 192.168.1.66 ## 指定自己nfs服务器地址
+              value: 192.168.1.123 ## 指定自己nfs服务器地址
             - name: NFS_PATH  
-              value: /nfs/  ## nfs服务器共享的目录
+              value: /cby-3/nfs/  ## nfs服务器共享的目录
       volumes:
         - name: nfs-client-root
           nfs:
             server: 192.168.1.123
-            path: /cby-3/nfs
+            path: /cby-3/nfs/
 ---
 apiVersion: v1
 kind: ServiceAccount
