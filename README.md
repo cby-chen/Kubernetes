@@ -2,7 +2,9 @@
 
 [Kubernetes](https://github.com/cby-chen/Kubernetes) 开源不易，帮忙点个star，谢谢了🌹
 
-不推荐使用CentOS7安装kubernetes集群，建议使用CentOS8安装！CentOS7安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，目前原因不明。
+不推荐使用CentOS7安装kubernetes集群，建议使用CentOS8安装！
+
+CentOS7安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，目前原因不明。
 
 # 介绍
 
