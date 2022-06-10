@@ -89,12 +89,12 @@ wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes
 
 作者：
 </br>
-![avatar](./image/2.png)   
+![avatar](https://www.oiox.cn/about/2.png)   
 </br>
 
 加群：
 </br>
-![avatar](./image/1.png)
+![avatar](https://www.oiox.cn/about/1.png)
 
 
 </br>
@@ -102,28 +102,24 @@ wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes
 
 其他文档请查看如下，欢迎关注微信公众号《Linux运维交流社区》：
 
-> https://www.oiox.cn/   
->
-> https://www.chenby.cn/  
->
-> https://cby-chen.github.io/  
->
-> https://blog.csdn.net/qq_33921750  
->
-> https://my.oschina.net/u/3981543  
->
-> https://www.zhihu.com/people/chen-bu-yun-2  
->
-> https://segmentfault.com/u/hppyvyv6/articles  
->
-> https://juejin.cn/user/3315782802482007  
->
-> https://cloud.tencent.com/developer/column/93230  
->
-> https://www.jianshu.com/u/0f894314ae2c  
->
-> https://www.toutiao.com/c/user/token/MS4wLjABAAAAeqOrhjsoRZSj7iBJbjLJyMwYT5D0mLOgCoo4pEmpr4A/
->
-> CSDN、GitHub、知乎、开源中国、思否、掘金、简书、腾讯云、今日头条、个人博客、全网可搜《小陈运维》
->
-> 文章主要发布于微信公众号：《Linux运维交流社区》
+> https://www.oiox.cn/ </br>
+> https://blog.oiox.cn/ </br>
+> https://www.chenby.cn/ </br>
+> https://cby-chen.github.io/ </br>
+> https://my.oschina.net/u/3981543/ </br>
+> https://blog.csdn.net/qq_33921750/ </br>
+> https://www.jianshu.com/u/0f894314ae2c/ </br>
+> https://juejin.cn/user/3315782802482007/ </br>
+> https://www.zhihu.com/people/chen-bu-yun-2/ </br>
+> https://segmentfault.com/u/hppyvyv6/articles/ </br>
+> https://space.bilibili.com/352476552/article/ </br>
+> https://cloud.tencent.com/developer/column/93230 </br>
+> https://developer.aliyun.com/profile/nghinjk6dyidw/ </br>
+> https://bbs.huaweicloud.com/community/usersnew/id_1576987520942284/ </br>
+> https://www.toutiao.com/c/user/token/MS4wLjABAAAAeqOrhjsoRZSj7iBJbjLJyMwYT5D0mLOgCoo4pEmpr4A/ </br>
+
+CSDN、GitHub、知乎、开源中国、思否、掘金、简书、腾讯云、阿里云、腾讯云、哔哩哔哩、今日头条、新浪微博、个人博客 </br> </br>
+
+全网可搜《小陈运维》 </br> </br>
+
+文章主要发布于微信公众号：《Linux运维交流社区》 </br> </br>
