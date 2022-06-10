@@ -101,12 +101,11 @@ https://github.com/cby-chen/Kubernetes/tree/v1.24.1
 # 技术交流
 
 作者：
-`</br>`
+
 ![avatar](https://www.oiox.cn/about/2.png)
-`</br>`
 
 加群：
-`</br>`
+
 ![avatar](https://www.oiox.cn/about/1.png)
 
 </br>
