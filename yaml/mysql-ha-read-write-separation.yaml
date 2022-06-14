@@ -1,0 +1,225 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+data:
+  master.cnf: |
+    # Apply this config only on the master.
+    [mysqld]
+    log-bin
+  slave.cnf: |
+    # Apply this config only on slaves.
+    [mysqld]
+    super-read-only
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  clusterIP: None
+  selector:
+    app: mysql
+---
+# Client service for connecting to any MySQL instance for reads.
+# For writes, you must instead connect to the master: mysql-0.mysql.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-read
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      # 设置初始化容器，进行一些准备工作
+      initContainers:
+      - name: init-mysql
+        image: mysql:5.7
+        # 为每个MySQL节点配置service-id
+        # 如果节点序号是0，则使用master的配置， 其余节点使用slave的配置
+        command:
+        - bash
+        - "-c"
+        - |
+          set -ex
+          # 基于 Pod 序号生成 MySQL 服务器的 ID。
+          [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+          ordinal=${BASH_REMATCH[1]}
+          echo [mysqld] > /mnt/conf.d/server-id.cnf
+          # 添加偏移量以避免使用 server-id=0 这一保留值。
+          echo server-id=$((100 + $ordinal)) >> /mnt/conf.d/server-id.cnf
+          # Copy appropriate conf.d files from config-map to emptyDir.
+          # 将合适的 conf.d 文件从 config-map 复制到 emptyDir。
+          if [[ $ordinal -eq 0 ]]; then
+            cp /mnt/config-map/master.cnf /mnt/conf.d/
+          else
+            cp /mnt/config-map/slave.cnf /mnt/conf.d/
+          fi
+        volumeMounts:
+        - name: conf
+          mountPath: /mnt/conf.d
+        - name: config-map
+          mountPath: /mnt/config-map
+      - name: clone-mysql
+        image: registry.cn-hangzhou.aliyuncs.com/chenby/xtrabackup:1.0
+        # 为除了节点序号为0的主节点外的其它节点，备份前一个节点的数据
+        command:
+        - bash
+        - "-c"
+        - |
+          set -ex
+          # 如果已有数据，则跳过克隆。
+          [[ -d /var/lib/mysql/mysql ]] && exit 0
+          # 跳过主实例（序号索引 0）的克隆。
+          [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+          ordinal=${BASH_REMATCH[1]}
+          [[ $ordinal -eq 0 ]] && exit 0
+          # 从原来的对等节点克隆数据。
+          ncat --recv-only mysql-$(($ordinal-1)).mysql 3307 | xbstream -x -C /var/lib/mysql
+          # 准备备份。
+          xtrabackup --prepare --target-dir=/var/lib/mysql
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+          subPath: mysql
+        - name: conf
+          mountPath: /etc/mysql/conf.d
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        # 设置支持免密登录
+        env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "1"
+        ports:
+        - name: mysql
+          containerPort: 3306
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+          subPath: mysql
+        - name: conf
+          mountPath: /etc/mysql/conf.d
+        resources:
+          # 设置启动pod需要的资源，官方文档上需要500m cpu，1Gi memory。
+          # 我本地测试的时候，会因为资源不足，报1 Insufficient cpu, 1 Insufficient memory错误，所以我改小了点
+          requests:
+            # m是千分之一的意思，100m表示需要0.1个cpu
+            cpu: 1024m
+            # Mi是兆的意思，需要100M 内存
+            memory: 1Gi
+        livenessProbe:
+          # 使用mysqladmin ping命令，对MySQL节点进行探活检测
+          # 在节点部署完30秒后开始，每10秒检测一次，超时时间为5秒
+          exec:
+            command: ["mysqladmin", "ping"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          # 对节点服务可用性进行检测， 启动5秒后开始，每2秒检测一次，超时时间1秒
+          exec:
+            # 检查我们是否可以通过 TCP 执行查询（skip-networking 是关闭的）。
+            command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          timeoutSeconds: 1
+      - name: xtrabackup
+        image: registry.cn-hangzhou.aliyuncs.com/chenby/xtrabackup:1.0
+        ports:
+        - name: xtrabackup
+          containerPort: 3307
+        # 开始进行备份文件校验、解析和开始同步
+        command:
+        - bash
+        - "-c"
+        - |
+          set -ex
+          cd /var/lib/mysql
+          # 确定克隆数据的 binlog 位置（如果有的话）。
+          if [[ -f xtrabackup_slave_info && "x$(<xtrabackup_slave_info)" != "x" ]]; then
+            # XtraBackup 已经生成了部分的 “CHANGE MASTER TO” 查询
+            # 因为我们从一个现有副本进行克隆。(需要删除末尾的分号!)
+            cat xtrabackup_slave_info | sed -E 's/;$//g' > change_master_to.sql.in
+            # 在这里要忽略 xtrabackup_binlog_info （它是没用的）。
+            rm -f xtrabackup_slave_info xtrabackup_binlog_info
+          elif [[ -f xtrabackup_binlog_info ]]; then
+            # 我们直接从主实例进行克隆。解析 binlog 位置。
+            [[ `cat xtrabackup_binlog_info` =~ ^(.*?)[[:space:]]+(.*?)$ ]] || exit 1
+            rm -f xtrabackup_binlog_info xtrabackup_slave_info
+            echo "CHANGE MASTER TO MASTER_LOG_FILE='${BASH_REMATCH[1]}',\
+                  MASTER_LOG_POS=${BASH_REMATCH[2]}" > change_master_to.sql.in
+          fi
+          # 检查我们是否需要通过启动复制来完成克隆。
+          if [[ -f change_master_to.sql.in ]]; then
+            echo "Waiting for mysqld to be ready (accepting connections)"
+            until mysql -h 127.0.0.1 -e "SELECT 1"; do sleep 1; done
+            echo "Initializing replication from clone position"
+            mysql -h 127.0.0.1 \
+                  -e "$(<change_master_to.sql.in), \
+                          MASTER_HOST='mysql-0.mysql', \
+                          MASTER_USER='root', \
+                          MASTER_PASSWORD='', \
+                          MASTER_CONNECT_RETRY=10; \
+                        START SLAVE;" || exit 1
+            # 如果容器重新启动，最多尝试一次。
+            mv change_master_to.sql.in change_master_to.sql.orig
+          fi
+          # 当对等点请求时，启动服务器发送备份。
+          exec ncat --listen --keep-open --send-only --max-conns=1 3307 -c \
+            "xtrabackup --backup --slave-info --stream=xbstream --host=127.0.0.1 --user=root"
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+          subPath: mysql
+        - name: conf
+          mountPath: /etc/mysql/conf.d
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      volumes:
+      - name: conf
+        emptyDir: {}
+      - name: config-map
+        configMap:
+          name: mysql
+  # 设置PVC
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      annotations:
+          # 配置PVC使用nfs动态供给
+        volume.beta.kubernetes.io/storage-class: nfs-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
