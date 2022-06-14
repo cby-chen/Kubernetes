@@ -4,15 +4,20 @@
 
 不推荐使用CentOS7安装kubernetes集群，建议使用CentOS8安装！
 
-CentOS7安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，目前原因不明。
+CentOS7安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
+
+注意若是CentOS7，将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=` 
+将 `''` 删除
 
 # 介绍
 
-kubernetes（k8s） 二进制安装
+kubernetes二进制安装
 
-后续尽可能第一时间更新新版本文档
+后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
 
-1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.24.0 和 1.24.1 文档以及安装包已生成。
+本文是使用的是Ubuntu作为基底，其他文档请在GitHub上查看。
+
+1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.24.0 和1.24.1 文档以及安装包已生成。
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
 
@@ -20,7 +25,7 @@ kubernetes（k8s） 二进制安装
 
 不配置IPV6，不影响后续，不过集群依旧是支持IPv6的。为后期留有扩展可能性。
 
-（下载更快）我的网盘共享：https://pan.oiox.cn/s/PetV
+https://github.com/cby-chen/Kubernetes/
 
 手动项目地址：https://github.com/cby-chen/Kubernetes
 
@@ -32,19 +37,21 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 每个版本文档如下链接
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.3-binary-install.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.23.3-CentOS-binary-install.md
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.4-binary-install.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.23.4-CentOS-binary-install.md
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.5-binary-install.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.23.5-CentOS-binary-install.md
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.6-binary-install.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.23.6-CentOS-binary-install.md
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-binary-install-IPv6-IPv4.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4.md
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-binary-install-IPv6-IPv4.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4.md
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+
+https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
 # 安装包
 
