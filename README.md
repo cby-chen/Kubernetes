@@ -17,7 +17,7 @@ kubernetes二进制安装
 
 本文是使用的是Ubuntu作为基底，其他文档请在GitHub上查看。
 
-1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.24.0 和1.24.1 文档以及安装包已生成。
+1.22.10 和 1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.23.7 和 1.24.0 和1.24.1 文档以及安装包已生成。
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
 
@@ -49,6 +49,8 @@ https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-I
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4.md
 
+https://github.com/cby-chen/Kubernetes/blob/main/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+
 https://github.com/cby-chen/Kubernetes/blob/main/v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
@@ -78,6 +80,8 @@ wget https://github.com/cby-chen/Kubernetes/releases/download/v1.23.7/kubernetes
 wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes-v1.24.0.tar
 
 wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
+
+wget https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 
 # 旧版本地址
 
