@@ -1,8 +1,6 @@
 使用kubeadm初始化IPV4/IPV6集群
 =======================
 
-![图片](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6d3da68f95d943bb9691ea9b660b9d63~tplv-k3u1fbpfcp-zoom-1.image)
-
 CentOS 配置YUM源
 =============
 

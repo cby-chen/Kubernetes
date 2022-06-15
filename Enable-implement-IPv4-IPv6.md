@@ -3,7 +3,6 @@
 
 如今IPv4IP地址已经使用完毕，未来全球会以IPv6地址为中心，会大力发展IPv6网络环境，由于IPv6可以实现给任何一个设备分配到公网IP，所以资源是非常丰富的。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/95a7066334c9422fb9f4f160b23b8f57~tplv-k3u1fbpfcp-zoom-1.image)
 
 配置hosts
 =======
