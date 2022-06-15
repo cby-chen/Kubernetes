@@ -37,20 +37,39 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 每个版本文档如下链接
 
+v1.23.3
+
 https://github.com/cby-chen/Kubernetes/blob/main/v1.23.3-CentOS-binary-install.md
+
+v1.23.4
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.23.4-CentOS-binary-install.md
 
+v1.23.5
+
 https://github.com/cby-chen/Kubernetes/blob/main/v1.23.5-CentOS-binary-install.md
+
+v1.23.6
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.23.6-CentOS-binary-install.md
 
+v1.24.0
+
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4.md
+
+v1.24.1
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4.md
 
+v1.23.7
+
+https://github.com/cby-chen/Kubernetes/blob/main/v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+
+v1.24.0
+
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
+v1.24.1
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
 # 安装包
