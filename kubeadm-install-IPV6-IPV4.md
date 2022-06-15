@@ -461,30 +461,15 @@ Accept-Ranges: bytes
 
 ```
 
+> **关于**
+>
 > https://www.oiox.cn/
-> 
-> https://www.chenby.cn/
-> 
-> https://blog.oiox.cn/
-> 
-> https://cby-chen.github.io/
-> 
-> https://blog.csdn.net/qq\_33921750
-> 
-> https://my.oschina.net/u/3981543
-> 
-> https://www.zhihu.com/people/chen-bu-yun-2
-> 
-> https://segmentfault.com/u/hppyvyv6/articles
-> 
-> https://juejin.cn/user/3315782802482007
-> 
-> https://cloud.tencent.com/developer/column/93230
-> 
-> https://www.jianshu.com/u/0f894314ae2c
-> 
-> https://www.toutiao.com/c/user/token/MS4wLjABAAAAeqOrhjsoRZSj7iBJbjLJyMwYT5D0mLOgCoo4pEmpr4A/
-> 
-> CSDN、GitHub、知乎、开源中国、思否、掘金、简书、腾讯云、今日头条、个人博客、全网可搜《小陈运维》
-> 
-> 文章主要发布于微信公众号：《Linux运维交流社区》
+>
+> https://www.oiox.cn/index.php/start-page.html
+>
+> **CSDN、GitHub、知乎、开源中国、思否、掘金、简书、华为云、阿里云、腾讯云、哔哩哔哩、今日头条、新浪微博、个人博客**
+>
+> **全网可搜《小陈运维》**
+>
+> **文章主要发布于微信公众号：《Linux运维交流社区》**
+
