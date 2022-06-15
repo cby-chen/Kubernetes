@@ -102,10 +102,10 @@ net.ipv4.tcp_timestamps = 0
 net.core.somaxconn = 16384
 
 
-net.ipv6.conf.all.disable_ipv6 = 0
-net.ipv6.conf.default.disable_ipv6 = 0
-net.ipv6.conf.lo.disable_ipv6 = 0
-net.ipv6.conf.all.forwarding = 1
+net.ipv6.conf.all.disable_ipv6 = 0
+net.ipv6.conf.default.disable_ipv6 = 0
+net.ipv6.conf.lo.disable_ipv6 = 0
+net.ipv6.conf.all.forwarding = 0
 
 [root@k8s-master01 ~]# 
 [root@k8s-master01 ~]# reboot
@@ -229,8 +229,7 @@ ExecStart=/usr/local/bin/kube-controller-manager \
       --cluster-cidr=172.16.0.0/12,fc00::/48 \
       --node-cidr-mask-size-ipv4=24 \
       --node-cidr-mask-size-ipv6=64 \
-      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem \
-      --node-cidr-mask-size=24
+      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem 
 
 Restart=always
 RestartSec=10s
@@ -278,7 +277,7 @@ WantedBy=multi-user.target
 
 ```
 
-修改kube-apiserver如下配置
+修改kube-proxy如下配置
 ====================
 
 ```shell
