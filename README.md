@@ -2,11 +2,10 @@
 
 [Kubernetes](https://github.com/cby-chen/Kubernetes) 开源不易，帮忙点个star，谢谢了🌹
 
-不推荐使用CentOS7安装kubernetes集群，建议使用CentOS8安装！
+安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
 
-CentOS7安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
+将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=` 
 
-注意若是CentOS7，将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=` 
 将 `''` 删除
 
 # 介绍
@@ -56,6 +55,8 @@ https://github.com/cby-chen/Kubernetes/blob/main/v1.22.10-CentOS-binary-install-
 https://github.com/cby-chen/Kubernetes/blob/main/v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+
+https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
