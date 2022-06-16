@@ -63,6 +63,8 @@ https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-Ubuntu-binary-install-I
 
 （下载更快）我自己的网盘：https://pan.oiox.cn/s/PetV
 
+（下载更快）123网盘：https://www.123pan.com/s/Z8ArVv-PG60d
+
 每个初始版本会打上releases，安装包在releases页面
 
 https://github.com/cby-chen/Kubernetes/releases
