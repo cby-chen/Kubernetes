@@ -138,6 +138,10 @@ spec:
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
         - --kubelet-insecure-tls
+        - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem # change to front-proxy-ca.crt for kubeadm
+        - --requestheader-username-headers=X-Remote-User
+        - --requestheader-group-headers=X-Remote-Group
+        - --requestheader-extra-headers-prefix=X-Remote-Extra-
         image: registry.cn-hangzhou.aliyuncs.com/chenby/metrics-server:v0.6.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -172,6 +176,8 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: tmp-dir
+        - name: ca-ssl
+          mountPath: /etc/kubernetes/pki
       nodeSelector:
         kubernetes.io/os: linux
       priorityClassName: system-cluster-critical
@@ -179,6 +185,9 @@ spec:
       volumes:
       - emptyDir: {}
         name: tmp-dir
+      - name: ca-ssl
+        hostPath:
+          path: /etc/kubernetes/pki
 ---
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService
