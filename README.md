@@ -48,6 +48,8 @@ https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-I
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4.md
 
+https://github.com/cby-chen/Kubernetes/blob/main/v1.24.2-CentOS-binary-install-IPv6-IPv4.md
+
 https://github.com/cby-chen/Kubernetes/blob/main/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
 
 https://github.com/cby-chen/Kubernetes/blob/main/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
@@ -86,6 +88,8 @@ wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes
 
 wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
 
+wget https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
+
 wget https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 
 wget https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar
@@ -109,6 +113,8 @@ https://github.com/cby-chen/Kubernetes/tree/v1.23.7
 https://github.com/cby-chen/Kubernetes/tree/v1.24.0
 
 https://github.com/cby-chen/Kubernetes/tree/v1.24.1
+
+https://github.com/cby-chen/Kubernetes/tree/v1.24.2
 
 https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 
