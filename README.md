@@ -1,4 +1,4 @@
-# 二进制安装 Kubernetes（k8s）
+# kubernetes (k8s) 二进制高可用安装
 
 [Kubernetes](https://github.com/cby-chen/Kubernetes) 开源不易，帮忙点个star，谢谢了🌹
 
