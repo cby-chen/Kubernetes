@@ -40,45 +40,46 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 # 文档
 
-## 二进制安装每个版本文档如下链接
+## 二进制安装每个版本文档
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.3-CentOS-binary-install.md
+[v1.23.3-CentOS-binary-install](./v1.23.3-CentOS-binary-install.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.4-CentOS-binary-install.md
+[v1.23.4-CentOS-binary-install](./v1.23.4-CentOS-binary-install.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.5-CentOS-binary-install.md
+[v1.23.5-CentOS-binary-install](./v1.23.5-CentOS-binary-install.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.6-CentOS-binary-install.md
+[v1.23.6-CentOS-binary-install](./v1.23.6-CentOS-binary-install.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4.md
+[v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4.md
+[v1.24.1-CentOS-binary-install-IPv6-IPv4.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.2-CentOS-binary-install-IPv6-IPv4.md
+[v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+[v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+[v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+[v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+[v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+[v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-https://github.com/cby-chen/Kubernetes/blob/main/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md
+[v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+
 
 ## 修复kube-proxy证书权限过大问题
 
-https://github.com/cby-chen/Kubernetes/blob/main/kube-proxy_permissions.md
+[kube-proxy_permissions.md](./kube-proxy_permissions.md)
 
 ## 使用kubeadm初始化IPV4/IPV6集群
 
-https://github.com/cby-chen/Kubernetes/blob/main/kubeadm-install-IPV6-IPV4.md
+[kubeadm-install-IPV6-IPV4.md](./kubeadm-install-IPV6-IPV4.md)
 
 ## IPv4集群启用IPv6功能，关闭IPv6则反之
 
-https://github.com/cby-chen/Kubernetes/blob/main/Enable-implement-IPv4-IPv6.md
+[Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
 
 # 安装包
 
