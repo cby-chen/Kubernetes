@@ -2,6 +2,8 @@
 
 [Kubernetes](https://github.com/cby-chen/Kubernetes) 开源不易，帮忙点个star，谢谢了🌹
 
+GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernetes
+
 # 常见异常
 
 1. 安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
