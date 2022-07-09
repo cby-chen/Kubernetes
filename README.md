@@ -4,25 +4,23 @@
 
 安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
 
-将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=` 
-
-将 `''` 删除
+将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=`  将 `''` 删除即可。
 
 # 介绍
 
 kubernetes二进制安装
-
-后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
-
-本文是使用的是Ubuntu作为基底，其他文档请在GitHub上查看。
-
-1.21.13 和 1.22.10 和 1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.23.7 和 1.24.0 和 1.24.1 和 1.24.2 文档以及安装包已生成。
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
 
 若您没有IPV6环境，或者不想使用IPv6，不对主机进行配置IPv6地址即可。
 
 不配置IPV6，不影响后续，不过集群依旧是支持IPv6的。为后期留有扩展可能性。
+
+如果本地没有IPv6，那么Calico需要使用IPv4的yaml配置文件。
+
+后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
+
+1.21.13 和 1.22.10 和 1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.23.7 和 1.24.0 和 1.24.1 和 1.24.2 文档以及安装包已生成。
 
 https://github.com/cby-chen/Kubernetes/
 
