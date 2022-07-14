@@ -44,6 +44,7 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 ## 二进制安装每个版本文档
 
+### 1.23版本
 [v1.23.3-CentOS-binary-install](./v1.23.3-CentOS-binary-install.md)
 
 [v1.23.4-CentOS-binary-install](./v1.23.4-CentOS-binary-install.md)
@@ -52,12 +53,16 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 [v1.23.6-CentOS-binary-install](./v1.23.6-CentOS-binary-install.md)
 
+### 1.24版本
 [v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
 
 [v1.24.1-CentOS-binary-install-IPv6-IPv4.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4.md)
 
 [v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
 
+[v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
+
+### 三主俩从版本
 [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
@@ -111,6 +116,8 @@ wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/downloa
 
 wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
 
+wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
+
 wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 
 wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar
@@ -136,6 +143,8 @@ https://github.com/cby-chen/Kubernetes/tree/v1.24.0
 https://github.com/cby-chen/Kubernetes/tree/v1.24.1
 
 https://github.com/cby-chen/Kubernetes/tree/v1.24.2
+
+https://github.com/cby-chen/Kubernetes/tree/v1.24.3
 
 https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 
