@@ -88,6 +88,10 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 [Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
 
+## 升级kubernetes集群  
+
+[Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
+
 # 安装包
 
 （下载更快）我自己的网盘：https://pan.oiox.cn/s/PetV
