@@ -202,3 +202,9 @@ CSDN、GitHub、知乎、开源中国、思否、掘金、简书、华为云、�
 全网可搜《小陈运维》  
 
 文章主要发布于微信公众号
+
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/cby-chen/Kubernetes.svg)](https://starchart.cc/cby-chen/Kubernetes)
+
