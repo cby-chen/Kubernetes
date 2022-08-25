@@ -62,6 +62,9 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 [v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
 
+### 1.25版本
+[v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
+
 ### 三主俩从版本
 [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
