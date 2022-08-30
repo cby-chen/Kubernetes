@@ -155,6 +155,8 @@ https://github.com/cby-chen/Kubernetes/tree/v1.24.2
 
 https://github.com/cby-chen/Kubernetes/tree/v1.24.3
 
+https://github.com/cby-chen/Kubernetes/tree/v1.25.0
+
 https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 
 https://github.com/cby-chen/Kubernetes/tree/v1.21.13
