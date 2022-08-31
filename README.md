@@ -95,6 +95,11 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 [Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
 
+## Minikube初始化集群
+
+[Minikube_init.md](./Minikube_init.md)  
+
+
 # 安装包
 
 （下载更快）我自己的网盘：https://pan.oiox.cn/s/PetV
