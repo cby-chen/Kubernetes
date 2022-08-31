@@ -102,8 +102,6 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 # 安装包
 
-（下载更快）我自己的网盘：https://pan.oiox.cn/s/PetV
-
 （下载更快）123网盘：https://www.123pan.com/s/Z8ArVv-PG60d
 
 每个初始版本会打上releases，安装包在releases页面
