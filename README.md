@@ -42,6 +42,30 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 # 文档
 
+## 修复kube-proxy证书权限过大问题
+
+[kube-proxy_permissions.md](./kube-proxy_permissions.md)
+
+## 使用kubeadm初始化IPV4/IPV6集群
+
+[kubeadm-install-IPV6-IPV4.md](./kubeadm-install-IPV6-IPV4.md)
+
+## IPv4集群启用IPv6功能，关闭IPv6则反之
+
+[Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
+
+## 升级kubernetes集群  
+
+[Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
+
+## Minikube初始化集群
+
+[Minikube_init.md](./Minikube_init.md)  
+
+## Kubernetes 1.24 1.25 集群使用docker作为容器
+
+[Kubernetes_docker](./Kubernetes_docker.md)
+
 ## 二进制安装每个版本文档
 
 ### 1.23版本
@@ -77,27 +101,6 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 [v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-
-## 修复kube-proxy证书权限过大问题
-
-[kube-proxy_permissions.md](./kube-proxy_permissions.md)
-
-## 使用kubeadm初始化IPV4/IPV6集群
-
-[kubeadm-install-IPV6-IPV4.md](./kubeadm-install-IPV6-IPV4.md)
-
-## IPv4集群启用IPv6功能，关闭IPv6则反之
-
-[Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
-
-## 升级kubernetes集群  
-
-[Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
-
-## Minikube初始化集群
-
-[Minikube_init.md](./Minikube_init.md)  
 
 
 # 安装包
