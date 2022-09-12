@@ -38,8 +38,6 @@ https://github.com/cby-chen/Kubernetes/
 
 脚本项目地址：https://github.com/cby-chen/Binary_installation_of_Kubernetes
 
-kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04/07/upcoming-changes-in-kubernetes-1-24/
-
 # 文档
 
 ## 修复kube-proxy证书权限过大问题
