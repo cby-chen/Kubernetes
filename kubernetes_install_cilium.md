@@ -51,7 +51,7 @@ kube-system   cilium-tdjq4                       1/1     Running       0        
 
 ### 4 下载专属监控面板
 
-```
+```shell
 [root@k8s-master01 yaml]# wget https://raw.githubusercontent.com/cilium/cilium/1.12.1/examples/kubernetes/addons/prometheus/monitoring-example.yaml
 [root@k8s-master01 yaml]#
 [root@k8s-master01 yaml]# kubectl  apply -f monitoring-example.yaml
@@ -73,7 +73,7 @@ deployment.apps/prometheus created
 
 ### 5 下载部署测试用例
 
-```
+```shell
 [root@k8s-master01 yaml]# wget https://raw.githubusercontent.com/cilium/cilium/master/examples/kubernetes/connectivity-check/connectivity-check.yaml
 
 [root@k8s-master01 yaml]# sed -i "s#google.com#oiox.cn#g" connectivity-check.yaml
@@ -105,7 +105,7 @@ ciliumnetworkpolicy.cilium.io/pod-to-external-fqdn-allow-google-cnp created
 
 ### 6 查看pod
 
-```
+```shell
 [root@k8s-master01 yaml]# kubectl  get pod -A
 NAMESPACE           NAME                                                     READY   STATUS    RESTARTS      AGE
 cilium-monitoring   grafana-59957b9549-6zzqh                                 1/1     Running   0             10m
@@ -143,7 +143,7 @@ kube-system         metrics-server-776f58c94b-c6zgs                          1/1
 
 ### 7 修改为NodePort
 
-```
+```shell
 [root@k8s-master01 yaml]# kubectl  edit svc  -n kube-system hubble-ui
 service/hubble-ui edited
 [root@k8s-master01 yaml]#
@@ -159,7 +159,7 @@ type: NodePort
 
 ### 8 查看端口
 
-```
+```shell
 [root@k8s-master01 yaml]# kubectl get svc -A | grep monit
 cilium-monitoring   grafana                NodePort    10.100.250.17    <none>        3000:30707/TCP           15m
 cilium-monitoring   prometheus             NodePort    10.100.131.243   <none>        9090:31155/TCP           15m
@@ -174,7 +174,7 @@ kube-system         hubble-ui              NodePort    10.102.253.59    <none>  
 
 ### 9 访问
 
-```
+```shell
 http://192.168.1.61:30707
 http://192.168.1.61:31155
 http://192.168.1.61:31219
