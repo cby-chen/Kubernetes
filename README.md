@@ -66,6 +66,10 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 [Kubernetes_docker](./Kubernetes_docker.md)
 
+## kubernetes 安装cilium
+
+[kubernetes_install_cilium](./kubernetes_install_cilium.md)
+
 ## 二进制安装每个版本文档
 
 ### 1.23版本
@@ -102,7 +106,7 @@ kubernetes 1.24 变化较大，详细见：https://kubernetes.io/zh/blog/2022/04
 
 [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-
+[v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 # 安装包
 
 （下载更快）123网盘：https://www.123pan.com/s/Z8ArVv-PG60d
