@@ -4,16 +4,6 @@
 
 GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernetes
 
-# 常见异常
-
-1. 安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
-
-将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=`  将 `''` 删除即可。
-
-2. 注意hosts配置文件中主机名和IP地址对应
-
-3. 在文档7.2，却记别忘记执行`kubectl create -f bootstrap.secret.yaml`命令
-
 # 介绍
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
@@ -28,146 +18,115 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 # 当前文档版本
 
-1.21.13 和 1.22.10 和 1.23.3 和 1.23.4 和 1.23.5 和 1.23.6 和 1.23.7 和 1.24.0 和 1.24.1 和 1.24.2 和 1.24.3 文档以及安装包已生成。
+- 1.21.x
+- 1.22.x
+- 1.23.x
+- 1.24.x
+- 1.25.x
+
+大版本之间是通用的，比如使用 1.25.0 的文档可以安装 1.25.x 各种版本，只是安装过程中的下载新的包即可。
 
 # 访问地址
 
-https://github.com/cby-chen/Kubernetes/
+手动项目地址：  
+https://github.com/cby-chen/Kubernetes
 
-手动项目地址：https://github.com/cby-chen/Kubernetes
-
-脚本项目地址：https://github.com/cby-chen/Binary_installation_of_Kubernetes
+脚本项目地址：  
+https://github.com/cby-chen/Binary_installation_of_Kubernetes  
+https://github.com/cby-chen/kube_ansible  
 
 # 文档
 
-## 修复kube-proxy证书权限过大问题
+## 安装文档
+###  1.21.x版本
+- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+###  1.22.x版本
+- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-[kube-proxy_permissions.md](./kube-proxy_permissions.md)
+###  1.23.x版本
+- [v1.23.3-CentOS-binary-install](./v1.23.3-CentOS-binary-install.md)
+- [v1.23.4-CentOS-binary-install](./v1.23.4-CentOS-binary-install.md)
+- [v1.23.5-CentOS-binary-install](./v1.23.5-CentOS-binary-install.md)
+- [v1.23.6-CentOS-binary-install](./v1.23.6-CentOS-binary-install.md)
 
-## 使用kubeadm初始化IPV4/IPV6集群
+###  1.24.x版本
+- [v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.1-CentOS-binary-install-IPv6-IPv4.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
 
-[kubeadm-install-IPV6-IPV4.md](./kubeadm-install-IPV6-IPV4.md)
+###  1.25.x版本
+- [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
 
-## IPv4集群启用IPv6功能，关闭IPv6则反之
+###  三主俩从版本
+- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-[Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
+## 其他文档
+-  修复kube-proxy证书权限过大问题 [kube-proxy_permissions.md](./kube-proxy_permissions.md)
+-  使用kubeadm初始化IPV4/IPV6集群 [kubeadm-install-IPV6-IPV4.md](./kubeadm-install-IPV6-IPV4.md)
+-  IPv4集群启用IPv6功能，关闭IPv6则反之 [Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
+-  升级kubernetes集群 [Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
+-  Minikube初始化集群 [Minikube_init.md](./Minikube_init.md)  
+-  Kubernetes 1.24 1.25 集群使用docker作为容器 [Kubernetes_docker](./Kubernetes_docker.md)
+-  kubernetes 安装cilium [kubernetes_install_cilium](./kubernetes_install_cilium.md)
+-  二进制安装每个版本文档
 
-## 升级kubernetes集群  
-
-[Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
-
-## Minikube初始化集群
-
-[Minikube_init.md](./Minikube_init.md)  
-
-## Kubernetes 1.24 1.25 集群使用docker作为容器
-
-[Kubernetes_docker](./Kubernetes_docker.md)
-
-## kubernetes 安装cilium
-
-[kubernetes_install_cilium](./kubernetes_install_cilium.md)
-
-## 二进制安装每个版本文档
-
-### 1.23版本
-[v1.23.3-CentOS-binary-install](./v1.23.3-CentOS-binary-install.md)
-
-[v1.23.4-CentOS-binary-install](./v1.23.4-CentOS-binary-install.md)
-
-[v1.23.5-CentOS-binary-install](./v1.23.5-CentOS-binary-install.md)
-
-[v1.23.6-CentOS-binary-install](./v1.23.6-CentOS-binary-install.md)
-
-### 1.24版本
-[v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
-
-[v1.24.1-CentOS-binary-install-IPv6-IPv4.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4.md)
-
-[v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
-
-[v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
-
-### 1.25版本
-[v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
-
-### 三主俩从版本
-[v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-[v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-[v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-[v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-[v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-[v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
-[v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 # 安装包
 
-（下载更快）123网盘：https://www.123pan.com/s/Z8ArVv-PG60d
-
+- （下载更快）123网盘：https://www.123pan.com/s/Z8ArVv-PG60d
 每个初始版本会打上releases，安装包在releases页面
-
-https://github.com/cby-chen/Kubernetes/releases
+- https://github.com/cby-chen/Kubernetes/releases
 
 注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/cby/Kubernetes.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.4/kubernetes-v1.23.4.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.5/kubernetes-v1.24.5.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.6/kubernetes-v1.23.6.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.7/kubernetes-v1.23.7.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes-v1.24.0.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
-
-wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/cby/Kubernetes.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.4/kubernetes-v1.23.4.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.5/kubernetes-v1.24.5.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.6/kubernetes-v1.23.6.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.7/kubernetes-v1.23.7.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes-v1.24.0.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar
 
 # 旧版本地址
 
-建议查看main版本中的文档。https://github.com/cby-chen/Kubernetes/
-
+建议查看main版本中的文档。  
+https://github.com/cby-chen/Kubernetes/  
 若找对应版本文档中的安装包，可以在上方下载安装包，可以在在下方地址中查找。
 
-https://github.com/cby-chen/Kubernetes/tree/cby
+- https://github.com/cby-chen/Kubernetes/tree/cby
+- https://github.com/cby-chen/Kubernetes/tree/v1.23.4
+- https://github.com/cby-chen/Kubernetes/tree/v1.23.5
+- https://github.com/cby-chen/Kubernetes/tree/v1.23.6
+- https://github.com/cby-chen/Kubernetes/tree/v1.23.7
+- https://github.com/cby-chen/Kubernetes/tree/v1.24.0
+- https://github.com/cby-chen/Kubernetes/tree/v1.24.1
+- https://github.com/cby-chen/Kubernetes/tree/v1.24.2
+- https://github.com/cby-chen/Kubernetes/tree/v1.24.3
+- https://github.com/cby-chen/Kubernetes/tree/v1.25.0
+- https://github.com/cby-chen/Kubernetes/tree/v1.22.10
+- https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
-https://github.com/cby-chen/Kubernetes/tree/v1.23.4
+# 常见异常
 
-https://github.com/cby-chen/Kubernetes/tree/v1.23.5
+-  安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
 
-https://github.com/cby-chen/Kubernetes/tree/v1.23.6
+将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=`  将 `''` 删除即可。
 
-https://github.com/cby-chen/Kubernetes/tree/v1.23.7
+-  注意hosts配置文件中主机名和IP地址对应
 
-https://github.com/cby-chen/Kubernetes/tree/v1.24.0
+-  在文档7.2，却记别忘记执行`kubectl create -f bootstrap.secret.yaml`命令
 
-https://github.com/cby-chen/Kubernetes/tree/v1.24.1
-
-https://github.com/cby-chen/Kubernetes/tree/v1.24.2
-
-https://github.com/cby-chen/Kubernetes/tree/v1.24.3
-
-https://github.com/cby-chen/Kubernetes/tree/v1.25.0
-
-https://github.com/cby-chen/Kubernetes/tree/v1.22.10
-
-https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
 # 其他
 
