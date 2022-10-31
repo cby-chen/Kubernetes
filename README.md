@@ -37,44 +37,48 @@ https://github.com/cby-chen/kube_ansible
 
 # 文档
 
+### 最新版本文档
+- [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+
 ## 安装文档
+
 ###  1.21.x版本
-- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 ###  1.22.x版本
-- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ###  1.23.x版本
-- [v1.23.3-CentOS-binary-install](./v1.23.3-CentOS-binary-install.md)
-- [v1.23.4-CentOS-binary-install](./v1.23.4-CentOS-binary-install.md)
-- [v1.23.5-CentOS-binary-install](./v1.23.5-CentOS-binary-install.md)
-- [v1.23.6-CentOS-binary-install](./v1.23.6-CentOS-binary-install.md)
+- [v1.23.3-CentOS-binary-install](./doc/v1.23.3-CentOS-binary-install.md)
+- [v1.23.4-CentOS-binary-install](./doc/v1.23.4-CentOS-binary-install.md)
+- [v1.23.5-CentOS-binary-install](./doc/v1.23.5-CentOS-binary-install.md)
+- [v1.23.6-CentOS-binary-install](./doc/v1.23.6-CentOS-binary-install.md)
 
 ###  1.24.x版本
-- [v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
-- [v1.24.1-CentOS-binary-install-IPv6-IPv4.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4.md)
-- [v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
-- [v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.1-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.1-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
 
 ###  1.25.x版本
-- [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
 
 ###  三主俩从版本
-- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ## 其他文档
--  修复kube-proxy证书权限过大问题 [kube-proxy_permissions.md](./kube-proxy_permissions.md)
--  使用kubeadm初始化IPV4/IPV6集群 [kubeadm-install-IPV6-IPV4.md](./kubeadm-install-IPV6-IPV4.md)
--  IPv4集群启用IPv6功能，关闭IPv6则反之 [Enable-implement-IPv4-IPv6.md](./Enable-implement-IPv4-IPv6.md)
--  升级kubernetes集群 [Upgrade_Kubernetes.md](./Upgrade_Kubernetes.md)  
--  Minikube初始化集群 [Minikube_init.md](./Minikube_init.md)  
--  Kubernetes 1.24 1.25 集群使用docker作为容器 [Kubernetes_docker](./Kubernetes_docker.md)
--  kubernetes 安装cilium [kubernetes_install_cilium](./kubernetes_install_cilium.md)
+-  修复kube-proxy证书权限过大问题 [kube-proxy_permissions.md](./doc/kube-proxy_permissions.md)
+-  使用kubeadm初始化IPV4/IPV6集群 [kubeadm-install-IPV6-IPV4.md](./doc/kubeadm-install-IPV6-IPV4.md)
+-  IPv4集群启用IPv6功能，关闭IPv6则反之 [Enable-implement-IPv4-IPv6.md](./doc/Enable-implement-IPv4-IPv6.md)
+-  升级kubernetes集群 [Upgrade_Kubernetes.md](./doc/Upgrade_Kubernetes.md)  
+-  Minikube初始化集群 [Minikube_init.md](./doc/Minikube_init.md)  
+-  Kubernetes 1.24 1.25 集群使用docker作为容器 [Kubernetes_docker](./doc/Kubernetes_docker.md)
+-  kubernetes 安装cilium [kubernetes_install_cilium](./doc/kubernetes_install_cilium.md)
 -  二进制安装每个版本文档
 
 # 安装包

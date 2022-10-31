@@ -32,7 +32,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://ted9wxpi.mirror.aliyuncs.com"],
+  "registry-mirrors": ["https://hub-mirror.c.163.com"],
   "exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
