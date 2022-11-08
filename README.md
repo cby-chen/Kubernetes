@@ -151,11 +151,11 @@ https://github.com/cby-chen/Kubernetes/
 
 作者:  
 
-![avatar](https://www.oiox.cn/about/2.png)  
+![cby](https://www.oiox.cn/about/2.png)  
 
 加群:  
 
-![avatar](https://www.oiox.cn/about/1.png)  
+![cby](https://www.oiox.cn/about/1.png)  
 
 </br>
 </br>
