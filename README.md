@@ -151,14 +151,15 @@ https://github.com/cby-chen/Kubernetes/
 
 作者:  
 
-![cby](https://www.oiox.cn/about/2.png)  
+![2](https://user-images.githubusercontent.com/46200206/200541597-6fcb7a4c-ebe6-425b-ac68-2eef3c7e6096.png)
 
 加群:  
 
-![cby](https://www.oiox.cn/about/1.png)  
+![1](https://user-images.githubusercontent.com/46200206/200541372-16489249-5350-461b-8770-9135ea3813c9.png)
 
 </br>
 </br>
+
 
 
 ## Stargazers over time
