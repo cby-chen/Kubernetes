@@ -151,11 +151,13 @@ https://github.com/cby-chen/Kubernetes/
 
 作者:  
 
-![2](https://user-images.githubusercontent.com/46200206/200541597-6fcb7a4c-ebe6-425b-ac68-2eef3c7e6096.png)
+
+<img src=https://user-images.githubusercontent.com/46200206/200541597-6fcb7a4c-ebe6-425b-ac68-2eef3c7e6096.png width=30% /> 
+
 
 加群:  
 
-![1](https://user-images.githubusercontent.com/46200206/200541372-16489249-5350-461b-8770-9135ea3813c9.png)
+<img src=https://user-images.githubusercontent.com/46200206/200541372-16489249-5350-461b-8770-9135ea3813c9.png width=30% /> 
 
 </br>
 </br>
