@@ -38,7 +38,7 @@ https://github.com/cby-chen/kube_ansible
 # 文档
 
 ### 最新版本文档
-- [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ## 安装文档
 
@@ -61,6 +61,7 @@ https://github.com/cby-chen/kube_ansible
 
 ###  1.25.x版本
 - [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ###  三主俩从版本
 - [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
@@ -70,6 +71,7 @@ https://github.com/cby-chen/kube_ansible
 - [v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 - [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 - [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ## 其他文档
 -  修复kube-proxy证书权限过大问题 [kube-proxy_permissions.md](./doc/kube-proxy_permissions.md)
