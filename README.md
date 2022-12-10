@@ -23,8 +23,9 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 - 1.23.x
 - 1.24.x
 - 1.25.x
+- 1.26.x
 
-大版本之间是通用的，比如使用 1.25.0 的文档可以安装 1.25.x 各种版本，只是安装过程中的下载新的包即可。
+大版本之间是通用的，比如使用 1.26.0 的文档可以安装 1.26.x 各种版本，只是安装过程中的下载新的包即可。
 
 # 访问地址
 
@@ -38,7 +39,7 @@ https://github.com/cby-chen/kube_ansible
 # 文档
 
 ### 最新版本文档
-- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ## 安装文档
 
@@ -63,6 +64,9 @@ https://github.com/cby-chen/kube_ansible
 - [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
 - [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
+###  1.26.x版本
+- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+
 ###  三主俩从版本
 - [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 - [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
@@ -72,6 +76,7 @@ https://github.com/cby-chen/kube_ansible
 - [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 - [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 - [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ## 其他文档
 -  修复kube-proxy证书权限过大问题 [kube-proxy_permissions.md](./doc/kube-proxy_permissions.md)
@@ -99,6 +104,8 @@ https://github.com/cby-chen/kube_ansible
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.4/kubernetes-v1.25.4.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.0/kubernetes-v1.26.0.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
 
@@ -120,6 +127,8 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.24.2
 - https://github.com/cby-chen/Kubernetes/tree/v1.24.3
 - https://github.com/cby-chen/Kubernetes/tree/v1.25.0
+- https://github.com/cby-chen/Kubernetes/tree/v1.25.4
+- https://github.com/cby-chen/Kubernetes/tree/v1.26.0
 - https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 - https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
