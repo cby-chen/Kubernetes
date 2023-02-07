@@ -116,7 +116,7 @@ spec:
                topologyKey: kubernetes.io/hostname
       containers:
       - name: coredns
-        image: registry.cn-hangzhou.aliyuncs.com/chenby/coredns:v1.9.3 
+        image: registry.cn-hangzhou.aliyuncs.com/chenby/coredns:v1.10.0
         imagePullPolicy: IfNotPresent
         resources:
           limits:
