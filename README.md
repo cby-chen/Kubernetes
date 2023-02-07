@@ -45,7 +45,7 @@ https://github.com/cby-chen/kube_ansible
 # 文档
 
 ### 最新版本文档
-- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
 
@@ -72,6 +72,7 @@ https://github.com/cby-chen/kube_ansible
 
 ###  1.26.x版本
 - [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ###  三主俩从版本
 - [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
@@ -112,6 +113,7 @@ https://github.com/cby-chen/kube_ansible
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.4/kubernetes-v1.25.4.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.0/kubernetes-v1.26.0.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.1/kubernetes-v1.26.1.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
 
@@ -135,6 +137,7 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.25.0
 - https://github.com/cby-chen/Kubernetes/tree/v1.25.4
 - https://github.com/cby-chen/Kubernetes/tree/v1.26.0
+- https://github.com/cby-chen/Kubernetes/tree/v1.26.1
 - https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 - https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
