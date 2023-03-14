@@ -4,13 +4,13 @@
 
 GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernetes
 
-# 写在前面
+# 一、写在前面
 
 打开文档，使用全文替换，全局替换主机IP即可。不懂就不要乱动别的参数，瞎改的出了问题，不要怪我文档的问题。
 
-觉得文档不好，您可以自己写，您可以选择不看，此仓库用爱发电，承受不起喷子。
+觉得文档不好，您可以自己写，您可以选择不看，此仓库用爱发电。
 
-# 介绍
+# 二、介绍
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
 
@@ -22,7 +22,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
 
-# 当前文档版本
+# 三、当前文档版本
 
 - 1.21.x
 - 1.22.x
@@ -33,7 +33,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 大版本之间是通用的，比如使用 1.26.0 的文档可以安装 1.26.x 各种版本，只是安装过程中的下载新的包即可。
 
-# 访问地址
+# 四、访问地址
 
 手动项目地址：  
 https://github.com/cby-chen/Kubernetes
@@ -42,7 +42,7 @@ https://github.com/cby-chen/Kubernetes
 https://github.com/cby-chen/Binary_installation_of_Kubernetes  
 https://github.com/cby-chen/kube_ansible  
 
-# 文档
+# 五、文档
 
 ### 最新版本文档
 - [v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
@@ -95,7 +95,7 @@ https://github.com/cby-chen/kube_ansible
 -  kubernetes 安装cilium [kubernetes_install_cilium](./doc/kubernetes_install_cilium.md)
 -  二进制安装每个版本文档
 
-# 安装包
+# 六、安装包
 
 - （下载更快）https://www.123pan.com/s/Z8ArVv-PG60d
 
@@ -119,7 +119,7 @@ https://github.com/cby-chen/kube_ansible
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
-# 旧版本地址
+# 七、旧版本地址
 
 建议查看main版本中的文档。  
 https://github.com/cby-chen/Kubernetes/  
@@ -141,7 +141,7 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 - https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
-# 常见异常
+# 八、常见异常
 
 -  安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
 
@@ -155,22 +155,33 @@ https://github.com/cby-chen/Kubernetes/
 
 详见 https://github.com/cby-chen/Kubernetes/blob/main/doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md#9%E5%AE%89%E8%A3%85%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6
 
-# 其他
+# 九、其他
 
-- 建议在 [Kubernetes](https://github.com/cby-chen/Kubernetes) 查看文档，后续会陆续更新文档
-- 小陈网站：
+## 生产环境推荐配置
 
-> https://www.oiox.cn/
->
-> https://www.oiox.cn/index.php/start-page.html
->
-> **CSDN、GitHub、51CTO、知乎、开源中国、思否、掘金、简书、华为云、阿里云、腾讯云、哔哩哔哩、今日头条、新浪微博、个人博客**
->
-> **全网可搜《小陈运维》**
->
-> **文章主要发布于微信公众号**
+###	Master节点：
+- 三个节点实现高可用（必须）
+- 节点数：0-100    8核16+
+- 节点数：100-250  8核32G+
+- 节点数：250-500  16核32G+
+    
+###	etcd节点：
+- 三个节点实现高可用（必须），有条件存储分区必须高性能SSD硬盘，没有SSD也要有高效独立磁盘
+- 节点数：0-50    2核8G+   50G SSD存储
+- 节点数：50-250  4核16G+  150G SSD存储
+- 节点数：250-1000  8核32G+ 250G SSD存储
+    
+###	Node节点：
+- 无特殊要求，主要是Docker数据分区、系统分区需要单独使用，不可以使用同一个磁盘，系统分区100G+、Docker数据分区200G+，有条件使用SSD硬盘，必须独立于系统盘
 
-# 技术交流
+###	其他：
+- 集群规模不大可以将etcd和master放置于同一个宿主机，
+- 也就是每个master节点部署k8s组件和etcd服务，但是etcd的数据目录一定要独立，并且使用SSD，
+- 两者部署在一起需要相对增加宿主机的资源，个人建议生产环境把master节点的资源一次性给够，
+- 此处的费用不应该节省，可以直接使用16核32G或者64G的机器，之后集群扩容就无需扩容master节点的资源，减少风险。
+- 其中master节点和etcd节点的系统分区100G即可。
+
+# 十、技术交流
 
 加群微信限制，现在只能先添加好友，然后我拉群。
 
@@ -187,6 +198,19 @@ https://github.com/cby-chen/Kubernetes/
 </br>
 </br>
 
+
+- 建议在 [Kubernetes](https://github.com/cby-chen/Kubernetes) 查看文档，后续会陆续更新文档
+- 小陈网站：
+
+> https://www.oiox.cn/
+>
+> https://www.oiox.cn/index.php/start-page.html
+>
+> **CSDN、GitHub、51CTO、知乎、开源中国、思否、掘金、简书、华为云、阿里云、腾讯云、哔哩哔哩、今日头条、新浪微博、个人博客**
+>
+> **全网可搜《小陈运维》**
+>
+> **文章主要发布于微信公众号**
 
 
 ## Stargazers over time
