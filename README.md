@@ -198,6 +198,12 @@ https://github.com/cby-chen/Kubernetes/
 </br>
 </br>
 
+# 赞助
+
+开源不易，如果这个项目对你有帮助可以分享给更多人，或者微信扫码打赏。
+
+![image](https://user-images.githubusercontent.com/46200206/226853802-4b11bad6-cc4e-4a17-8c10-6393a6fe8db7.png)
+
 
 - 建议在 [Kubernetes](https://github.com/cby-chen/Kubernetes) 查看文档，后续会陆续更新文档
 - 小陈网站：
