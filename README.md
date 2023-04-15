@@ -30,6 +30,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 - 1.24.x
 - 1.25.x
 - 1.26.x
+- 1.27.x
 
 大版本之间是通用的，比如使用 1.26.0 的文档可以安装 1.26.x 各种版本，只是安装过程中的下载新的包即可。
 
@@ -45,20 +46,19 @@ https://github.com/cby-chen/kube_ansible
 # 五、文档
 
 ### 最新版本文档
-- [v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
+###  1.27.x版本
+- [v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
-###  1.21.x版本
-- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-###  1.22.x版本
-- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+###  1.26.x版本
+- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+- [v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
-###  1.23.x版本
-- [v1.23.3-CentOS-binary-install](./doc/v1.23.3-CentOS-binary-install.md)
-- [v1.23.4-CentOS-binary-install](./doc/v1.23.4-CentOS-binary-install.md)
-- [v1.23.5-CentOS-binary-install](./doc/v1.23.5-CentOS-binary-install.md)
-- [v1.23.6-CentOS-binary-install](./doc/v1.23.6-CentOS-binary-install.md)
+###  1.25.x版本
+- [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
+- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ###  1.24.x版本
 - [v1.24.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.0-CentOS-binary-install-IPv6-IPv4.md)
@@ -66,13 +66,17 @@ https://github.com/cby-chen/kube_ansible
 - [v1.24.2-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.2-CentOS-binary-install-IPv6-IPv4.md)
 - [v1.24.3-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.24.3-CentOS-binary-install-IPv6-IPv4.md)
 
-###  1.25.x版本
-- [v1.25.0-CentOS-binary-install-IPv6-IPv4.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4.md)
-- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+###  1.23.x版本
+- [v1.23.3-CentOS-binary-install](./doc/v1.23.3-CentOS-binary-install.md)
+- [v1.23.4-CentOS-binary-install](./doc/v1.23.4-CentOS-binary-install.md)
+- [v1.23.5-CentOS-binary-install](./doc/v1.23.5-CentOS-binary-install.md)
+- [v1.23.6-CentOS-binary-install](./doc/v1.23.6-CentOS-binary-install.md)
 
-###  1.26.x版本
-- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.26.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+###  1.22.x版本
+- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
+
+###  1.21.x版本
+- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
 ###  三主俩从版本
 - [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
@@ -114,6 +118,7 @@ https://github.com/cby-chen/kube_ansible
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.4/kubernetes-v1.25.4.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.0/kubernetes-v1.26.0.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.1/kubernetes-v1.26.1.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.1/kubernetes-v1.27.1.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
 
@@ -138,6 +143,7 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.25.4
 - https://github.com/cby-chen/Kubernetes/tree/v1.26.0
 - https://github.com/cby-chen/Kubernetes/tree/v1.26.1
+- https://github.com/cby-chen/Kubernetes/tree/v1.27.1
 - https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 - https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
