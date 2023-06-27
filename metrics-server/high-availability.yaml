@@ -36,11 +36,14 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - nodes/metrics
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
   - pods
   - nodes
-  - nodes/stats
-  - namespaces
-  - configmaps
   verbs:
   - get
   - list
@@ -116,17 +119,27 @@ metadata:
   name: metrics-server
   namespace: kube-system
 spec:
+  replicas: 2
   selector:
     matchLabels:
       k8s-app: metrics-server
   strategy:
     rollingUpdate:
-      maxUnavailable: 0
+      maxUnavailable: 1
   template:
     metadata:
       labels:
         k8s-app: metrics-server
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                k8s-app: metrics-server
+            namespaces:
+            - kube-system
+            topologyKey: kubernetes.io/hostname
       containers:
       - args:
         - --cert-dir=/tmp
@@ -135,11 +148,11 @@ spec:
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
         - --kubelet-insecure-tls
-        - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt # change to front-proxy-ca.crt for kubeadm
+        - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem
         - --requestheader-username-headers=X-Remote-User
         - --requestheader-group-headers=X-Remote-Group
         - --requestheader-extra-headers-prefix=X-Remote-Extra-
-        image: registry.cn-beijing.aliyuncs.com/dotbalo/metrics-server:0.5.0
+        image: m.daocloud.io/registry.k8s.io/metrics-server/metrics-server:v0.6.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -166,6 +179,7 @@ spec:
             cpu: 100m
             memory: 200Mi
         securityContext:
+          allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
@@ -184,7 +198,17 @@ spec:
       - name: ca-ssl
         hostPath:
           path: /etc/kubernetes/pki
-
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: metrics-server
+  namespace: kube-system
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
 ---
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService
@@ -201,4 +225,3 @@ spec:
     namespace: kube-system
   version: v1beta1
   versionPriority: 100
-

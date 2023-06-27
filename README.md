@@ -18,6 +18,8 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 不配置IPV6，不影响后续，不过集群依旧是支持IPv6的。为后期留有扩展可能性。
 
+若不要IPv6 ，不给网卡配置IPv6即可，不要对IPv6相关配置删除或操作，否则会出问题。
+
 如果本地没有IPv6，那么Calico需要使用IPv4的yaml配置文件。
 
 后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
@@ -46,11 +48,12 @@ https://github.com/cby-chen/kube_ansible
 # 五、文档
 
 ### 最新版本文档
-- [v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
 ###  1.27.x版本
 - [v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ###  1.26.x版本
 - [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)

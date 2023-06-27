@@ -119,27 +119,17 @@ metadata:
   name: metrics-server
   namespace: kube-system
 spec:
-  replicas: 2
   selector:
     matchLabels:
       k8s-app: metrics-server
   strategy:
     rollingUpdate:
-      maxUnavailable: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
         k8s-app: metrics-server
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                k8s-app: metrics-server
-            namespaces:
-            - kube-system
-            topologyKey: kubernetes.io/hostname
       containers:
       - args:
         - --cert-dir=/tmp
@@ -148,11 +138,11 @@ spec:
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
         - --kubelet-insecure-tls
-        - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem # change to front-proxy-ca.crt for kubeadm
+        - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem
         - --requestheader-username-headers=X-Remote-User
         - --requestheader-group-headers=X-Remote-Group
         - --requestheader-extra-headers-prefix=X-Remote-Extra-
-        image: registry.cn-hangzhou.aliyuncs.com/chenby/metrics-server:v0.6.1
+        image: m.daocloud.io/registry.k8s.io/metrics-server/metrics-server:v0.6.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -198,17 +188,6 @@ spec:
       - name: ca-ssl
         hostPath:
           path: /etc/kubernetes/pki
----
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: metrics-server
-  namespace: kube-system
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      k8s-app: metrics-server
 ---
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService
