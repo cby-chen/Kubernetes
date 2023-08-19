@@ -127,6 +127,7 @@ https://github.com/cby-chen/kube_ansible
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.1/kubernetes-v1.26.1.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.1/kubernetes-v1.27.1.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.3/kubernetes-v1.27.3.tar
+- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.0.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
 - wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
 
@@ -153,6 +154,7 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.26.1
 - https://github.com/cby-chen/Kubernetes/tree/v1.27.1
 - https://github.com/cby-chen/Kubernetes/tree/v1.27.3
+- https://github.com/cby-chen/Kubernetes/tree/v1.28.0
 - https://github.com/cby-chen/Kubernetes/tree/v1.22.10
 - https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 
