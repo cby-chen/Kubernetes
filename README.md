@@ -33,6 +33,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 - 1.25.x
 - 1.26.x
 - 1.27.x
+- 1.28.x
 
 大版本之间是通用的，比如使用 1.26.0 的文档可以安装 1.26.x 各种版本，只是安装过程中的下载新的包即可。
 
@@ -48,9 +49,12 @@ https://github.com/cby-chen/kube_ansible
 # 五、文档
 
 ### 最新版本文档
-- [v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
+###  1.28.x版本
+- [v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+
 ###  1.27.x版本
 - [v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 - [v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
@@ -192,6 +196,8 @@ https://github.com/cby-chen/Kubernetes/
 - 此处的费用不应该节省，可以直接使用16核32G或者64G的机器，之后集群扩容就无需扩容master节点的资源，减少风险。
 - 其中master节点和etcd节点的系统分区100G即可。
 
+### 加群
+![avatar](./images/1.jpg)
 
 - 建议在 [Kubernetes](https://github.com/cby-chen/Kubernetes) 查看文档，后续会陆续更新文档
 - 小陈网站：

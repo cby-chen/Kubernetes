@@ -192,8 +192,8 @@ kind: ClusterConfiguration
 kubernetesVersion: v1.24.0
 imageRepository: registry.cn-hangzhou.aliyuncs.com/chenby
 networking:
-  podSubnet: 172.16.0.0/12,fc00::/48
-  serviceSubnet: 10.96.0.0/12,fd00::/108
+  podSubnet: 172.16.0.0/12,fc00:2222::/112
+  serviceSubnet: 10.96.0.0/12,fd00:1111::/112
 root@k8s-master01:~#
 
 
@@ -364,7 +364,7 @@ wget https://raw.githubusercontent.com/cby-chen/Kubernetes/main/yaml/calico-ipv
       value: "autodetect"
 
     - name: CALICO_IPV4POOL_CIDR
-      value: "172.16.0.0/16"
+      value: "172.16.0.0/12"
 
     - name: CALICO_IPV6POOL_CIDR
       value: "fc00::/48"

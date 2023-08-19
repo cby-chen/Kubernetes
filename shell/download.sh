@@ -17,20 +17,17 @@
 
 # Version numbers
 cni_plugins_version='v1.3.0'
-cri_containerd_cni_version='1.7.2'
-crictl_version='v1.27.0'
-cri_dockerd_version='0.3.3'
+cri_containerd_cni_version='1.7.3'
+crictl_version='v1.28.0'
+cri_dockerd_version='0.3.4'
 etcd_version='v3.5.9'
 cfssl_version='1.6.4'
-kubernetes_server_version='1.27.3'
-docker_version='24.0.2'
-runc_version='1.1.7'
-kernel_version='5.4.248'
-helm_version='3.12.1'
-nginx_version='1.25.1'
-
-
-# crictl_url="https://ghproxy.com/https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.27.0/crictl-v1.27.0-linux-amd64.tar.gz"
+kubernetes_server_version='1.28.0'
+docker_version='24.0.5'
+runc_version='1.1.9'
+kernel_version='5.4.254'
+helm_version='3.12.3'
+nginx_version='1.25.2'
 
 # URLs 
 base_url='https://ghproxy.com/https://github.com'
@@ -44,8 +41,8 @@ cri_dockerd_url="${base_url}/Mirantis/cri-dockerd/releases/download/v${cri_docke
 etcd_url="${base_url}/etcd-io/etcd/releases/download/${etcd_version}/etcd-${etcd_version}-linux-amd64.tar.gz"
 cfssl_url="${base_url}/cloudflare/cfssl/releases/download/v${cfssl_version}/cfssl_${cfssl_version}_linux_amd64"
 cfssljson_url="${base_url}/cloudflare/cfssl/releases/download/v${cfssl_version}/cfssljson_${cfssl_version}_linux_amd64"
-helm_url="https://files.m.daocloud.io/get.helm.sh/helm-v${helm_version}-linux-amd64.tar.gz"
-kubernetes_server_url="https://dl.k8s.io/v${kubernetes_server_version}/kubernetes-server-linux-amd64.tar.gz"
+helm_url="https://mirrors.huaweicloud.com/helm/v${helm_version}/helm-v${helm_version}-linux-amd64.tar.gz"
+kubernetes_server_url="https://storage.googleapis.com/kubernetes-release/release/v${kubernetes_server_version}/kubernetes-server-linux-amd64.tar.gz"
 nginx_url="http://nginx.org/download/nginx-${nginx_version}.tar.gz"
 
 # Download packages
@@ -67,11 +64,10 @@ packages=(
 
 for package_url in "${packages[@]}"; do
   filename=$(basename "$package_url")
-  if wget -cq --progress=bar:force:noscroll -nc "$package_url"; then
+  if curl --parallel --parallel-immediate -k -L -C - -o "$filename" "$package_url"; then
     echo "Downloaded $filename"
   else
     echo "Failed to download $filename"
     exit 1
   fi
 done
-

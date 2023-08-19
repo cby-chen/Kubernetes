@@ -132,7 +132,7 @@ rtt min/avg/max/mdev = 9.937/10.269/10.602/0.347 ms
 ====================
 
 ```shell
---service-cluster-ip-range=10.96.0.0/12,fd00::/108  
+--service-cluster-ip-range=10.96.0.0/12,fd00:1111::/112  
 --feature-gates=IPv6DualStack=true 
 
 [root@k8s-master01 ~]# vim /usr/lib/systemd/system/kube-apiserver.service
@@ -152,7 +152,7 @@ ExecStart=/usr/local/bin/kube-apiserver \
       --secure-port=6443  \
       --insecure-port=0  \
       --advertise-address=192.168.1.81 \
-      --service-cluster-ip-range=10.96.0.0/12,fd00::/108  \
+      --service-cluster-ip-range=10.96.0.0/12,fd00:1111::/112  \
       --feature-gates=IPv6DualStack=true \
       --service-node-port-range=30000-32767  \
       --etcd-servers=https://192.168.1.81:2379,https://192.168.1.82:2379,https://192.168.1.83:2379 \
@@ -195,8 +195,8 @@ WantedBy=multi-user.target
 
 ```shell
 --feature-gates=IPv6DualStack=true
---service-cluster-ip-range=10.96.0.0/12,fd00::/108
---cluster-cidr=172.16.0.0/12,fc00::/48
+--service-cluster-ip-range=10.96.0.0/12,fd00:1111::/112
+--cluster-cidr=172.16.0.0/12,fc00:2222::/112
 --node-cidr-mask-size-ipv4=24
 --node-cidr-mask-size-ipv6=64
 
@@ -225,8 +225,8 @@ ExecStart=/usr/local/bin/kube-controller-manager \
       --controllers=*,bootstrapsigner,tokencleaner \
       --allocate-node-cidrs=true \
       --feature-gates=IPv6DualStack=true \
-      --service-cluster-ip-range=10.96.0.0/12,fd00::/108 \
-      --cluster-cidr=172.16.0.0/12,fc00::/48 \
+      --service-cluster-ip-range=10.96.0.0/12,fd00:1111::/112 \
+      --cluster-cidr=172.16.0.0/12,fc00:2222::/112 \
       --node-cidr-mask-size-ipv4=24 \
       --node-cidr-mask-size-ipv6=64 \
       --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem 
@@ -282,7 +282,7 @@ WantedBy=multi-user.target
 
 ```shell
 #修改如下配置
-clusterCIDR: 172.16.0.0/12,fc00::/48 
+clusterCIDR: 172.16.0.0/12,fc00:2222::/112 
 
 [root@k8s-master01 ~]# vim /etc/kubernetes/kube-proxy.yaml
 [root@k8s-master01 ~]# cat /etc/kubernetes/kube-proxy.yaml
@@ -294,7 +294,7 @@ clientConnection:
   contentType: application/vnd.kubernetes.protobuf
   kubeconfig: /etc/kubernetes/kube-proxy.kubeconfig
   qps: 5
-clusterCIDR: 172.16.0.0/12,fc00::/48 
+clusterCIDR: 172.16.0.0/12,fc00:2222::/112 
 configSyncPeriod: 15m0s
 conntrack:
   max: null
@@ -344,7 +344,7 @@ udpIdleTimeout: 250ms
       value: "autodetect"
 
     - name: CALICO_IPV4POOL_CIDR
-      value: "172.16.0.0/16"
+      value: "172.16.0.0/12"
 
     - name: CALICO_IPV6POOL_CIDR
       value: "fc00::/48"
