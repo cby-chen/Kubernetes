@@ -47,6 +47,7 @@ mkdir -p update_k8s && cd update_k8s
 # 下载所需版本
 if [ -e "kubernetes-server-linux-amd64.tar.gz" ]; then
     echo "文件存在"
+    tar xf kubernetes-server-linux-amd64.tar.gz
 else
     echo "文件不存在"
     wget https://dl.k8s.io/v${k8s}/kubernetes-server-linux-amd64.tar.gz && tar xf kubernetes-server-linux-amd64.tar.gz
