@@ -13,15 +13,10 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 # 二、介绍
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
-
 若您没有IPV6环境，或者不想使用IPv6，不对主机进行配置IPv6地址即可。
-
 不配置IPV6，不影响后续，不过集群依旧是支持IPv6的。为后期留有扩展可能性。
-
 若不要IPv6 ，不给网卡配置IPv6即可，不要对IPv6相关配置删除或操作，否则会出问题。
-
 如果本地没有IPv6，那么Calico需要使用IPv4的yaml配置文件。
-
 后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
 
 # 三、当前文档版本
@@ -42,18 +37,19 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 手动项目地址：  
 https://github.com/cby-chen/Kubernetes
 
-脚本项目地址：  
+脚本项目地址（已停更）：  
 https://github.com/cby-chen/Binary_installation_of_Kubernetes  
 https://github.com/cby-chen/kube_ansible  
 
 # 五、文档
 
 ### 最新版本文档
-- [v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.28.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.28.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
 ###  1.28.x版本
 - [v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.28.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.28.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.28.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ###  1.27.x版本
 - [v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.27.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
@@ -111,25 +107,25 @@ https://github.com/cby-chen/kube_ansible
 - （下载更快）https://www.123pan.com/s/Z8ArVv-PG60d
 
 - https://github.com/cby-chen/Kubernetes/releases
-
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/cby/Kubernetes.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.4/kubernetes-v1.23.4.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.5/kubernetes-v1.24.5.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.6/kubernetes-v1.23.6.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.7/kubernetes-v1.23.7.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes-v1.24.0.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.4/kubernetes-v1.25.4.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.0/kubernetes-v1.26.0.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.1/kubernetes-v1.26.1.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.1/kubernetes-v1.27.1.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.3/kubernetes-v1.27.3.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.0.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
-- wget https://ghproxy.com/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/cby/Kubernetes.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.4/kubernetes-v1.23.4.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.5/kubernetes-v1.24.5.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.6/kubernetes-v1.23.6.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.7/kubernetes-v1.23.7.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes-v1.24.0.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.4/kubernetes-v1.25.4.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.0/kubernetes-v1.26.0.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.1/kubernetes-v1.26.1.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.1/kubernetes-v1.27.1.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.3/kubernetes-v1.27.3.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.0.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.3.tar
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
@@ -139,6 +135,8 @@ https://github.com/cby-chen/kube_ansible
 https://github.com/cby-chen/Kubernetes/  
 若找对应版本文档中的安装包，可以在上方下载安装包，可以在在下方地址中查找。
 
+- https://github.com/cby-chen/Kubernetes/tree/v1.22.10
+- https://github.com/cby-chen/Kubernetes/tree/v1.21.13
 - https://github.com/cby-chen/Kubernetes/tree/cby
 - https://github.com/cby-chen/Kubernetes/tree/v1.23.4
 - https://github.com/cby-chen/Kubernetes/tree/v1.23.5
@@ -155,22 +153,17 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.27.1
 - https://github.com/cby-chen/Kubernetes/tree/v1.27.3
 - https://github.com/cby-chen/Kubernetes/tree/v1.28.0
-- https://github.com/cby-chen/Kubernetes/tree/v1.22.10
-- https://github.com/cby-chen/Kubernetes/tree/v1.21.13
+- https://github.com/cby-chen/Kubernetes/tree/v1.28.3
 
 # 八、常见异常
 
--  安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
-
-将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=`  将 `''` 删除即可。
-
 -  注意hosts配置文件中主机名和IP地址对应
-
+-  若服务器重启后集群不正常，检查以下kubelet
 -  在文档7.2，却记别忘记执行`kubectl create -f bootstrap.secret.yaml`命令
-
 -  在 centos7 环境下需要升级 runc 和 libseccomp 
-
 详见 https://github.com/cby-chen/Kubernetes/blob/main/doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md#9%E5%AE%89%E8%A3%85%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6
+- 安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
+将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=`  将 `''` 删除即可。
 
 # 九、其他
 
@@ -181,13 +174,13 @@ https://github.com/cby-chen/Kubernetes/
 - 节点数：0-100    8核16+
 - 节点数：100-250  8核32G+
 - 节点数：250-500  16核32G+
-    
+  
 ###	etcd节点：
 - 三个节点实现高可用（必须），有条件存储分区必须高性能SSD硬盘，没有SSD也要有高效独立磁盘
 - 节点数：0-50    2核8G+   50G SSD存储
 - 节点数：50-250  4核16G+  150G SSD存储
 - 节点数：250-1000  8核32G+ 250G SSD存储
-    
+  
 ###	Node节点：
 - 无特殊要求，主要是Docker数据分区、系统分区需要单独使用，不可以使用同一个磁盘，系统分区100G+、Docker数据分区200G+，有条件使用SSD硬盘，必须独立于系统盘
 
@@ -218,4 +211,3 @@ https://github.com/cby-chen/Kubernetes/
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/cby-chen/Kubernetes.svg)](https://starchart.cc/cby-chen/Kubernetes)
-
