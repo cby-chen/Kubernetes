@@ -158,12 +158,18 @@ https://github.com/cby-chen/Kubernetes/
 # 八、常见异常
 
 -  注意hosts配置文件中主机名和IP地址对应
--  若服务器重启后集群不正常，检查以下kubelet
+
 -  在文档7.2，却记别忘记执行`kubectl create -f bootstrap.secret.yaml`命令
+
+-  重启服务器之后出现异常，可以查看`systemctl status kubelet.service`服务是否正常
+
 -  在 centos7 环境下需要升级 runc 和 libseccomp 
 详见 https://github.com/cby-chen/Kubernetes/blob/main/doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md#9%E5%AE%89%E8%A3%85%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6
+
 - 安装会出现kubelet异常，无法识别 `--node-labels` 字段问题，原因如下。
 将 `--node-labels=node.kubernetes.io/node=''` 替换为 `--node-labels=node.kubernetes.io/node=`  将 `''` 删除即可。
+
+-  IPv6无法正常访问，kubelet服务需要添加`--node-ip=`参数，若动态获取IP地址变动之后需要重新配置，详细查看文档 https://github.com/cby-chen/Kubernetes/blob/main/doc/v1.28.3-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md#82kubelet%E9%85%8D%E7%BD%AE
 
 # 九、其他
 
