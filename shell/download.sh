@@ -30,7 +30,7 @@ helm_version='3.12.3'
 nginx_version='1.25.2'
 
 # URLs 
-base_url='https://ghproxy.com/https://github.com'
+base_url='https://mirrors.chenby.cn/https://github.com'
 kernel_url="http://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-${kernel_version}-1.el7.elrepo.x86_64.rpm"
 runc_url="${base_url}/opencontainers/runc/releases/download/v${runc_version}/runc.amd64"
 docker_url="https://download.docker.com/linux/static/stable/x86_64/docker-${docker_version}.tgz"

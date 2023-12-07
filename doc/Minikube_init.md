@@ -44,7 +44,7 @@ sudo systemctl restart docker
 ```shell
 # 由于1.24以及更高版本不支持docker所以安装cri-docker
 # 下载cri-docker 
-wget  https://ghproxy.com/https://github.com/Mirantis/cri-dockerd/releases/download/v0.2.5/cri-dockerd-0.2.5.amd64.tgz
+wget  https://mirrors.chenby.cn/https://github.com/Mirantis/cri-dockerd/releases/download/v0.2.5/cri-dockerd-0.2.5.amd64.tgz
 
 # 解压cri-docker
 tar xvf cri-dockerd-0.2.5.amd64.tgz 
