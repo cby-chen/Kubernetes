@@ -125,7 +125,7 @@ https://github.com/cby-chen/kube_ansible
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.1/kubernetes-v1.27.1.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.3/kubernetes-v1.27.3.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.0.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.3.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.3/kubernetes-v1.28.3.tar
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
