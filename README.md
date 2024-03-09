@@ -108,7 +108,8 @@ https://github.com/cby-chen/kube_ansible
 
 # 六、安装包
 
-- （下载更快）https://www.123pan.com/s/Z8ArVv-PG60d
+- 123云盘 https://www.123pan.com/s/Z8ArVv-PG60d
+- 夸克云盘 https://pan.quark.cn/s/450ef6406f30
 
 - https://github.com/cby-chen/Kubernetes/releases
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
