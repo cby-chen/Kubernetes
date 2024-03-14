@@ -204,6 +204,12 @@ https://github.com/cby-chen/Kubernetes/
 - 此处的费用不应该节省，可以直接使用16核32G或者64G的机器，之后集群扩容就无需扩容master节点的资源，减少风险。
 - 其中master节点和etcd节点的系统分区100G即可。
 
+### 添加好友
+<img src=./images/1.jpg width=30% />
+
+### 添加群聊
+<img src=./images/2.jpg width=30% />
+
 - 建议在 [Kubernetes](https://github.com/cby-chen/Kubernetes) 查看文档，后续会陆续更新文档
 - 小陈网站：
 
