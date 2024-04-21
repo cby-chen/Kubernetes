@@ -20,7 +20,9 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
 
 不要删除 IPv6 相关配置！！！
+
 不要删除 IPv6 相关配置！！！
+
 不要删除 IPv6 相关配置！！！
 
 # 三、当前文档版本
