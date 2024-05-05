@@ -51,7 +51,7 @@ https://github.com/cby-chen/kube_ansible
 # 五、文档
 
 ### 最新版本文档
-- [v1.29.2-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.29.2-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [kubeadm-install.md](./doc/kubeadm-install.md)
 
 ## 安装文档
 ###  1.29.x版本
