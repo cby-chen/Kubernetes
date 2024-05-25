@@ -198,7 +198,7 @@ WantedBy=multi-user.target
 --service-cluster-ip-range=10.96.0.0/12,fd00:1111::/112
 --cluster-cidr=172.16.0.0/12,fc00:2222::/112
 --node-cidr-mask-size-ipv4=24
---node-cidr-mask-size-ipv6=64
+--node-cidr-mask-size-ipv6=120
 
 [root@k8s-master01 ~]# vim /usr/lib/systemd/system/kube-controller-manager.service
 [root@k8s-master01 ~]# cat /usr/lib/systemd/system/kube-controller-manager.service
@@ -228,7 +228,7 @@ ExecStart=/usr/local/bin/kube-controller-manager \
       --service-cluster-ip-range=10.96.0.0/12,fd00:1111::/112 \
       --cluster-cidr=172.16.0.0/12,fc00:2222::/112 \
       --node-cidr-mask-size-ipv4=24 \
-      --node-cidr-mask-size-ipv6=64 \
+      --node-cidr-mask-size-ipv6=120 \
       --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem 
 
 Restart=always
