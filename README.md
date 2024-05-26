@@ -38,6 +38,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 - 1.27.x
 - 1.28.x
 - 1.29.x
+- 1.30.x
 
 大版本之间是通用的，比如使用 1.26.0 的文档可以安装 1.26.x 各种版本，只是安装过程中的下载新的包即可。
 
@@ -54,6 +55,7 @@ https://github.com/cby-chen/kube_ansible
 
 ### 最新版本文档
 - [kubeadm-install.md](./doc/kubeadm-install.md)
+- [v1.30.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.30.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
 ###  1.29.x版本
@@ -140,6 +142,7 @@ https://github.com/cby-chen/kube_ansible
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.0.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.3/kubernetes-v1.28.3.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.29.2/kubernetes-v1.29.2.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.30.1/kubernetes-v1.30.1.tar
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
@@ -169,6 +172,7 @@ https://github.com/cby-chen/Kubernetes/
 - https://github.com/cby-chen/Kubernetes/tree/v1.28.0
 - https://github.com/cby-chen/Kubernetes/tree/v1.28.3
 - https://github.com/cby-chen/Kubernetes/tree/v1.29.2
+- https://github.com/cby-chen/Kubernetes/tree/v1.30.1
 
 # 八、常见异常
 
