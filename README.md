@@ -222,8 +222,8 @@ https://github.com/cby-chen/Kubernetes/
 ### 添加好友
 <img src=./images/1.jpg width=30% />
 
-### 添加群聊
-<img src=./images/2.jpg width=30% />
+### 打赏
+<img src=./images/3.jpg width=30% />
 
 - 建议在 [Kubernetes](https://github.com/cby-chen/Kubernetes) 查看文档，后续会陆续更新文档
 - 小陈网站：
