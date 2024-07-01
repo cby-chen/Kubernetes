@@ -2,24 +2,6 @@
 
 https://github.com/cby-chen/Kubernetes 开源不易，帮忙点个star，谢谢了
 
-## 介绍
-
-kubernetes（k8s）二进制高可用安装部署，支持IPv4+IPv6双栈。
-
-我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
-
-若您没有IPV6环境，或者不想使用IPv6，不对主机进行配置IPv6地址即可。
-
-不配置IPV6，不影响后续，不过集群依旧是支持IPv6的。为后期留有扩展可能性。
-
-若不要IPv6 ，不给网卡配置IPv6即可，不要对IPv6相关配置删除或操作，否则会出问题。
-
-## 强烈建议在Github上查看文档 ！！！
-
-## Github出问题会更新文档，并且后续尽可能第一时间更新新版本文档 ！！！
-
-
-
 ## k8s基础系统环境配置
 
 ### 配置IP
@@ -28,8 +10,13 @@ kubernetes（k8s）二进制高可用安装部署，支持IPv4+IPv6双栈。
 # 注意！
 # 若虚拟机是进行克隆的那么网卡的UUID会重复
 # 若UUID重复需要重新生成新的UUID
-# UUID重复无法获取到IPV6地址
-# 
+# UUID和MachineID重复无法DHCP获取到IPV6地址
+ssh root@192.168.1.155 "rm -rf /etc/machine-id; systemd-machine-id-setup;reboot"
+ssh root@192.168.1.158 "rm -rf /etc/machine-id; systemd-machine-id-setup;reboot"
+ssh root@192.168.1.160 "rm -rf /etc/machine-id; systemd-machine-id-setup;reboot"
+ssh root@192.168.1.161 "rm -rf /etc/machine-id; systemd-machine-id-setup;reboot"
+ssh root@192.168.1.162 "rm -rf /etc/machine-id; systemd-machine-id-setup;reboot"
+
 # 查看当前的网卡列表和 UUID：
 # nmcli con show
 # 删除要更改 UUID 的网络连接：
@@ -40,11 +27,11 @@ kubernetes（k8s）二进制高可用安装部署，支持IPv4+IPv6双栈。
 # nmcli con up <新名称>
 
 # 更改网卡的UUID
-ssh root@192.168.1.31 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname eth0 con-name eth0;nmcli con up eth0"
-ssh root@192.168.1.32 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname eth0 con-name eth0;nmcli con up eth0"
-ssh root@192.168.1.33 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname eth0 con-name eth0;nmcli con up eth0"
-ssh root@192.168.1.34 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname eth0 con-name eth0;nmcli con up eth0"
-ssh root@192.168.1.35 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname eth0 con-name eth0;nmcli con up eth0"
+ssh root@192.168.1.31 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname ens33 con-name ens33;nmcli con up ens33"
+ssh root@192.168.1.32 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname ens33 con-name ens33;nmcli con up ens33"
+ssh root@192.168.1.33 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname ens33 con-name ens33;nmcli con up ens33"
+ssh root@192.168.1.34 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname ens33 con-name ens33;nmcli con up ens33"
+ssh root@192.168.1.35 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44;nmcli con add type ethernet ifname ens33 con-name ens33;nmcli con up ens33"
 
 # 参数解释
 # 
@@ -54,76 +41,76 @@ ssh root@192.168.1.35 "nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c4
 # nmcli con delete uuid 708a1497-2192-43a5-9f03-2ab936fb3c44
 # 删除 UUID 为 708a1497-2192-43a5-9f03-2ab936fb3c44 的网络连接，这是 NetworkManager 中一种特定网络配置的唯一标识符。
 # 
-# nmcli con add type ethernet ifname eth0 con-name eth0
-# 添加一种以太网连接类型，并指定接口名为 eth0，连接名称也为 eth0。
+# nmcli con add type ethernet ifname ens33 con-name ens33
+# 添加一种以太网连接类型，并指定接口名为 ens33，连接名称也为 ens33。
 # 
-# nmcli con up eth0
-# 开启 eth0 这个网络连接。
+# nmcli con up ens33
+# 开启 ens33 这个网络连接。
 # 
-# 简单来说，这个命令的作用是删除一个特定的网络连接配置，并添加一个名为 eth0 的以太网连接，然后启用这个新的连接。
+# 简单来说，这个命令的作用是删除一个特定的网络连接配置，并添加一个名为 ens33 的以太网连接，然后启用这个新的连接。
 
 # 修改静态的IPv4地址
-ssh root@192.168.1.104 "nmcli con mod eth0 ipv4.addresses 192.168.1.31/24; nmcli con mod eth0 ipv4.gateway  192.168.1.1; nmcli con mod eth0 ipv4.method manual; nmcli con mod eth0 ipv4.dns "8.8.8.8"; nmcli con up eth0"
-ssh root@192.168.1.106 "nmcli con mod eth0 ipv4.addresses 192.168.1.32/24; nmcli con mod eth0 ipv4.gateway  192.168.1.1; nmcli con mod eth0 ipv4.method manual; nmcli con mod eth0 ipv4.dns "8.8.8.8"; nmcli con up eth0"
-ssh root@192.168.1.107 "nmcli con mod eth0 ipv4.addresses 192.168.1.33/24; nmcli con mod eth0 ipv4.gateway  192.168.1.1; nmcli con mod eth0 ipv4.method manual; nmcli con mod eth0 ipv4.dns "8.8.8.8"; nmcli con up eth0"
-ssh root@192.168.1.109 "nmcli con mod eth0 ipv4.addresses 192.168.1.34/24; nmcli con mod eth0 ipv4.gateway  192.168.1.1; nmcli con mod eth0 ipv4.method manual; nmcli con mod eth0 ipv4.dns "8.8.8.8"; nmcli con up eth0"
-ssh root@192.168.1.110 "nmcli con mod eth0 ipv4.addresses 192.168.1.35/24; nmcli con mod eth0 ipv4.gateway  192.168.1.1; nmcli con mod eth0 ipv4.method manual; nmcli con mod eth0 ipv4.dns "8.8.8.8"; nmcli con up eth0"
+ssh root@192.168.1.104 "nmcli con mod ens33 ipv4.addresses 192.168.1.31/24; nmcli con mod ens33 ipv4.gateway  192.168.1.1; nmcli con mod ens33 ipv4.method manual; nmcli con mod ens33 ipv4.dns "8.8.8.8"; nmcli con up ens33"
+ssh root@192.168.1.106 "nmcli con mod ens33 ipv4.addresses 192.168.1.32/24; nmcli con mod ens33 ipv4.gateway  192.168.1.1; nmcli con mod ens33 ipv4.method manual; nmcli con mod ens33 ipv4.dns "8.8.8.8"; nmcli con up ens33"
+ssh root@192.168.1.107 "nmcli con mod ens33 ipv4.addresses 192.168.1.33/24; nmcli con mod ens33 ipv4.gateway  192.168.1.1; nmcli con mod ens33 ipv4.method manual; nmcli con mod ens33 ipv4.dns "8.8.8.8"; nmcli con up ens33"
+ssh root@192.168.1.109 "nmcli con mod ens33 ipv4.addresses 192.168.1.34/24; nmcli con mod ens33 ipv4.gateway  192.168.1.1; nmcli con mod ens33 ipv4.method manual; nmcli con mod ens33 ipv4.dns "8.8.8.8"; nmcli con up ens33"
+ssh root@192.168.1.110 "nmcli con mod ens33 ipv4.addresses 192.168.1.35/24; nmcli con mod ens33 ipv4.gateway  192.168.1.1; nmcli con mod ens33 ipv4.method manual; nmcli con mod ens33 ipv4.dns "8.8.8.8"; nmcli con up ens33"
 
 # 参数解释
 # 
 # ssh root@192.168.1.154
 # 使用SSH登录到IP为192.168.1.154的主机，使用root用户身份。
 # 
-# "nmcli con mod eth0 ipv4.addresses 192.168.1.31/24"
-# 修改eth0网络连接的IPv4地址为192.168.1.31，子网掩码为 24。
+# "nmcli con mod ens33 ipv4.addresses 192.168.1.31/24"
+# 修改ens33网络连接的IPv4地址为192.168.1.31，子网掩码为 24。
 # 
-# "nmcli con mod eth0 ipv4.gateway 192.168.1.1"
-# 修改eth0网络连接的IPv4网关为192.168.1.1。
+# "nmcli con mod ens33 ipv4.gateway 192.168.1.1"
+# 修改ens33网络连接的IPv4网关为192.168.1.1。
 # 
-# "nmcli con mod eth0 ipv4.method manual"
-# 将eth0网络连接的IPv4配置方法设置为手动。
+# "nmcli con mod ens33 ipv4.method manual"
+# 将ens33网络连接的IPv4配置方法设置为手动。
 # 
-# "nmcli con mod eth0 ipv4.dns "8.8.8.8"
-# 将eth0网络连接的IPv4 DNS服务器设置为 8.8.8.8。
+# "nmcli con mod ens33 ipv4.dns "8.8.8.8"
+# 将ens33网络连接的IPv4 DNS服务器设置为 8.8.8.8。
 # 
-# "nmcli con up eth0"
-# 启动eth0网络连接。
+# "nmcli con up ens33"
+# 启动ens33网络连接。
 # 
-# 总体来说，这条命令是通过SSH远程登录到指定的主机，并使用网络管理命令 (nmcli) 修改eth0网络连接的配置，包括IP地址、网关、配置方法和DNS服务器，并启动该网络连接。
+# 总体来说，这条命令是通过SSH远程登录到指定的主机，并使用网络管理命令 (nmcli) 修改ens33网络连接的配置，包括IP地址、网关、配置方法和DNS服务器，并启动该网络连接。
 
 # 没有IPv6选择不配置即可
-ssh root@192.168.1.31 "nmcli con mod eth0 ipv6.addresses fc00:43f4:1eea:1::10; nmcli con mod eth0 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod eth0 ipv6.method manual; nmcli con mod eth0 ipv6.dns "2400:3200::1"; nmcli con up eth0"
-ssh root@192.168.1.32 "nmcli con mod eth0 ipv6.addresses fc00:43f4:1eea:1::20; nmcli con mod eth0 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod eth0 ipv6.method manual; nmcli con mod eth0 ipv6.dns "2400:3200::1"; nmcli con up eth0"
-ssh root@192.168.1.33 "nmcli con mod eth0 ipv6.addresses fc00:43f4:1eea:1::30; nmcli con mod eth0 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod eth0 ipv6.method manual; nmcli con mod eth0 ipv6.dns "2400:3200::1"; nmcli con up eth0"
-ssh root@192.168.1.34 "nmcli con mod eth0 ipv6.addresses fc00:43f4:1eea:1::40; nmcli con mod eth0 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod eth0 ipv6.method manual; nmcli con mod eth0 ipv6.dns "2400:3200::1"; nmcli con up eth0"
-ssh root@192.168.1.35 "nmcli con mod eth0 ipv6.addresses fc00:43f4:1eea:1::50; nmcli con mod eth0 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod eth0 ipv6.method manual; nmcli con mod eth0 ipv6.dns "2400:3200::1"; nmcli con up eth0"
+ssh root@192.168.1.31 "nmcli con mod ens33 ipv6.addresses fc00:43f4:1eea:1::10; nmcli con mod ens33 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod ens33 ipv6.method manual; nmcli con mod ens33 ipv6.dns "2400:3200::1"; nmcli con up ens33"
+ssh root@192.168.1.32 "nmcli con mod ens33 ipv6.addresses fc00:43f4:1eea:1::20; nmcli con mod ens33 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod ens33 ipv6.method manual; nmcli con mod ens33 ipv6.dns "2400:3200::1"; nmcli con up ens33"
+ssh root@192.168.1.33 "nmcli con mod ens33 ipv6.addresses fc00:43f4:1eea:1::30; nmcli con mod ens33 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod ens33 ipv6.method manual; nmcli con mod ens33 ipv6.dns "2400:3200::1"; nmcli con up ens33"
+ssh root@192.168.1.34 "nmcli con mod ens33 ipv6.addresses fc00:43f4:1eea:1::40; nmcli con mod ens33 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod ens33 ipv6.method manual; nmcli con mod ens33 ipv6.dns "2400:3200::1"; nmcli con up ens33"
+ssh root@192.168.1.35 "nmcli con mod ens33 ipv6.addresses fc00:43f4:1eea:1::50; nmcli con mod ens33 ipv6.gateway fc00:43f4:1eea:1::1; nmcli con mod ens33 ipv6.method manual; nmcli con mod ens33 ipv6.dns "2400:3200::1"; nmcli con up ens33"
 
 # 参数解释
 # 
 # ssh root@192.168.1.31
 # 通过SSH连接到IP地址为192.168.1.31的远程主机，使用root用户进行登录。
 # 
-# "nmcli con mod eth0 ipv6.addresses fc00:43f4:1eea:1::10"
-# 使用nmcli命令修改eth0接口的IPv6地址为fc00:43f4:1eea:1::10。
+# "nmcli con mod ens33 ipv6.addresses fc00:43f4:1eea:1::10"
+# 使用nmcli命令修改ens33接口的IPv6地址为fc00:43f4:1eea:1::10。
 # 
-# "nmcli con mod eth0 ipv6.gateway fc00:43f4:1eea:1::1"
-# 使用nmcli命令修改eth0接口的IPv6网关为fc00:43f4:1eea:1::1。
+# "nmcli con mod ens33 ipv6.gateway fc00:43f4:1eea:1::1"
+# 使用nmcli命令修改ens33接口的IPv6网关为fc00:43f4:1eea:1::1。
 # 
-# "nmcli con mod eth0 ipv6.method manual"
-# 使用nmcli命令将eth0接口的IPv6配置方法修改为手动配置。
+# "nmcli con mod ens33 ipv6.method manual"
+# 使用nmcli命令将ens33接口的IPv6配置方法修改为手动配置。
 # 
-# "nmcli con mod eth0 ipv6.dns "2400:3200::1"
-# 使用nmcli命令设置eth0接口的IPv6 DNS服务器为2400:3200::1。
+# "nmcli con mod ens33 ipv6.dns "2400:3200::1"
+# 使用nmcli命令设置ens33接口的IPv6 DNS服务器为2400:3200::1。
 # 
-# "nmcli con up eth0"
-# 使用nmcli命令启动eth0接口。
+# "nmcli con up ens33"
+# 使用nmcli命令启动ens33接口。
 # 
-# 这个命令的目的是在远程主机上配置eth0接口的IPv6地址、网关、配置方法和DNS服务器，并启动eth0接口。
+# 这个命令的目的是在远程主机上配置ens33接口的IPv6地址、网关、配置方法和DNS服务器，并启动ens33接口。
 
 # 查看网卡配置
-# nmcli device show eth0
-# nmcli con show eth0
-[root@localhost ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth0 
+# nmcli device show ens33
+# nmcli con show ens33
+[root@localhost ~]# cat /etc/sysconfig/network-scripts/ifcfg-ens33 
 TYPE=Ethernet
 PROXY_METHOD=none
 BROWSER_ONLY=no
@@ -135,9 +122,9 @@ IPV6_AUTOCONF=yes
 IPV6_DEFROUTE=yes
 IPV6_FAILURE_FATAL=no
 IPV6_ADDR_GEN_MODE=stable-privacy
-NAME=eth0
+NAME=ens33
 UUID=2aaddf95-3f36-4a48-8626-b55ebf7f53e7
-DEVICE=eth0
+DEVICE=ens33
 ONBOOT=yes
 IPADDR=192.168.1.31
 PREFIX=24
@@ -180,14 +167,14 @@ DNS1=8.8.8.8
 # IPV6_ADDR_GEN_MODE=stable-privacy
 # 指定IPv6地址生成模式为稳定隐私模式。
 # 
-# NAME=eth0
-# 指定设备名称为eth0。
+# NAME=ens33
+# 指定设备名称为ens33。
 # 
 # UUID=424fd260-c480-4899-97e6-6fc9722031e8
 # 指定设备的唯一标识符。
 # 
-# DEVICE=eth0
-# 指定设备名称为eth0。
+# DEVICE=ens33
+# 指定设备名称为ens33。
 # 
 # ONBOOT=yes
 # 指定开机自动启用这个连接。
@@ -247,11 +234,8 @@ sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' \
          -i.bak \
          /etc/yum.repos.d/CentOS-*.repo
 
-# 对于 CentOS 8
-sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' \
-         -e 's|^#baseurl=http://mirror.centos.org/$contentdir|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos|g' \
-         -i.bak \
-         /etc/yum.repos.d/CentOS-*.repo
+# 对于 CentOS 9
+# 查看 https://mirrors.tuna.tsinghua.edu.cn/help/centos-stream/
 
 # 对于私有仓库
 sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://mirror.centos.org/\$contentdir|baseurl=http://192.168.1.123/centos|g' -i.bak  /etc/yum.repos.d/CentOS-*.repo
@@ -282,6 +266,9 @@ yum update -y && yum -y install  wget psmisc vim net-tools nfs-utils telnet yum-
 
 # 对于 CentOS 8
 yum update -y && yum -y install wget psmisc vim net-tools nfs-utils telnet yum-utils device-mapper-persistent-data lvm2 git network-scripts tar curl
+
+# 对于 CentOS 9
+yum update -y && yum -y install wget psmisc vim net-tools nfs-utils telnet yum-utils device-mapper-persistent-data lvm2 git tar curl
 ```
 
 ### 关闭防火墙
@@ -510,7 +497,7 @@ yum  --disablerepo="*"  --enablerepo="elrepo-kernel"  list  available
 ### 升级内核至4.18版本以上
 
 ```shell
-# Ubuntu忽略，CentOS执行
+# Ubuntu忽略，CentOS7执行
 
 # 安装最新的内核
 # 我这里选择的是稳定版kernel-ml   如需更新长期维护版本kernel-lt  
@@ -872,10 +859,11 @@ ps: 由于官网未开放同步方式, 可能会有索引gpg检查失败的情�
 
 ## 配置containerd
 
+### 下载解压
 ```shell
 # 下载所需应用包
-wget https://mirrors.chenby.cn/https://github.com/containerd/containerd/releases/download/v1.7.16/cri-containerd-cni-1.7.16-linux-amd64.tar.gz
-wget https://mirrors.chenby.cn/https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-amd64-v1.4.1.tgz
+wget https://mirrors.chenby.cn/https://github.com/containerd/containerd/releases/download/v1.7.18/cri-containerd-cni-1.7.18-linux-amd64.tar.gz
+wget https://mirrors.chenby.cn/https://github.com/containernetworking/plugins/releases/download/v1.5.1/cni-plugins-linux-amd64-v1.5.1.tgz
 
 # centos7 要升级libseccomp
 yum -y install https://mirrors.tuna.tsinghua.edu.cn/centos/8-stream/BaseOS/x86_64/os/Packages/libseccomp-2.5.1-1.el8.x86_64.rpm
@@ -913,7 +901,9 @@ OOMScoreAdjust=-999
 [Install]
 WantedBy=multi-user.target
 EOF
-
+```
+### 配置内核
+```shell
 # 配置Containerd所需的模块
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
 overlay
@@ -932,7 +922,9 @@ EOF
 
 # 加载内核
 sysctl --system
-
+```
+### 修改默认配置
+```shell
 # 创建Containerd的配置文件
 mkdir -p /etc/containerd
 containerd config default | tee /etc/containerd/config.toml
@@ -940,20 +932,23 @@ containerd config default | tee /etc/containerd/config.toml
 # 修改Containerd的配置文件
 sed -i "s#SystemdCgroup\ \=\ false#SystemdCgroup\ \=\ true#g" /etc/containerd/config.toml
 cat /etc/containerd/config.toml | grep SystemdCgroup
-sed -i "s#registry.k8s.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g" /etc/containerd/config.toml
+sed -i "s#registry.k8s.io#k8s.chenby.cn#g" /etc/containerd/config.toml
 cat /etc/containerd/config.toml | grep sandbox_image
 sed -i "s#config_path\ \=\ \"\"#config_path\ \=\ \"/etc/containerd/certs.d\"#g" /etc/containerd/config.toml
 cat /etc/containerd/config.toml | grep certs.d
-
+```
+### 配置加速器
+```shell
 # 配置加速器
 mkdir /etc/containerd/certs.d/docker.io -pv
 cat > /etc/containerd/certs.d/docker.io/hosts.toml << EOF
 server = "https://docker.io"
-[host."https://dockerproxy.com"]
+[host."https://docker.chenby.cn"]
   capabilities = ["pull", "resolve"]
 EOF
-
-
+```
+### 启动
+```shell
 # 启动并设置为开机启动
 systemctl daemon-reload
 systemctl enable --now containerd.service
@@ -1088,7 +1083,7 @@ vrrp_script chk_apiserver {
 vrrp_instance VI_1 {
     state MASTER
     # 注意网卡名
-    interface eth0 
+    interface ens33 
     mcast_src_ip 192.168.1.31
     virtual_router_id 51
     priority 100
@@ -1130,7 +1125,7 @@ vrrp_script chk_apiserver {
 vrrp_instance VI_1 {
     state BACKUP
     # 注意网卡名
-    interface eth0
+    interface ens33
     mcast_src_ip 192.168.1.32
     virtual_router_id 51
     priority 80
@@ -1172,7 +1167,7 @@ vrrp_script chk_apiserver {
 vrrp_instance VI_1 {
     state BACKUP
     # 注意网卡名
-    interface eth0
+    interface ens33
     mcast_src_ip 192.168.1.33
     virtual_router_id 51
     priority 50
@@ -1208,7 +1203,7 @@ EOF
 
 - `vrrp_instance`部分定义了一个VRRP实例。`VI_1`是实例的名称。
     - `state`参数指定了当前实例的状态，这里设置为MASTER表示当前实例是主节点。
-    - `interface`参数指定了要监听的网卡，这里设置为eth0。
+    - `interface`参数指定了要监听的网卡，这里设置为ens33。
     - `mcast_src_ip`参数指定了VRRP报文的源IP地址，这里设置为192.168.1.31。
     - `virtual_router_id`参数指定了虚拟路由器的ID，这里设置为51。
     - `priority`参数指定了实例的优先级，优先级越高（数值越大）越有可能被选为主节点。
@@ -1296,18 +1291,40 @@ systemctl status keepalived.service
 
 ## 初始化安装
 
+#### 整改镜像
 ```shell
 # 查看最新版本有那些镜像
-[root@k8s-master01 ~]# kubeadm config images list --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers
-registry.cn-hangzhou.aliyuncs.com/google_containers/kube-apiserver:v1.30.0
-registry.cn-hangzhou.aliyuncs.com/google_containers/kube-controller-manager:v1.30.0
-registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler:v1.30.0
-registry.cn-hangzhou.aliyuncs.com/google_containers/kube-proxy:v1.30.0
-registry.cn-hangzhou.aliyuncs.com/google_containers/coredns:v1.11.1
-registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.9
-registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.5.12-0
+[root@k8s-master01 ~]# kubeadm config images list --image-repository k8s.chenby.cn
+k8s.chenby.cn/kube-apiserver:v1.30.2
+k8s.chenby.cn/kube-controller-manager:v1.30.2
+k8s.chenby.cn/kube-scheduler:v1.30.2
+k8s.chenby.cn/kube-proxy:v1.30.2
+k8s.chenby.cn/coredns:v1.11.1
+k8s.chenby.cn/pause:3.9
+k8s.chenby.cn/etcd:3.5.12-0
 [root@k8s-master01 ~]# 
 
+# 这里的coredns镜像地址有问题
+# 需要修改地址 讲原地址 k8s.chenby.cn/coredns/coredns:v1.11.1 修改为 k8s.chenby.cn/coredns:v1.11.1
+
+  # 拉取镜像
+  ctr --namespace k8s.io images pull k8s.chenby.cn/coredns/coredns:v1.11.1
+  # 修改镜像名称
+  ctr --namespace k8s.io images tag k8s.chenby.cn/coredns/coredns:v1.11.1 k8s.chenby.cn/coredns:v1.11.1
+  # 查看镜像
+  ctr --namespace k8s.io images ls | grep coredns
+  # 打包镜像
+  ctr --namespace k8s.io images export coredns.tar k8s.chenby.cn/coredns:v1.11.1 
+  # 发送到其他主机
+  for NODE in k8s-master02 k8s-master03 k8s-node01 k8s-node02; do scp coredns.tar  $NODE:/root/ ; done
+  # 在其他主机导入镜像
+  ctr --namespace k8s.io images import coredns.tar
+  # 查看镜像
+  ctr --namespace k8s.io images ls | grep coredns
+```
+
+### 修改初始化配置
+```shell
 # 创建默认配置
 kubeadm config print init-defaults > kubeadm-init.yaml
 # 这是我使用的配置文件
@@ -1330,7 +1347,7 @@ nodeRegistration:
   imagePullPolicy: IfNotPresent
   kubeletExtraArgs:
     # 这里使用maser01的IP 
-    node-ip: 192.168.1.31,2408:822a:730:af01::7d8
+    node-ip: 192.168.1.31,2408:822a:731:d9c1::4f7
   taints:
   - effect: PreferNoSchedule
     key: node-role.kubernetes.io/master
@@ -1338,6 +1355,7 @@ nodeRegistration:
 apiServer:
   certSANs:
     - x.oiox.cn
+    - z.oiox.cn
     - k8s-master01
     - k8s-master02
     - k8s-master03
@@ -1347,7 +1365,9 @@ apiServer:
     - 192.168.1.34
     - 192.168.1.35
     - 192.168.1.36
-    - 192.168.1.60
+    - 192.168.1.37
+    - 192.168.1.38
+    - 192.168.1.39
     - 127.0.0.1
   timeoutForControlPlane: 4m0s
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -1359,12 +1379,15 @@ etcd:
   local:
     dataDir: /var/lib/etcd
 kind: ClusterConfiguration
-kubernetesVersion: 1.30.0
-imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+# 设置安装的版本
+kubernetesVersion: 1.30.2
+imageRepository: k8s.chenby.cn
 networking:
   dnsDomain: cluster.local
-  podSubnet: 10.244.0.0/16,2408:822a:730:af01::/64
-  serviceSubnet: 10.96.0.0/16,2408:822a:730:af01::/112
+  # podSubnet: 10.244.0.0/16,2408:822a:730:af01::/64
+  # serviceSubnet: 10.96.0.0/16,2408:822a:730:af01::/112
+  podSubnet: 172.16.0.0/12,fc00:2222::/64
+  serviceSubnet: 10.96.0.0/16,fd00:1111::/112
 scheduler: {}
 # 这里使用的是负载地址
 controlPlaneEndpoint: "192.168.1.36:9443"
@@ -1412,24 +1435,21 @@ streamingConnectionIdleTimeout: 0s
 syncFrequency: 0s
 volumeStatsAggPeriod: 0s
 EOF
+```
 
-
-
-
-
-
-
+### 开始初始化
+```shell
 [root@k8s-master01 ~]# kubeadm init --config=kubeadm.yaml
-[init] Using Kubernetes version: v1.30.0
+[init] Using Kubernetes version: v1.30.2
 [preflight] Running pre-flight checks
 [preflight] Pulling images required for setting up a Kubernetes cluster
 [preflight] This might take a minute or two, depending on the speed of your internet connection
 [preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
-W0505 03:06:30.873603   10998 checks.go:844] detected that the sandbox image "m.daocloud.io/registry.k8s.io/pause:3.8" of the container runtime is inconsistent with that used by kubeadm.It is recommended to use "registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.9" as the CRI sandbox image.
+W0701 15:07:47.374925   18069 checks.go:844] detected that the sandbox image "k8s.chenby.cn/pause:3.8" of the container runtime is inconsistent with that used by kubeadm.It is recommended to use "k8s.chenby.cn/pause:3.9" as the CRI sandbox image.
 [certs] Using certificateDir folder "/etc/kubernetes/pki"
 [certs] Generating "ca" certificate and key
 [certs] Generating "apiserver" certificate and key
-[certs] apiserver serving cert is signed for DNS names [k8s-master01 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local x.oiox.cn] and IPs [10.96.0.1 192.168.1.31 192.168.1.36 192.168.1.32 192.168.1.33 192.168.1.34 192.168.1.35 192.168.1.60 127.0.0.1]
+[certs] apiserver serving cert is signed for DNS names [k8s-master01 k8s-master02 k8s-master03 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local x.oiox.cn z.oiox.cn] and IPs [10.96.0.1 192.168.1.31 192.168.1.36 192.168.1.32 192.168.1.33 192.168.1.34 192.168.1.35 192.168.1.37 192.168.1.38 192.168.1.39 127.0.0.1]
 [certs] Generating "apiserver-kubelet-client" certificate and key
 [certs] Generating "front-proxy-ca" certificate and key
 [certs] Generating "front-proxy-client" certificate and key
@@ -1442,15 +1462,15 @@ W0505 03:06:30.873603   10998 checks.go:844] detected that the sandbox image "m.
 [certs] Generating "apiserver-etcd-client" certificate and key
 [certs] Generating "sa" key and public key
 [kubeconfig] Using kubeconfig folder "/etc/kubernetes"
-W0505 03:06:33.121345   10998 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
+W0701 15:07:48.935058   18069 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
 [kubeconfig] Writing "admin.conf" kubeconfig file
-W0505 03:06:33.297328   10998 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
+W0701 15:07:49.013208   18069 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
 [kubeconfig] Writing "super-admin.conf" kubeconfig file
-W0505 03:06:33.403541   10998 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
+W0701 15:07:49.343945   18069 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
 [kubeconfig] Writing "kubelet.conf" kubeconfig file
-W0505 03:06:33.552221   10998 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
+W0701 15:07:49.396487   18069 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
 [kubeconfig] Writing "controller-manager.conf" kubeconfig file
-W0505 03:06:33.625848   10998 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
+W0701 15:07:49.498260   18069 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
 [kubeconfig] Writing "scheduler.conf" kubeconfig file
 [etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
 [control-plane] Using manifest folder "/etc/kubernetes/manifests"
@@ -1462,9 +1482,9 @@ W0505 03:06:33.625848   10998 endpoint.go:57] [endpoint] WARNING: port specified
 [kubelet-start] Starting the kubelet
 [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests"
 [kubelet-check] Waiting for a healthy kubelet. This can take up to 4m0s
-[kubelet-check] The kubelet is healthy after 501.155946ms
+[kubelet-check] The kubelet is healthy after 1.000972688s
 [api-check] Waiting for a healthy API server. This can take up to 4m0s
-[api-check] The API server is healthy after 16.665034989s
+[api-check] The API server is healthy after 16.018464544s
 [upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
 [kubelet] Creating a ConfigMap "kubelet-config" in namespace kube-system with the configuration for the kubelets in the cluster
 [upload-certs] Skipping phase. Please see --upload-certs
@@ -1479,7 +1499,7 @@ W0505 03:06:33.625848   10998 endpoint.go:57] [endpoint] WARNING: port specified
 [bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
 [kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
 [addons] Applied essential addon: CoreDNS
-W0505 03:06:54.233183   10998 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
+W0701 15:08:10.688995   18069 endpoint.go:57] [endpoint] WARNING: port specified in controlPlaneEndpoint overrides bindPort in the controlplane address
 [addons] Applied essential addon: kube-proxy
 
 Your Kubernetes control-plane has initialized successfully!
@@ -1502,29 +1522,29 @@ You can now join any number of control-plane nodes by copying certificate author
 and service account keys on each node and then running the following as root:
 
   kubeadm join 192.168.1.36:9443 --token abcdef.0123456789abcdef \
-	--discovery-token-ca-cert-hash sha256:583ddadd1318dae447c3890aa3a2469c5b00c6775e87102458db07e691c724be \
+	--discovery-token-ca-cert-hash sha256:f1e3b76440a1b75bb1c9149ada724b415208188e7ecc264c367b4806d20843d3 \
 	--control-plane 
 
 Then you can join any number of worker nodes by running the following on each as root:
 
 kubeadm join 192.168.1.36:9443 --token abcdef.0123456789abcdef \
-	--discovery-token-ca-cert-hash sha256:583ddadd1318dae447c3890aa3a2469c5b00c6775e87102458db07e691c724be 
+	--discovery-token-ca-cert-hash sha256:f1e3b76440a1b75bb1c9149ada724b415208188e7ecc264c367b4806d20843d3 
 [root@k8s-master01 ~]# 
 
 
 
 # 重新初始化
 [root@k8s-master01 ~]# kubeadm reset
-
-
-
-[root@k8s-master01 ~]# 
-[root@k8s-master01 ~]#   mkdir -p $HOME/.kube
-[root@k8s-master01 ~]#   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-[root@k8s-master01 ~]#   sudo chown $(id -u):$(id -g) $HOME/.kube/config
-[root@k8s-master01 ~]# 
-[root@k8s-master01 ~]# 
-
+```
+### 配置kubectl
+```shell
+# 配置kubectl
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+### 配置证书
+```shell
 # 使用脚本将这如果你睡拷贝到其他maser节点
 USER=root
 CONTROL_PLANE_IPS="192.168.1.32 192.168.1.33"
@@ -1552,8 +1572,9 @@ mv /${USER}/front-proxy-ca.key /etc/kubernetes/pki/
 mv /${USER}/etcd-ca.crt /etc/kubernetes/pki/etcd/ca.crt
 # 如果你正使用外部 etcd，忽略下一行
 mv /${USER}/etcd-ca.key /etc/kubernetes/pki/etcd/ca.key
-
-
+```
+### 初始化Master2
+```shell
 # 在maser02上执行操作，将加入控制节点
 cat > kubeadm-join-master-02.yaml << EOF
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -1567,15 +1588,17 @@ discovery:
     apiServerEndpoint: 192.168.1.36:9443
     token: "abcdef.0123456789abcdef"
     caCertHashes:
-    - "sha256:583ddadd1318dae447c3890aa3a2469c5b00c6775e87102458db07e691c724be"
+    - "sha256:f1e3b76440a1b75bb1c9149ada724b415208188e7ecc264c367b4806d20843d3"
     # 请更改上面的认证信息，使之与你的集群中实际使用的令牌和 CA 证书匹配
 nodeRegistration:
   kubeletExtraArgs:
-    node-ip: 192.168.1.32,2408:822a:730:af01::fab
+    node-ip: 192.168.1.32,2408:822a:731:d9c1::eb1
 EOF
 
 kubeadm join --config=kubeadm-join-master-02.yaml
-
+```
+### 初始化Master3
+```shell
 # 在maser03上执行操作，将加入控制节点
 cat > kubeadm-join-master-03.yaml << EOF
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -1589,17 +1612,19 @@ discovery:
     apiServerEndpoint: 192.168.1.36:9443
     token: "abcdef.0123456789abcdef"
     caCertHashes:
-    - "sha256:583ddadd1318dae447c3890aa3a2469c5b00c6775e87102458db07e691c724be"
+    - "sha256:f1e3b76440a1b75bb1c9149ada724b415208188e7ecc264c367b4806d20843d3"
     # 请更改上面的认证信息，使之与你的集群中实际使用的令牌和 CA 证书匹配
 nodeRegistration:
   kubeletExtraArgs:
-    node-ip: 192.168.1.33,2408:822a:730:af01::bea
+    node-ip: 192.168.1.33,2408:822a:731:d9c1::eb8
 EOF
 
 kubeadm join --config=kubeadm-join-master-03.yaml
 
-
-# 在node02上执行操作，将加入工作节点
+```
+### 初始化Node1
+```shell
+# 在node01上执行操作，将加入工作节点
 cat > kubeadm-join-node-01.yaml << EOF
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: JoinConfiguration
@@ -1608,15 +1633,17 @@ discovery:
     apiServerEndpoint: 192.168.1.36:9443
     token: "abcdef.0123456789abcdef"
     caCertHashes:
-    - "sha256:583ddadd1318dae447c3890aa3a2469c5b00c6775e87102458db07e691c724be"
+    - "sha256:f1e3b76440a1b75bb1c9149ada724b415208188e7ecc264c367b4806d20843d3"
     # 请更改上面的认证信息，使之与你的集群中实际使用的令牌和 CA 证书匹配
 nodeRegistration:
   kubeletExtraArgs:
-    node-ip: 192.168.1.34,2408:822a:730:af01::bcf
+    node-ip: 192.168.1.34,2408:822a:731:d9c1::876
 EOF
 
 kubeadm join --config=kubeadm-join-node-01.yaml
-
+```
+### 初始化Node2
+```shell
 # 在node02上执行操作，将加入工作节点
 cat > kubeadm-join-node-02.yaml << EOF
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -1626,11 +1653,11 @@ discovery:
     apiServerEndpoint: 192.168.1.36:9443
     token: "abcdef.0123456789abcdef"
     caCertHashes:
-    - "sha256:583ddadd1318dae447c3890aa3a2469c5b00c6775e87102458db07e691c724be"
+    - "sha256:f1e3b76440a1b75bb1c9149ada724b415208188e7ecc264c367b4806d20843d3"
     # 请更改上面的认证信息，使之与你的集群中实际使用的令牌和 CA 证书匹配
 nodeRegistration:
   kubeletExtraArgs:
-    node-ip: 192.168.1.35,2408:822a:730:af01::443
+    node-ip: 192.168.1.35,2408:822a:731:d9c1::bef
 EOF
 
 kubeadm join --config=kubeadm-join-node-02.yaml
@@ -1641,29 +1668,76 @@ kubeadm join --config=kubeadm-join-node-02.yaml
 ```shell
 [root@k8s-master01 ~]# kubectl get nodes
 NAME           STATUS     ROLES           AGE     VERSION
-k8s-master01   NotReady   control-plane   2m14s   v1.30.0
-k8s-master02   NotReady   control-plane   48s     v1.30.0
-k8s-master03   NotReady   control-plane   30s     v1.30.0
-k8s-node01     NotReady   <none>          19s     v1.30.0
-k8s-node02     NotReady   <none>          9s      v1.30.0
+k8s-master01   NotReady   control-plane   2m14s   v1.30.2
+k8s-master02   NotReady   control-plane   48s     v1.30.2
+k8s-master03   NotReady   control-plane   30s     v1.30.2
+k8s-node01     NotReady   <none>          19s     v1.30.2
+k8s-node02     NotReady   <none>          9s      v1.30.2
 [root@k8s-master01 ~]# 
 ```
 
-## 安装Calico
+## 安装cilium(二选一)
+
+### 安装helm
+
+```shell
+# [root@k8s-master01 ~]# curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+# [root@k8s-master01 ~]# chmod 700 get_helm.sh
+# [root@k8s-master01 ~]# ./get_helm.sh
+
+# wget https://mirrors.huaweicloud.com/helm/v3.15.2/helm-v3.15.2-linux-amd64.tar.gz
+tar xvf helm-*-linux-amd64.tar.gz
+cp linux-amd64/helm /usr/local/bin/
+```
+
+### 安装cilium
+
+```shell
+# 添加源
+helm repo add cilium https://helm.cilium.io
+
+# 修改为国内源
+helm pull cilium/cilium
+tar xvf cilium-*.tgz
+cd cilium/
+sed -i "s#quay.io/#quay.chenby.cn/#g" values.yaml
+
+# 默认参数安装
+helm install  cilium ./cilium/ -n kube-system
+
+# 启用ipv6
+# helm install cilium ./cilium/ --namespace kube-system --set ipv6.enabled=true
+
+# 启用路由信息和监控插件
+# helm install cilium ./cilium/ --namespace kube-system --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set prometheus.enabled=true --set operator.prometheus.enabled=true --set hubble.enabled=true --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}" 
+```
+
+### 查看
+
+```shell
+[root@k8s-master01 ~]# kubectl  get pod -A | grep cil
+NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
+kube-system   cilium-2tnfb                       1/1     Running   0          60s
+kube-system   cilium-5tgcb                       1/1     Running   0          60s
+kube-system   cilium-6shf5                       1/1     Running   0          60s
+kube-system   cilium-ccbcx                       1/1     Running   0          60s
+kube-system   cilium-cppft                       1/1     Running   0          60s
+kube-system   cilium-operator-675f685d59-7q27q   1/1     Running   0          60s
+kube-system   cilium-operator-675f685d59-kwmqz   1/1     Running   0          60s
+[root@k8s-master01 ~]#
+```
+
+## 安装Calico(二选一)
 
 ### 更改calico网段
 
 ```shell
-# 下载所需yaml文件
 wget https://mirrors.chenby.cn/https://github.com/projectcalico/calico/blob/master/manifests/calico-typha.yaml
 
-# 备份脚本文件
 cp calico-typha.yaml calico.yaml
 cp calico-typha.yaml calico-ipv6.yaml
 
-# 修改脚本文件中配置项
-
-# vim calico.yaml
+vim calico.yaml
 # calico-config ConfigMap处
     "ipam": {
         "type": "calico-ipam",
@@ -1674,7 +1748,7 @@ cp calico-typha.yaml calico-ipv6.yaml
     - name: CALICO_IPV4POOL_CIDR
       value: "172.16.0.0/12"
 
-vim calico-ipv6.yaml
+# vim calico-ipv6.yaml
 # calico-config ConfigMap处
     "ipam": {
         "type": "calico-ipam",
@@ -1688,50 +1762,39 @@ vim calico-ipv6.yaml
       value: "autodetect"
 
     - name: CALICO_IPV4POOL_CIDR
-      value: "10.244.0.0/16"
+      value: "172.16.0.0/12"
 
     - name: CALICO_IPV6POOL_CIDR
-      value: "2408:822a:730:af01::/64"
+      value: "fc00:2222::/112"
 
     - name: FELIX_IPV6SUPPORT
       value: "true"
-      
-     # 设置IPv6 vxLAN的模式为CrossSubnet
-     # 如果节点跨了子网，pod通信用vxlan封装，注意该功能3.23版本后才支持
-    - name: CALICO_IPV6POOL_VXLAN
-      value: "CrossSubnet"
-     # 增加环境变量，开启IPv6 pool nat outgoing功能
-    - name: CALICO_IPV6POOL_NAT_OUTGOING
-      value: "true"
-
 
 
 # 若docker镜像拉不下来，可以使用国内的仓库
-# sed -i "s#docker.io/calico/#m.daocloud.io/docker.io/calico/#g" calico.yaml 
-# sed -i "s#docker.io/calico/#m.daocloud.io/docker.io/calico/#g" calico-ipv6.yaml
-# sed -i "s#m.daocloud.io/docker.io/calico/#docker.io/calico/#g" calico.yaml 
-# sed -i "s#m.daocloud.io/docker.io/calico/#docker.io/calico/#g" calico-ipv6.yaml
+sed -i "s#docker.io/calico/#docker.chenby.cn/calico/#g" calico.yaml 
+sed -i "s#docker.io/calico/#docker.chenby.cn/calico/#g" calico-ipv6.yaml
 
 # 本地没有公网 IPv6 使用 calico.yaml
-# kubectl apply -f calico.yaml
+kubectl apply -f calico.yaml
 
 # 本地有公网 IPv6 使用 calico-ipv6.yaml 
-kubectl apply -f calico-ipv6.yaml 
+# kubectl apply -f calico-ipv6.yaml 
 ```
 
 ### 查看容器状态
 
 ```shell
 # calico 初始化会很慢 需要耐心等待一下，大约十分钟左右
-[root@k8s-master01 ~]# kubectl get pod -A| grep calico
-kube-system   calico-kube-controllers-57cf4498-rqhhz   1/1     Running   0          4m1s
-kube-system   calico-node-4mbth                        1/1     Running   0          4m1s
-kube-system   calico-node-624z2                        1/1     Running   0          4m1s
-kube-system   calico-node-646qq                        1/1     Running   0          4m1s
-kube-system   calico-node-7m4z8                        1/1     Running   0          4m1s
-kube-system   calico-node-889qb                        1/1     Running   0          4m1s
-kube-system   calico-typha-7746b44b78-kcgkx            1/1     Running   0          4m1s
-[root@k8s-master01 ~]# 
+[root@k8s-master01 ~]# kubectl  get pod -A
+NAMESPACE     NAME                                     READY   STATUS    RESTARTS   AGE
+kube-system   calico-kube-controllers-57cf4498-d92w9   1/1     Running   0          114s
+kube-system   calico-node-8m7mr                        1/1     Running   0          114s
+kube-system   calico-node-g6nk9                        1/1     Running   0          114s
+kube-system   calico-node-g76dc                        1/1     Running   0          114s
+kube-system   calico-node-h4p27                        1/1     Running   0          114s
+kube-system   calico-node-jrlcj                        1/1     Running   0          114s
+kube-system   calico-typha-7746b44b78-8hf9k            1/1     Running   0          114s
 ```
 
 ## 查看集群
@@ -1746,34 +1809,33 @@ k8s-node01     Ready    <none>          8m34s   v1.30.0
 k8s-node02     Ready    <none>          8m24s   v1.30.0
 [root@k8s-master01 ~]# 
 [root@k8s-master01 ~]# kubectl get pod -A
-NAMESPACE     NAME                                     READY   STATUS    RESTARTS   AGE
-kube-system   calico-kube-controllers-57cf4498-rqhhz   1/1     Running   0          93s
-kube-system   calico-node-4mbth                        1/1     Running   0          93s
-kube-system   calico-node-624z2                        1/1     Running   0          93s
-kube-system   calico-node-646qq                        1/1     Running   0          93s
-kube-system   calico-node-7m4z8                        1/1     Running   0          93s
-kube-system   calico-node-889qb                        1/1     Running   0          93s
-kube-system   calico-typha-7746b44b78-kcgkx            1/1     Running   0          93s
-kube-system   coredns-7c445c467-kmjd7                  1/1     Running   0          10m
-kube-system   coredns-7c445c467-xzhn6                  1/1     Running   0          10m
-kube-system   etcd-k8s-master01                        1/1     Running   5          10m
-kube-system   etcd-k8s-master02                        1/1     Running   70         9m8s
-kube-system   etcd-k8s-master03                        1/1     Running   0          8m50s
-kube-system   kube-apiserver-k8s-master01              1/1     Running   5          10m
-kube-system   kube-apiserver-k8s-master02              1/1     Running   70         9m8s
-kube-system   kube-apiserver-k8s-master03              1/1     Running   0          8m50s
-kube-system   kube-controller-manager-k8s-master01     1/1     Running   5          10m
-kube-system   kube-controller-manager-k8s-master02     1/1     Running   2          9m8s
-kube-system   kube-controller-manager-k8s-master03     1/1     Running   2          8m50s
-kube-system   kube-proxy-74c8q                         1/1     Running   0          8m52s
-kube-system   kube-proxy-g6mcf                         1/1     Running   0          8m31s
-kube-system   kube-proxy-lcrv7                         1/1     Running   0          10m
-kube-system   kube-proxy-qbvc8                         1/1     Running   0          8m41s
-kube-system   kube-proxy-vxhh9                         1/1     Running   0          9m10s
-kube-system   kube-scheduler-k8s-master01              1/1     Running   5          10m
-kube-system   kube-scheduler-k8s-master02              1/1     Running   2          9m8s
-kube-system   kube-scheduler-k8s-master03              1/1     Running   2          8m50s
-[root@k8s-master01 ~]# 
+NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE
+kube-system   cilium-2vlhn                           1/1     Running   0          70s
+kube-system   cilium-94pvm                           1/1     Running   0          70s
+kube-system   cilium-dqllb                           1/1     Running   0          70s
+kube-system   cilium-operator-84cc645cfd-nl286       1/1     Running   0          70s
+kube-system   cilium-operator-84cc645cfd-v9lzh       1/1     Running   0          70s
+kube-system   cilium-r649m                           1/1     Running   0          70s
+kube-system   cilium-xhcb5                           1/1     Running   0          70s
+kube-system   coredns-85c54ff74b-vgxbg               1/1     Running   0          27s
+kube-system   coredns-85c54ff74b-zvr67               1/1     Running   0          42s
+kube-system   etcd-k8s-master01                      1/1     Running   0          20m
+kube-system   etcd-k8s-master02                      1/1     Running   0          8m20s
+kube-system   etcd-k8s-master03                      1/1     Running   0          11m
+kube-system   kube-apiserver-k8s-master01            1/1     Running   0          20m
+kube-system   kube-apiserver-k8s-master02            1/1     Running   0          8m20s
+kube-system   kube-apiserver-k8s-master03            1/1     Running   0          11m
+kube-system   kube-controller-manager-k8s-master01   1/1     Running   0          20m
+kube-system   kube-controller-manager-k8s-master02   1/1     Running   0          8m20s
+kube-system   kube-controller-manager-k8s-master03   1/1     Running   0          11m
+kube-system   kube-proxy-6bd4n                       1/1     Running   0          11m
+kube-system   kube-proxy-77w24                       1/1     Running   0          8m26s
+kube-system   kube-proxy-9d5m8                       1/1     Running   0          12m
+kube-system   kube-proxy-jxcrx                       1/1     Running   0          20m
+kube-system   kube-proxy-vr5w9                       1/1     Running   0          11m
+kube-system   kube-scheduler-k8s-master01            1/1     Running   0          20m
+kube-system   kube-scheduler-k8s-master02            1/1     Running   0          8m20s
+kube-system   kube-scheduler-k8s-master03            1/1     Running   0          11m
 ```
 
 ## 集群验证
@@ -2097,7 +2159,7 @@ vim components.yaml
 
 
 # 修改镜像地址
-sed -i "s#registry.k8s.io/metrics-server#registry.aliyuncs.com/google_containers#g" components.yaml
+sed -i "s#registry.k8s.io#k8s.chenby.cn#g" components.yaml
 cat components.yaml | grep image
 
 
@@ -2180,7 +2242,7 @@ kubectl  apply -f dashboard-user.yaml
 
 # 创建token
 kubectl -n kube-system create token admin-user
-eyJhbGciOiJSUzI1NiIsImtpZCI6Ikk0dXVHN05BZ0k3VXQ1ekR3NkMzTThad2tzVkpEbFp0bjAyR1lRYlpObmMifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzE0ODg1NDYzLCJpYXQiOjE3MTQ4ODE4NjMsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiNWYzYzkxYjctZDMzYy00ZjcwLTg0OTEtMmEwNTVmYzI1ZThhIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiZjdjYmFmMGItOGVkMC00ZmU4LThlNGUtZGUwZDEzZDk5ZDJhIn19LCJuYmYiOjE3MTQ4ODE4NjMsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.JELSXYQM7fRt4ccaBhBe1O_rMvvVGtv_NzN3Hr8TIzxGTc0yvv3lwSP8SygFQVI3a60Y3ZU45khjqYJ5MbmJfO_t3BtjjMXE-WXmqTK4_lSS0urkmZ_7yxwJNwq4keAQYRIXcOJzzEwbhKhKblRoY5GgssW93nAOfcHZZNy2hKXzmlnzBoMbg46P2TmcSeYitYq4yLL877KALvQVUg7OWcUnX68NGWM3kW78Uakurjcx7WGSOZRm-vS2VWn3iyf--3Jz2v-oUHmtPUEj82SE0rXnBMC_VlrSlWBR34gk0p7NLeblAlmuqiY7FEOkWyHbtQmGZuCVm0DUtGnMsqAfew
+eyJhbGciOiJSUzI1NiIsImtpZCI6IlpRcUt5QjNHSndISG0zTXk0My1DSXd2UHU2X20xUjBTcnFyRVVPa2RuRWMifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzE5ODIyODY3LCJpYXQiOjE3MTk4MTkyNjcsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiZDY3ZmNiYjItZTk4My00NmRlLWFlNDQtMjRhNzIyYWJkODUxIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiYTYzMTY0ZDUtMGViNi00MjY5LTgzMWEtN2ZjOThhOTZmNGU5In19LCJuYmYiOjE3MTk4MTkyNjcsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTphZG1pbi11c2VyIn0.v3bGzZG7e5Szmev2HInwWuQ9cUxx2dN9pLv-g3dOLbedP953K76aozHlovaQwPLZaDljDRnFEdM-GENp_0EE4Mdii5FLunJZic8MbFrt8igvZaJGrViFalpvM1bYj97HvpDUmMAugeaneeRgi2vGyCNZKUXIMi-0J8DnvrRd4qO0tD2aiUCc6r-7S1GuIh4KBb35PXWOHp9LNFrPE-7TgphkA8Q6JSnh-pQ5DIyaC6ib2xoyoRtSWcfrC949mh4Ai8V3AoSNJVKmEIW36JXjsgF9pZageYUNcDnQH4bit9B8KMf35A5YiQAMM3I7Ohtt58vgoeWbwBeSFVMF1k-AVA
 ```
 
 ### 创建长期token
@@ -2202,7 +2264,7 @@ kubectl  apply -f dashboard-user-token.yaml
 # 查看密码
 kubectl get secret admin-user -n kube-system -o jsonpath={".data.token"} | base64 -d
 
-eyJhbGciOiJSUzI1NiIsImtpZCI6Ikk0dXVHN05BZ0k3VXQ1ekR3NkMzTThad2tzVkpEbFp0bjAyR1lRYlpObmMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmN2NiYWYwYi04ZWQwLTRmZTgtOGU0ZS1kZTBkMTNkOTlkMmEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.B5UxbBooSeV5M9PfOhSp5bCwBs5434u3y1tjCmfEuKKfUYbwYMq2jsjm4n9M816kKWG30NoQ8aqVxfJK2EKThSURLMhhr4idq2E_ndftXel-fE4dqDfHj8jfDcuvfXMXJhsNFkD6jcQW25aMl_W1u8_5A5xNAE9EkspkQWYAiBFJHZO6jd5Evt134Q0i9mPGqw-kqK7QOaBoVlYPlJd4jPdrPUoIyx0VLj9rjNcYTFWhe_qkBndcu28nM33NfG9D-Qj6Z29_-rT3BrpCfe54S3ihdsn5YNxu3UQrKM6Vaquwgq0Z4SnMHUfSvV1OwsYGLeLC6gb8dgtVhwF5tJIuAQ
+eyJhbGciOiJSUzI1NiIsImtpZCI6IlpRcUt5QjNHSndISG0zTXk0My1DSXd2UHU2X20xUjBTcnFyRVVPa2RuRWMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJhNjMxNjRkNS0wZWI2LTQyNjktODMxYS03ZmM5OGE5NmY0ZTkiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.fU53TfqawF3a4eAN-6yAiVZGxREjlEJgNmD4XvpjgVU304GgFbPUa00-RMlt3NFDofmS2xA2FWICwoGfiNp-HESSx9LmwIDzHobhjEJb56c4y9GfCbEFXF9qlIm5Sg3V1sRA7_24HWjADEj3rlxvY9JvsjA8Tf3MQ7w5YrWjFEAvCbNLviBbYukRAWT_J0_UCUgVUd8lGVmEPeG_9rvMeIhOcM8m1vitWD9NifFVQma0fle6Lha2dvFT_UXi2xMc3rMAw-syovkR1UaZxPnKCfRF4FQT6euaeUIr6mU3e3aHBipYe7xf4BtbTQiOjDmWmlufcbBGzHv_TgAeR6CJQQ
 ```
 
 
@@ -2219,7 +2281,7 @@ https://192.168.1.31:32457/
 wget https://mirrors.chenby.cn/https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 
 # 修改为国内源 docker源可选
-sed -i "s#registry.k8s.io#k8s.dockerproxy.com#g" *.yaml
+sed -i "s#registry.k8s.io#k8s.chenby.cn#g" *.yaml
 cat deploy.yaml | grep image
 
 cat > backend.yaml << EOF
@@ -2432,11 +2494,11 @@ tar xvf kube-prometheus-stack-*.tgz
 ```shell
 # 进入目录进行修改images地址
 cd kube-prometheus-stack/
-sed -i "s#registry.k8s.io#k8s.dockerproxy.com#g" charts/kube-state-metrics/values.yaml
-sed -i "s#quay.io#quay.dockerproxy.com#g" charts/kube-state-metrics/values.yaml
+sed -i "s#registry.k8s.io#k8s.chenby.cn#g" charts/kube-state-metrics/values.yaml
+sed -i "s#quay.io#quay.chenby.cn#g" charts/kube-state-metrics/values.yaml
 
-sed -i "s#registry.k8s.io#k8s.dockerproxy.com#g" values.yaml
-sed -i "s#quay.io#quay.dockerproxy.com#g" values.yaml
+sed -i "s#registry.k8s.io#k8s.chenby.cn#g" values.yaml
+sed -i "s#quay.io#quay.chenby.cn#g" values.yaml
 ```
 
 ### 安装
@@ -2508,9 +2570,6 @@ op-prometheus-node-exporter-h976s                      1/1     Running   0      
 prometheus-op-kube-prometheus-stack-prometheus-0       2/2     Running   0          2m31s
 root@hello:~# 
 ```
-
-
-
 ### 访问
 
 ```shell
@@ -2520,6 +2579,38 @@ http://192.168.1.31:31474
 
 user： admin
 password： prom-operator
+```
+
+## 污点
+```shell
+# 查看当前污点状态
+[root@k8s-master01 ~]# kubectl describe node  | grep Taints
+Taints:             <none>
+Taints:             <none>
+Taints:             <none>
+Taints:             <none>
+Taints:             <none>
+
+# 设置污点 禁止调度 同时进行驱赶现有的POD
+kubectl taint nodes k8s-master01 key1=value1:NoExecute
+kubectl taint nodes k8s-master02 key1=value1:NoExecute
+kubectl taint nodes k8s-master03 key1=value1:NoExecute
+
+# 取消污点
+kubectl taint nodes k8s-master01 key1=value1:NoExecute-
+kubectl taint nodes k8s-master02 key1=value1:NoExecute-
+kubectl taint nodes k8s-master03 key1=value1:NoExecute-
+
+# 设置污点 禁止调度 不进行驱赶现有的POD
+kubectl taint nodes k8s-master01 key1=value1:NoSchedule
+kubectl taint nodes k8s-master02 key1=value1:NoSchedule
+kubectl taint nodes k8s-master03 key1=value1:NoSchedule
+
+# 取消污点
+kubectl taint nodes k8s-master01 key1=value1:NoSchedule-
+kubectl taint nodes k8s-master02 key1=value1:NoSchedule-
+kubectl taint nodes k8s-master03 key1=value1:NoSchedule-
+
 ```
 
 ## 安装命令行自动补全功能
