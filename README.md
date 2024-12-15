@@ -15,6 +15,8 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 能用自动部署就用自动部署吧。推荐：https://github.com/easzlab/kubeasz
 
+也可以用 [kubeadm-install.md](./doc/kubeadm-install.md)
+
 # 二、介绍
 
 我使用IPV6的目的是在公网进行访问，所以我配置了IPV6静态地址。
@@ -24,6 +26,8 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 如果本地没有IPv6，那么Calico需要使用IPv4的yaml配置文件。
 后续尽可能第一时间更新新版本文档，更新后内容在GitHub。
 
+最新版本的文档对于IPv6方面的写的比较详细。
+
 不要删除 IPv6 相关配置！！！
 
 不要删除 IPv6 相关配置！！！
@@ -32,17 +36,18 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 # 三、当前文档版本
 
-- 1.21.x
-- 1.22.x
-- 1.23.x
-- 1.24.x
-- 1.25.x
-- 1.26.x
-- 1.27.x
-- 1.28.x
-- 1.29.x
-- 1.30.x
+- 1.32.x
 - 1.31.x
+- 1.30.x
+- 1.29.x
+- 1.28.x
+- 1.27.x
+- 1.26.x
+- 1.25.x
+- 1.24.x
+- 1.23.x
+- 1.22.x
+- 1.21.x
 
 大版本之间是通用的，比如使用 1.26.0 的文档可以安装 1.26.x 各种版本，只是安装过程中的下载新的包即可。
 
@@ -59,9 +64,12 @@ https://github.com/cby-chen/kube_ansible
 
 ### 最新版本文档
 - [kubeadm-install.md](./doc/kubeadm-install.md)
-- [v1.31.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.31.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
+###  1.32.x版本
+- [v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+  
 ###  1.31.x版本
 - [v1.31.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.31.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
@@ -106,17 +114,6 @@ https://github.com/cby-chen/kube_ansible
 ###  1.21.x版本
 - [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
 
-###  三主俩从版本
-- [v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.21.13-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.22.10-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.23.7-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.24.1-Ubuntu-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.25.4-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-- [v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md](./doc/v1.26.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves.md)
-
 ## 其他文档
 -  修复kube-proxy证书权限过大问题 [kube-proxy_permissions.md](./doc/kube-proxy_permissions.md)
 -  使用kubeadm初始化IPV4/IPV6集群 [kubeadm-install-IPV6-IPV4.md](./doc/kubeadm-install-IPV6-IPV4.md)
@@ -156,38 +153,10 @@ https://github.com/cby-chen/kube_ansible
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.30.1/kubernetes-v1.30.1.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.30.2/kubernetes-v1.30.2.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.31.1/kubernetes-v1.31.1.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.32.0/kubernetes-v1.32.0.tar
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
-# 七、旧版本地址
-
-建议查看main版本中的文档。  
-https://github.com/cby-chen/Kubernetes/  
-若找对应版本文档中的安装包，可以在上方下载安装包，可以在在下方地址中查找。
-
-- https://github.com/cby-chen/Kubernetes/tree/v1.22.10
-- https://github.com/cby-chen/Kubernetes/tree/v1.21.13
-- https://github.com/cby-chen/Kubernetes/tree/cby
-- https://github.com/cby-chen/Kubernetes/tree/v1.23.4
-- https://github.com/cby-chen/Kubernetes/tree/v1.23.5
-- https://github.com/cby-chen/Kubernetes/tree/v1.23.6
-- https://github.com/cby-chen/Kubernetes/tree/v1.23.7
-- https://github.com/cby-chen/Kubernetes/tree/v1.24.0
-- https://github.com/cby-chen/Kubernetes/tree/v1.24.1
-- https://github.com/cby-chen/Kubernetes/tree/v1.24.2
-- https://github.com/cby-chen/Kubernetes/tree/v1.24.3
-- https://github.com/cby-chen/Kubernetes/tree/v1.25.0
-- https://github.com/cby-chen/Kubernetes/tree/v1.25.4
-- https://github.com/cby-chen/Kubernetes/tree/v1.26.0
-- https://github.com/cby-chen/Kubernetes/tree/v1.26.1
-- https://github.com/cby-chen/Kubernetes/tree/v1.27.1
-- https://github.com/cby-chen/Kubernetes/tree/v1.27.3
-- https://github.com/cby-chen/Kubernetes/tree/v1.28.0
-- https://github.com/cby-chen/Kubernetes/tree/v1.28.3
-- https://github.com/cby-chen/Kubernetes/tree/v1.29.2
-- https://github.com/cby-chen/Kubernetes/tree/v1.30.1
-- https://github.com/cby-chen/Kubernetes/tree/v1.30.2
-- https://github.com/cby-chen/Kubernetes/tree/v1.31.1
 
 # 八、常见异常
 
