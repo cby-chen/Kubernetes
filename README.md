@@ -127,7 +127,7 @@ https://github.com/cby-chen/kube_ansible
 # 六、安装包
 
 - 123云盘 https://www.123pan.com/s/Z8ArVv-PG60d
-- 夸克云盘 https://pan.quark.cn/s/5638b6a87e55
+- 夸克云盘 https://pan.quark.cn/s/8d8525a12895
 
 - https://github.com/cby-chen/Kubernetes/releases
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
