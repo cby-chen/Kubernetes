@@ -15,7 +15,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 能用自动部署就用自动部署吧。推荐：https://github.com/easzlab/kubeasz
 
-也可以用 [kubeadm-install.md](./doc/kubeadm-install.md)
+也可以用 [kubeadm-install.md](./doc/kubeadm-install-V1.32.md)
 
 # 二、介绍
 
@@ -63,7 +63,7 @@ https://github.com/cby-chen/kube_ansible
 # 五、文档
 
 ### 最新版本文档
-- [kubeadm-install.md](./doc/kubeadm-install.md)
+- [kubeadm-install.md](./doc/kubeadm-install-V1.32.md)
 - [v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
