@@ -36,6 +36,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 # 三、当前文档版本
 
+- 1.33.x
 - 1.32.x
 - 1.31.x
 - 1.30.x
@@ -64,9 +65,12 @@ https://github.com/cby-chen/kube_ansible
 
 ### 最新版本文档
 - [kubeadm-install.md](./doc/kubeadm-install-V1.32.md)
-- [v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
+###  1.32.x版本
+- [v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+
 ###  1.32.x版本
 - [v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.32.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
   
@@ -127,7 +131,6 @@ https://github.com/cby-chen/kube_ansible
 # 六、安装包
 
 - 123云盘 https://www.123pan.com/s/Z8ArVv-PG60d
-- 夸克云盘 https://pan.quark.cn/s/8d8525a12895
 
 - https://github.com/cby-chen/Kubernetes/releases
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
@@ -154,6 +157,7 @@ https://github.com/cby-chen/kube_ansible
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.30.2/kubernetes-v1.30.2.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.31.1/kubernetes-v1.31.1.tar
 - wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.32.0/kubernetes-v1.32.0.tar
+- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.33.0/kubernetes-v1.33.0.tar
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
 
