@@ -36,6 +36,7 @@ GitHub访问不通畅可以访问国内GitEE https://gitee.com/cby-inc/Kubernete
 
 # 三、当前文档版本
 
+- 1.34.x
 - 1.33.x
 - 1.32.x
 - 1.31.x
@@ -65,9 +66,12 @@ https://github.com/cby-chen/kube_ansible
 
 ### 最新版本文档
 - [kubeadm-install.md](./doc/kubeadm-install-V1.32.md)
-- [v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+- [v1.34.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.34.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
 ## 安装文档
+###  1.34.x版本
+- [v1.34.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.34.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
+
 ###  1.33.x版本
 - [v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md](./doc/v1.33.0-CentOS-binary-install-IPv6-IPv4-Three-Masters-Two-Slaves-Offline.md)
 
@@ -131,36 +135,9 @@ https://github.com/cby-chen/kube_ansible
 # 六、安装包
 
 - 123云盘 https://www.123pan.com/s/Z8ArVv-PG60d
-
 - https://github.com/cby-chen/Kubernetes/releases
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.22.10/kubernetes-v1.22.10.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.21.13/kubernetes-v1.21.13.tar  
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/cby/Kubernetes.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.4/kubernetes-v1.23.4.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.5/kubernetes-v1.24.5.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.6/kubernetes-v1.23.6.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.23.7/kubernetes-v1.23.7.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.0/kubernetes-v1.24.0.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.1/kubernetes-v1.24.1.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.2/kubernetes-v1.24.2.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.24.3/kubernetes-v1.24.3.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.0/kubernetes-v1.25.0.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.25.4/kubernetes-v1.25.4.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.0/kubernetes-v1.26.0.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.26.1/kubernetes-v1.26.1.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.1/kubernetes-v1.27.1.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.27.3/kubernetes-v1.27.3.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.0/kubernetes-v1.28.0.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.28.3/kubernetes-v1.28.3.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.29.2/kubernetes-v1.29.2.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.30.1/kubernetes-v1.30.1.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.30.2/kubernetes-v1.30.2.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.31.1/kubernetes-v1.31.1.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.32.0/kubernetes-v1.32.0.tar
-- wget https://mirrors.chenby.cn/https://github.com/cby-chen/Kubernetes/releases/download/v1.33.0/kubernetes-v1.33.0.tar
 
 *注意：1.23.3 版本当时没想到会后续更新，所以当时命名不太规范。
-
 
 # 八、常见异常
 
