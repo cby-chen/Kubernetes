@@ -1,66 +1,87 @@
-使用kubeadm初始化IPV4/IPV6集群
-=======================
+## 使用kubeadm初始化IPV4/IPV6集群
 
-CentOS 配置YUM源
-=============
+## CentOS 配置YUM源
 
 ```shell
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
-name=kubernetes
-baseurl=https://mirrors.ustc.edu.cn/kubernetes/yum/repos/kubernetes-el7-$basearch
+name=Kubernetes
+baseurl=https://mirrors.ustc.edu.cn/kubernetes/core:/stable:/v1.37/rpm/
 enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.37/rpm/repodata/repomd.xml.key
 EOF
-setenforce 0
-yum install -y kubelet kubeadm kubectl
 
-# 如安装老版本
-# yum install kubelet-1.16.9-0 kubeadm-1.16.9-0 kubectl-1.16.9-0
-
-systemctl enable kubelet && systemctl start kubelet
+# 将 SELinux 设置为 permissive 模式（相当于将其禁用）
+sudo setenforce 0
+sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
 
-# 将 SELinux 设置为 permissive 模式（相当于将其禁用）
-sudo setenforce 0
-sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-sudo systemctl enable --now kubelet
 
+yum install -y kubelet kubeadm kubectl
+
+# 如安装老版本
+# yum install kubelet-1.16.9-0 kubeadm-1.16.9-0 kubectl-1.16.9-0
+
+systemctl enable kubelet && systemctl start kubelet
+sudo systemctl enable --now kubelet
 ```
 
-Ubuntu 配置APT源
-=============
+## Ubuntu 配置APT源
 
 ```shell
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
-deb https://mirrors.ustc.edu.cn/kubernetes/apt kubernetes-xenial main
-EOF
-apt-get update
-apt-get install -y kubelet kubeadm kubectl
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.ustc.edu.cn/kubernetes/core:/stable:/v1.37/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-# 如安装老版本
-# apt install kubelet=1.23.6-00 kubeadm=1.23.6-00 kubectl=1.23.6-00
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
 
+# 如安装老版本
+# apt install kubelet=1.23.6-00 kubeadm=1.23.6-00 kubectl=1.23.6-00
 ```
 
 配置containerd
-============
+
+
+## 安装Containerd作为Runtime
 
 ```shell
-wget https://github.com/containerd/containerd/releases/download/v1.6.4/cri-containerd-cni-1.6.4-linux-amd64.tar.gz
+
+# https://github.com/opencontainers/runc/releases
+# 升级runc
+wget https://github.com/opencontainers/runc/releases/download/v1.5.2/runc.amd64
+
+install -m 755 runc.amd64 /usr/local/sbin/runc
+cp -p /usr/local/sbin/runc  /usr/local/bin/runc
+cp -p /usr/local/sbin/runc  /usr/bin/runc
+
+
+# https://github.com/containerd/containerd/releases/
+wget https://github.com/containerd/containerd/releases/download/v2.4.1/containerd-2.4.1-linux-amd64.tar.gz
+
+# https://github.com/containernetworking/plugins/releases/
+wget https://github.com/containernetworking/plugins/releases/download/v1.9.1/cni-plugins-linux-amd64-v1.9.1.tgz
+
+
+#创建cni插件所需目录
+mkdir -p /etc/cni/net.d /opt/cni/bin 
+#解压cni二进制包
+tar xf cni-plugins-linux-amd64-v*.tgz -C /opt/cni/bin/
+
+# https://github.com/containerd/containerd/releases/
+# wget https://github.com/containerd/containerd/releases/download/v2.0.5/containerd-2.0.5-linux-amd64.tar.gz
 
 #解压
-tar -C / -xzf cri-containerd-cni-1.6.4-linux-amd64.tar.gz
+tar -xzf containerd-*-linux-amd64.tar.gz -C /usr/local/
 
 #创建服务启动文件
-cat > /etc/systemd/system/containerd.service <<EOF
+cat > /etc/systemd/system/containerd.service <<EOF
 [Unit]
-Description=containerd container runtime
+Description=containerd container runtime
 Documentation=https://containerd.io
-After=network.target local-fs.target
+After=network.target local-fs.target
 
 [Service]
-ExecStartPre=-/sbin/modprobe overlay
+ExecStartPre=-/sbin/modprobe overlay
 ExecStart=/usr/local/bin/containerd
 Type=notify
 Delegate=yes
@@ -76,31 +97,135 @@ OOMScoreAdjust=-999
 [Install]
 WantedBy=multi-user.target
 EOF
+```
+
+### 配置Containerd所需的模块
+
+```shell
+cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+overlay
+br_netfilter
+EOF
+```
+
+### 加载模块
+
+```shell
+systemctl restart systemd-modules-load.service
+```
+
+### 配置Containerd所需的内核
+
+```shell
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.ipv4.ip_forward                 = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
+
+# 加载内核
+sysctl --system
+```
+
+### 创建Containerd的配置文件
+
+```shell
+# 创建默认配置文件
+mkdir -p /etc/containerd
+containerd config default | tee /etc/containerd/config.toml
+
+# 沙箱pause镜像
+sed -i "s#registry.k8s.io#registry.aliyuncs.com/chenby#g" /etc/containerd/config.toml
+cat /etc/containerd/config.toml | grep sandbox
+
+# 配置加速器
+[root@k8s-master01 ~]# vim /etc/containerd/config.toml
+[root@k8s-master01 ~]# cat /etc/containerd/config.toml | grep certs.d -C 5
+
+    [plugins.'io.containerd.cri.v1.images'.pinned_images]
+      sandbox = 'registry.aliyuncs.com/chenby/pause:3.10'
+
+    [plugins.'io.containerd.cri.v1.images'.registry]
+      config_path = '/etc/containerd/certs.d'
+
+    [plugins.'io.containerd.cri.v1.images'.image_decryption]
+      key_model = 'node'
+
+  [plugins.'io.containerd.cri.v1.runtime']
+[root@k8s-master01 ~]# 
 
 
-mkdir -p /etc/containerd
-containerd config default | tee /etc/containerd/config.toml
+mkdir /etc/containerd/certs.d/docker.io -pv
+cat > /etc/containerd/certs.d/docker.io/hosts.toml << EOF
+server = "https://docker.io"
+[host."https://jockerhub.com"]
+  capabilities = ["pull", "resolve"]
+EOF
 
-sed -i "s#SystemdCgroup\ \=\ false#SystemdCgroup\ \=\ true#g" /etc/containerd/config.toml
-sed -i "s#k8s.gcr.io#registry.cn-hangzhou.aliyuncs.com/chenby#g" /etc/containerd/config.toml
+# 配置 GFW 代理
+mkdir -p /etc/systemd/system/containerd.service.d
+cat > /etc/systemd/system/containerd.service.d/http-proxy.conf <<'EOF'
+[Service]
+Environment="HTTP_PROXY=http://192.168.1.100:7897"
+Environment="HTTPS_PROXY=http://192.168.1.100:7897"
+Environment="NO_PROXY=localhost,127.0.0.1,containerd,192.168.1.0/24,10.96.0.0/16,172.16.0.0/16,.svc,.svc.cluster.local,cluster.local,fd00:1111::/108,fd00:2222::/48"
+EOF
+systemctl daemon-reload
+systemctl restart containerd
+```
 
-systemctl daemon-reload
-systemctl enable --now containerd
+### 启动并设置为开机启动
+
+```shell
+systemctl daemon-reload
+# 用于重新加载systemd管理的单位文件。当你新增或修改了某个单位文件（如.service文件、.socket文件等），需要运行该命令来刷新systemd对该文件的配置。
+
+systemctl enable --now containerd.service
+# 启用并立即启动docker.service单元。docker.service是Docker守护进程的systemd服务单元。
+
+systemctl stop containerd.service
+# 停止运行中的docker.service单元，即停止Docker守护进程。
+
+systemctl start containerd.service
+# 启动docker.service单元，即启动Docker守护进程。
+
+systemctl restart containerd.service
+# 重启docker.service单元，即重新启动Docker守护进程。
+
+systemctl status containerd.service
+# 显示docker.service单元的当前状态，包括运行状态、是否启用等信息。
+```
+
+### 配置crictl客户端连接的运行时位置
+
+```shell
+# https://github.com/kubernetes-sigs/cri-tools/releases/
+wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.37.0/crictl-v1.37.0-linux-amd64.tar.gz
+
+#解压
+tar xf crictl-v*-linux-amd64.tar.gz -C /usr/bin/
+#生成配置文件
+cat > /etc/crictl.yaml <<EOF
+runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 10
+debug: false
+EOF
+
+#测试
+systemctl restart  containerd
+crictl info
 
 ```
 
-配置基础环境
-======
+## 配置基础环境
+
 
 ```shell
-cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-br_netfilter
-EOF
-
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.ipv4.ip_forward = 1
-net.bridge.bridge-nf-call-iptables = 1
-fs.may_detach_mounts = 1
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-iptables = 1
+fs.may_detach_mounts = 1
 vm.overcommit_memory=1
 vm.panic_on_oom=0
 fs.inotify.max_user_watches=89100
@@ -109,353 +234,413 @@ fs.nr_open=52706963
 net.netfilter.nf_conntrack_max=2310720
 
 
-net.ipv4.tcp_keepalive_time = 600
-net.ipv4.tcp_keepalive_probes = 3
-net.ipv4.tcp_keepalive_intvl =15
-net.ipv4.tcp_max_tw_buckets = 36000
-net.ipv4.tcp_tw_reuse = 1
-net.ipv4.tcp_max_orphans = 327680
-net.ipv4.tcp_orphan_retries = 3
-net.ipv4.tcp_syncookies = 1
-net.ipv4.tcp_max_syn_backlog = 16384
-net.ipv4.ip_conntrack_max = 65536
-net.ipv4.tcp_max_syn_backlog = 16384
-net.ipv4.tcp_timestamps = 0
-net.core.somaxconn = 16384
+net.ipv4.tcp_keepalive_time = 600
+net.ipv4.tcp_keepalive_probes = 3
+net.ipv4.tcp_keepalive_intvl =15
+net.ipv4.tcp_max_tw_buckets = 36000
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_max_orphans = 327680
+net.ipv4.tcp_orphan_retries = 3
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 16384
+net.ipv4.ip_conntrack_max = 65536
+net.ipv4.tcp_max_syn_backlog = 16384
+net.ipv4.tcp_timestamps = 0
+net.core.somaxconn = 16384
 
 
-net.ipv6.conf.all.disable_ipv6 = 0
-net.ipv6.conf.default.disable_ipv6 = 0
-net.ipv6.conf.lo.disable_ipv6 = 0
-net.ipv6.conf.all.forwarding = 0
+net.ipv6.conf.all.disable_ipv6 = 0
+net.ipv6.conf.default.disable_ipv6 = 0
+net.ipv6.conf.lo.disable_ipv6 = 0
+net.ipv6.conf.all.forwarding = 1
+net.ipv6.conf.default.forwarding = 1
+EOF
+
+sudo sysctl --system
+
+
+sed -ri 's/.*swap.*/#&/' /etc/fstab
+swapoff -a && sysctl -w vm.swappiness=0
+
+cat /etc/fstab
+
+cat > /etc/hosts <<EOF
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+fc00::21 k8s-master01
+fc00::22 k8s-node01
+fc00::23 k8s-node02
+
+192.168.1.21 k8s-master01
+192.168.1.22 k8s-node01
+192.168.1.23 k8s-node02
 EOF
 
 
-modprobe br_netfilter
+hostnamectl set-hostname k8s-master01
+hostnamectl set-hostname k8s-node01
+hostnamectl set-hostname k8s-node02
 
-sudo sysctl --system
-
-
-hostnamectl set-hostname k8s-master01
-hostnamectl set-hostname k8s-node01
-hostnamectl set-hostname k8s-node02
-
-
-sed -ri 's/.*swap.*/#&/' /etc/fstab
-swapoff -a && sysctl -w vm.swappiness=0
-
-cat /etc/fstab
-
-
-cat > /etc/hosts <<EOF
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-2408:8207:78ce:7561::21 k8s-master01
-2408:8207:78ce:7561::22 k8s-node01
-2408:8207:78ce:7561::23 k8s-node02
-
-10.0.0.21 k8s-master01
-10.0.0.22 k8s-node01
-10.0.0.23 k8s-node02
-EOF
+systemctl stop firewalld
+systemctl disable firewalld
 
 ```
 
-初始化安装
-=====
+## 初始化安装
 
 ```shell
-root@k8s-master01:~# kubeadm config images list --image-repository registry.cn-hangzhou.aliyuncs.com/chenby
-registry.cn-hangzhou.aliyuncs.com/chenby/kube-apiserver:v1.24.0
-registry.cn-hangzhou.aliyuncs.com/chenby/kube-controller-manager:v1.24.0
-registry.cn-hangzhou.aliyuncs.com/chenby/kube-scheduler:v1.24.0
-registry.cn-hangzhou.aliyuncs.com/chenby/kube-proxy:v1.24.0
-registry.cn-hangzhou.aliyuncs.com/chenby/pause:3.7
-registry.cn-hangzhou.aliyuncs.com/chenby/etcd:3.5.3-0
-registry.cn-hangzhou.aliyuncs.com/chenby/coredns:v1.8.6
+[root@k8s-master01 ~]# kubeadm config images list
+registry.k8s.io/kube-apiserver:v1.37.1
+registry.k8s.io/kube-controller-manager:v1.37.1
+registry.k8s.io/kube-scheduler:v1.37.1
+registry.k8s.io/kube-proxy:v1.37.1
+registry.k8s.io/coredns/coredns:v1.14.6
+registry.k8s.io/pause:3.10.2
+registry.k8s.io/etcd:3.7.0-0
+[root@k8s-master01 ~]# 
 
-root@k8s-master01:~# vim kubeadm.yaml 
-root@k8s-master01:~# cat kubeadm.yaml
-apiVersion: kubeadm.k8s.io/v1beta3
-kind: InitConfiguration
+
+[root@k8s-master01 ~]# cat kubeadm.yaml
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: InitConfiguration
 localAPIEndpoint:
-  advertiseAddress: "10.0.0.21"
-  bindPort: 6443
+  advertiseAddress: "192.168.1.21"
+  bindPort: 6443
 nodeRegistration:
-  taints:
-  - effect: PreferNoSchedule
-    key: node-role.kubernetes.io/master
+  taints:
+  - effect: PreferNoSchedule
+    key: node-role.kubernetes.io/master
 ---
-apiVersion: kubeadm.k8s.io/v1beta3
-kind: ClusterConfiguration
-kubernetesVersion: v1.24.0
-imageRepository: registry.cn-hangzhou.aliyuncs.com/chenby
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+kubernetesVersion: v1.37.1
+  #imageRepository: registry.cn-hangzhou.aliyuncs.com/chenby
 networking:
-  podSubnet: 172.16.0.0/12,fc00:2222::/112
-  serviceSubnet: 10.96.0.0/12,fd00:1111::/112
-root@k8s-master01:~#
+  podSubnet: 172.16.0.0/16,fd00:2222::/48
+  serviceSubnet: 10.96.0.0/16,fd00:1111::/108
+[root@k8s-master01 ~]# 
 
 
-root@k8s-master01:~# 
-root@k8s-master01:~# kubeadm init --config=kubeadm.yaml 
-[init] Using Kubernetes version: v1.24.0
-[preflight] Running pre-flight checks
-[preflight] Pulling images required for setting up a Kubernetes cluster
-[preflight] This might take a minute or two, depending on the speed of your internet connection
-[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
-[certs] Using certificateDir folder "/etc/kubernetes/pki"
-[certs] Generating "ca" certificate and key
-[certs] Generating "apiserver" certificate and key
-[certs] apiserver serving cert is signed for DNS names [k8s-master01 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.0.0.21]
-[certs] Generating "apiserver-kubelet-client" certificate and key
-[certs] Generating "front-proxy-ca" certificate and key
-[certs] Generating "front-proxy-client" certificate and key
-[certs] Generating "etcd/ca" certificate and key
-[certs] Generating "etcd/server" certificate and key
-[certs] etcd/server serving cert is signed for DNS names [k8s-master01 localhost] and IPs [10.0.0.21 127.0.0.1 ::1]
-[certs] Generating "etcd/peer" certificate and key
-[certs] etcd/peer serving cert is signed for DNS names [k8s-master01 localhost] and IPs [10.0.0.21 127.0.0.1 ::1]
-[certs] Generating "etcd/healthcheck-client" certificate and key
-[certs] Generating "apiserver-etcd-client" certificate and key
-[certs] Generating "sa" key and public key
-[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
-[kubeconfig] Writing "admin.conf" kubeconfig file
-[kubeconfig] Writing "kubelet.conf" kubeconfig file
-[kubeconfig] Writing "controller-manager.conf" kubeconfig file
-[kubeconfig] Writing "scheduler.conf" kubeconfig file
-[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
-[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
-[kubelet-start] Starting the kubelet
-[control-plane] Using manifest folder "/etc/kubernetes/manifests"
-[control-plane] Creating static Pod manifest for "kube-apiserver"
-[control-plane] Creating static Pod manifest for "kube-controller-manager"
-[control-plane] Creating static Pod manifest for "kube-scheduler"
-[etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
-[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
-[apiclient] All control plane components are healthy after 6.504341 seconds
-[upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
-[kubelet] Creating a ConfigMap "kubelet-config" in namespace kube-system with the configuration for the kubelets in the cluster
-[upload-certs] Skipping phase. Please see --upload-certs
-[mark-control-plane] Marking the node k8s-master01 as control-plane by adding the labels: [node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
-[mark-control-plane] Marking the node k8s-master01 as control-plane by adding the taints [node-role.kubernetes.io/master:PreferNoSchedule]
-[bootstrap-token] Using token: lnodkp.3n8i4m33sqwg39w2
-[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
-[bootstrap-token] Configured RBAC rules to allow Node Bootstrap tokens to get nodes
-[bootstrap-token] Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
-[bootstrap-token] Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
-[bootstrap-token] Configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
-[bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
-[kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
-[addons] Applied essential addon: CoreDNS
-[addons] Applied essential addon: kube-proxy
+[root@k8s-master01 ~]# kubeadm init --config=kubeadm.yaml
 
-Your Kubernetes control-plane has initialized successfully!
-
-To start using your cluster, you need to run the following as a regular user:
-
-  mkdir -p $HOME/.kube
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-Alternatively, if you are the root user, you can run:
-
-  export KUBECONFIG=/etc/kubernetes/admin.conf
-
-You should now deploy a pod network to the cluster.
-Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
-  https://kubernetes.io/docs/concepts/cluster-administration/addons/
-
-Then you can join any number of worker nodes by running the following on each as root:
-
-kubeadm join 10.0.0.21:6443 --token lnodkp.3n8i4m33sqwg39w2 \
-    --discovery-token-ca-cert-hash sha256:0ed7e18ea2b49bb599bc45e72f764bbe034ef1dce47729f2722467c167754da8 
-root@k8s-master01:~# 
-root@k8s-master01:~#   mkdir -p $HOME/.kube
-root@k8s-master01:~#   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-root@k8s-master01:~#   sudo chown $(id -u):$(id -g) $HOME/.kube/config
-root@k8s-master01:~# 
+[root@k8s-node01 ~]# kubeadm join 192.168.1.21:6443 --token nw76f2.otg1p6gtt8wdxhwt \
+        --discovery-token-ca-cert-hash sha256:2633c00148c73d5f54db5633aeecbee7e819884d20078f80e90a2233e3752e59
 
 
-
-
-root@k8s-node01:~# kubeadm join 10.0.0.21:6443 --token qf3z22.qwtqieutbkik6dy4 \
-> --discovery-token-ca-cert-hash sha256:2ade8c834a41cc1960993a600c89fa4bb86e3594f82e09bcd42633d4defbda0d
-[preflight] Running pre-flight checks
-[preflight] Reading configuration from the cluster...
-[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
-[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
-[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
-[kubelet-start] Starting the kubelet
-[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
-
-This node has joined the cluster:
-* Certificate signing request was sent to apiserver and a response was received.
-* The Kubelet was informed of the new secure connection details.
-
-Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
-
-root@k8s-node01:~# 
-
-
-root@k8s-node02:~# kubeadm join 10.0.0.21:6443 --token qf3z22.qwtqieutbkik6dy4 \
-> --discovery-token-ca-cert-hash sha256:2ade8c834a41cc1960993a600c89fa4bb86e3594f82e09bcd42633d4defbda0d
-[preflight] Running pre-flight checks
-[preflight] Reading configuration from the cluster...
-[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
-[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
-[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
-[kubelet-start] Starting the kubelet
-[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
-
-This node has joined the cluster:
-* Certificate signing request was sent to apiserver and a response was received.
-* The Kubelet was informed of the new secure connection details.
-
-Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
-
-root@k8s-node02:~# 
+# 重置集群
+kubeadm reset -f
+rm -rf /etc/kubernetes/manifests
+rm -rf /var/lib/etcd
+rm -rf /var/lib/kubelet
+rm -rf ~/.kube
+systemctl restart containerd
+systemctl restart kubelet
+sleep 5
+ss -tulnp | grep -E ':2379|:2380|:6443'
 
 ```
 
-查看集群
-====
+## 查看集群
+
 
 ```shell
-root@k8s-master01:~# kubectl  get node
-NAME           STATUS   ROLES           AGE    VERSION
-k8s-master01   Ready    control-plane   111s   v1.24.0
-k8s-node01     Ready    <none>          82s    v1.24.0
-k8s-node02     Ready    <none>          92s    v1.24.0
-root@k8s-master01:~# 
-root@k8s-master01:~# 
-root@k8s-master01:~# kubectl  get pod -A
-NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE
-kube-system   coredns-bc77466fc-jxkpv                1/1     Running   0          83s
-kube-system   coredns-bc77466fc-nrc9l                1/1     Running   0          83s
-kube-system   etcd-k8s-master01                      1/1     Running   0          87s
-kube-system   kube-apiserver-k8s-master01            1/1     Running   0          89s
-kube-system   kube-controller-manager-k8s-master01   1/1     Running   0          87s
-kube-system   kube-proxy-2lgrn                       1/1     Running   0          83s
-kube-system   kube-proxy-69p9r                       1/1     Running   0          47s
-kube-system   kube-proxy-g58m2                       1/1     Running   0          42s
-kube-system   kube-scheduler-k8s-master01            1/1     Running   0          87s
-root@k8s-master01:~# 
+[root@k8s-master01 ~]# kubectl  get node
+NAME           STATUS     ROLES           AGE    VERSION
+k8s-master01   NotReady   control-plane   101s   v1.37.1
+k8s-node01     NotReady   <none>          49s    v1.37.1
+k8s-node02     NotReady   <none>          49s    v1.37.1
+[root@k8s-master01 ~]# 
+[root@k8s-master01 ~]# kubectl  get po -A
+NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE
+kube-system   coredns-559f6c778d-8nzjj               0/1     Pending   0          97s
+kube-system   coredns-559f6c778d-rpt7g               0/1     Pending   0          97s
+kube-system   etcd-k8s-master01                      1/1     Running   1          103s
+kube-system   kube-apiserver-k8s-master01            1/1     Running   1          103s
+kube-system   kube-controller-manager-k8s-master01   1/1     Running   1          103s
+kube-system   kube-proxy-5l7bj                       1/1     Running   0          54s
+kube-system   kube-proxy-9n7rk                       1/1     Running   0          54s
+kube-system   kube-proxy-dct4b                       1/1     Running   0          97s
+kube-system   kube-scheduler-k8s-master01            1/1     Running   1          103s
+[root@k8s-master01 ~]# 
 
 ```
 
-配置calico
-========
+
+
+## 更改calico网段
 
 ```shell
-wget https://raw.githubusercontent.com/cby-chen/Kubernetes/main/yaml/calico-ipv6.yaml
+# 查看版本
+https://github.com/projectcalico/calico/tags
 
-# vim calico-ipv6.yaml
-# calico-config ConfigMap处
-    "ipam": {
-        "type": "calico-ipam",
-        "assign_ipv4": "true",
-        "assign_ipv6": "true"
-    },
-    - name: IP
-      value: "autodetect"
+# 安装operator
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.32.2/manifests/tigera-operator.yaml
 
-    - name: IP6
-      value: "autodetect"
+# 下载配置文件
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.32.2/manifests/custom-resources.yaml -O
 
-    - name: CALICO_IPV4POOL_CIDR
-      value: "172.16.0.0/12"
-
-    - name: CALICO_IPV6POOL_CIDR
-      value: "fc00::/48"
-
-    - name: FELIX_IPV6SUPPORT
-      value: "true"
-
-kubectl  apply -f calico-ipv6.yaml 
-
-```
-
-测试IPV6
-======
-
-```shell
-root@k8s-master01:~# cat cby.yaml 
-apiVersion: apps/v1
-kind: Deployment
+# 修改地址池
+vim custom-resources.yaml
+apiVersion: operator.tigera.io/v1
+kind: Installation
 metadata:
-  name: chenby
+  name: default
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: chenby
-  template:
-    metadata:
-      labels:
-        app: chenby
-    spec:
-      containers:
-      - name: chenby
-        image: nginx
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 80
+  calicoNetwork:
+    ipPools:
+    - name: default-ipv4-ippool
+      blockSize: 26
+      cidr: 172.16.0.0/16
+      encapsulation: VXLANCrossSubnet
+      natOutgoing: Enabled
+      nodeSelector: all()
 
+# 修改地址池
+vim custom-resources.yaml
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+spec:
+  calicoNetwork:
+    ipPools:
+    - name: ipv4-ippool
+      cidr: 172.16.0.0/16
+      blockSize: 26
+      # encapsulation: IPIP
+      encapsulation: VXLANCrossSubnet
+      natOutgoing: Enabled
+      nodeSelector: all()
+    - name: ipv6-ippool
+      cidr: "fd00:2222::/48"
+      blockSize: 122
+      encapsulation: VXLANCrossSubnet
+      natOutgoing: Enabled
+      nodeSelector: all()
+    nodeAddressAutodetectionV4:
+      interface: "eth.*|en.*"
+    nodeAddressAutodetectionV6:
+      interface: "eth.*|en.*"
+
+
+# 打开vxlan内核  适用于大多数使用 systemd 的发行版
+echo "vxlan" | sudo tee /etc/modules-load.d/vxlan.conf
+systemctl restart systemd-modules-load.service
+lsmod | grep vxlan
+
+# 执行安装
+kubectl create -f custom-resources.yaml
+
+# 安装客户端
+curl -L https://github.com/projectcalico/calico/releases/download/v3.32.2/calicoctl-linux-amd64 -o calicoctl
+
+# 给客户端添加执行权限
+chmod +x ./calicoctl
+
+# 查看集群节点
+./calicoctl get nodes --allow-version-mismatch
+# 查看集群节点状态
+./calicoctl node status --allow-version-mismatch
+#查看地址池
+./calicoctl get ipPool --allow-version-mismatch
+./calicoctl get ipPool --allow-version-mismatch -o yaml
+
+```
+
+## 查看容器状态
+
+```shell
+# calico 初始化会很慢 需要耐心等待一下，大约十分钟左右
+[root@k8s-master01 kubernetes-v1.36.0]# kubectl get pod -A
+NAMESPACE         NAME                                       READY   STATUS    RESTARTS   AGE
+calico-system     calico-apiserver-7bb46cd974-2tb62          1/1     Running   0          7m46s
+calico-system     calico-apiserver-7bb46cd974-92p96          1/1     Running   0          7m46s
+calico-system     calico-kube-controllers-7c4f878bd8-xptks   1/1     Running   0          7m45s
+calico-system     calico-node-6wbsv                          1/1     Running   0          7m46s
+calico-system     calico-node-djq59                          1/1     Running   0          7m46s
+calico-system     calico-node-dm97b                          1/1     Running   0          7m46s
+calico-system     calico-node-lvq6w                          1/1     Running   0          7m46s
+calico-system     calico-node-pmq6v                          1/1     Running   0          7m46s
+calico-system     calico-typha-758c8bf6f7-8tkss              1/1     Running   0          7m43s
+calico-system     calico-typha-758c8bf6f7-dqsqq              1/1     Running   0          7m46s
+calico-system     calico-typha-758c8bf6f7-h7569              1/1     Running   0          7m43s
+calico-system     csi-node-driver-4rld6                      2/2     Running   0          7m45s
+calico-system     csi-node-driver-8krh7                      2/2     Running   0          7m45s
+calico-system     csi-node-driver-bvq9q                      2/2     Running   0          7m45s
+calico-system     csi-node-driver-qcb9d                      2/2     Running   0          7m45s
+calico-system     csi-node-driver-xkkcj                      2/2     Running   0          7m45s
+calico-system     goldmane-6885dcb7d-k26sd                   1/1     Running   0          7m46s
+calico-system     whisker-898cf7b47-75pdh                    2/2     Running   0          6m53s
+tigera-operator   tigera-operator-85dbff4478-sntj6           1/1     Running   0          9m13s
+[root@k8s-master01 kubernetes-v1.36.0]# 
+
+# IPIP模式 仅支持IPv4，不支持IPv6，有tun网口
+[root@k8s-master01 ~]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.1.1     0.0.0.0         UG    100    0        0 ens160
+172.17.125.0    192.168.1.34    255.255.255.192 UG    0      0        0 tunl0
+172.18.195.0    192.168.1.33    255.255.255.192 UG    0      0        0 tunl0
+172.25.92.64    192.168.1.32    255.255.255.192 UG    0      0        0 tunl0
+172.25.244.192  0.0.0.0         255.255.255.192 U     0      0        0 *
+172.25.244.193  0.0.0.0         255.255.255.255 UH    0      0        0 calif3e9d7544a4
+172.27.14.192   192.168.1.35    255.255.255.192 UG    0      0        0 tunl0
+192.168.1.0     0.0.0.0         255.255.255.0   U     100    0        0 ens160
+[root@k8s-master01 ~]#
+
+# VXLANCrossSubnet模式，无tun网口
+[root@k8s-master01 ~]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.1.1     0.0.0.0         UG    100    0        0 ens160
+172.16.32.128   0.0.0.0         255.255.255.192 U     0      0        0 *
+172.16.32.129   0.0.0.0         255.255.255.255 UH    1024   0        0 calic9ff772e94d
+172.16.58.192   192.168.1.35    255.255.255.192 UG    0      0        0 ens160
+172.16.85.192   192.168.1.34    255.255.255.192 UG    0      0        0 ens160
+172.16.122.128  192.168.1.32    255.255.255.192 UG    0      0        0 ens160
+172.16.195.0    192.168.1.33    255.255.255.192 UG    0      0        0 ens160
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
+192.168.1.0     0.0.0.0         255.255.255.0   U     100    0        0 ens160
+[root@k8s-master01 ~]# 
+
+# 路由表
+[root@k8s-master01 ~]# route  -n -4 -6  | grep  vxlan
+fe80::/64                      ::                         U    256 1      0 vxlan.calico
+fd00:100::88bd:e5c3:433c:2080/128 ::                         Un   0   2      0 vxlan-v6.calico
+fe80::/128                     ::                         Un   0   3      0 vxlan.calico
+fe80::6454:d1ff:fe67:d36d/128  ::                         Un   0   2      0 vxlan.calico
+ff00::/8                       ::                         U    256 1      0 vxlan.calico
+ff00::/8                       ::                         U    256 1      0 vxlan-v6.calico
+[root@k8s-master01 ~]#
+
+```
+## 删除
+```shell
+kubectl delete -f https://raw.githubusercontent.com/projectcalico/calico/v3.32.0/manifests/tigera-operator.yaml  --force --grace-period=0
+kubectl delete -f https://raw.githubusercontent.com/projectcalico/calico/v3.32.0/manifests/custom-resources.yaml --force --grace-period=0
+# 在所有主机上执行
+modprobe -r ipip      # 删除 IPIP 模式虚拟网卡
+modprobe -r vxlan     # 删除 VXLAN 模式虚拟网卡
+# 在所有主机上执行
+sudo rm -rf /etc/cni/net.d/*calico*
+sudo rm -f /opt/cni/bin/calico*
+sudo rm -f /usr/local/bin/calico*
+sudo rm -rf /var/lib/cni/networks/calico/
+# 在所有主机上执行
+systemctl restart kubelet
+```
+
+## 测试IPV6
+
+```shell
+[root@k8s-master01 ~]# echo 'KUBELET_EXTRA_ARGS="--node-ip=192.168.1.21,fc00::21"' > /etc/sysconfig/kubelet
+[root@k8s-master01 ~]# systemctl daemon-reload && systemctl restart kubelet
+
+[root@k8s-node01 ~]# echo 'KUBELET_EXTRA_ARGS="--node-ip=192.168.1.22,fc00::22"' > /etc/sysconfig/kubelet
+[root@k8s-node01 ~]# systemctl daemon-reload && systemctl restart kubelet
+
+[root@k8s-node02 ~]# echo 'KUBELET_EXTRA_ARGS="--node-ip=192.168.1.23,fc00::23"' > /etc/sysconfig/kubelet
+[root@k8s-node02 ~]# systemctl daemon-reload && systemctl restart kubelet
+
+cat<<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chenby
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chenby
+  template:
+    metadata:
+      labels:
+        app: chenby
+    spec:
+      hostNetwork: true
+      containers:
+      - name: chenby
+        image: docker.io/library/nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
 ---
-apiVersion: v1
-kind: Service
+apiVersion: v1
+kind: Service
 metadata:
-  name: chenby
+  name: chenby
 spec:
-  ipFamilyPolicy: PreferDualStack
-  ipFamilies:
-  - IPv6
-  - IPv4
-  type: NodePort
-  selector:
-    app: chenby
-  ports:
-  - port: 80
-    targetPort: 80
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
+  type: NodePort
+  selector:
+    app: chenby
+  ports:
+  - port: 80
+    targetPort: 80
+EOF
 
-kubectl  apply -f cby.yaml 
 
-root@k8s-master01:~# kubectl  get pod 
-NAME                      READY   STATUS    RESTARTS   AGE
-chenby-57479d5997-6pfzg   1/1     Running   0          6m
-chenby-57479d5997-jjwpk   1/1     Running   0          6m
-chenby-57479d5997-pzrkc   1/1     Running   0          6m
+#查看端口
+[root@k8s-master01 ~]# kubectl  get svc
+NAME         TYPE        CLUSTER-IP          EXTERNAL-IP   PORT(S)        AGE
+chenby       NodePort    fd00:1111::a:2aaa   <none>        80:30249/TCP   10s
+kubernetes   ClusterIP   10.96.0.1           <none>        443/TCP        9m56s
+[root@k8s-master01 ~]# 
+[root@k8s-master01 ~]# curl -I http://[fd00:1111::a:2aaa]
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Tue, 29 Sep 2026 09:05:19 GMT
+Content-Type: text/html
+Content-Length: 896
+Last-Modified: Tue, 15 Sep 2026 12:54:15 GMT
+Connection: keep-alive
+ETag: "6aa93ff7-380"
+Accept-Ranges: bytes
 
-root@k8s-master01:~# kubectl  get svc
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
-chenby       NodePort    fd00::f816   <none>        80:30265/TCP   6m7s
-kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP        168m
+[root@k8s-master01 ~]# 
+[root@k8s-master01 ~]# curl -I http://192.168.1.21:30249
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Tue, 29 Sep 2026 09:05:24 GMT
+Content-Type: text/html
+Content-Length: 896
+Last-Modified: Tue, 15 Sep 2026 12:54:15 GMT
+Connection: keep-alive
+ETag: "6aa93ff7-380"
+Accept-Ranges: bytes
 
-root@k8s-master01:~# curl -I http://[2408:8207:78ce:7561::21]:30265/
-HTTP/1.1 200 OK
-Server: nginx/1.21.6
-Date: Wed, 11 May 2022 07:01:43 GMT
-Content-Type: text/html
-Content-Length: 615
-Last-Modified: Tue, 25 Jan 2022 15:03:52 GMT
-Connection: keep-alive
-ETag: "61f01158-267"
-Accept-Ranges: bytes
+[root@k8s-master01 ~]#
+[root@k8s-master01 ~]# curl -I http://[fc00::21]:30249
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Tue, 29 Sep 2026 09:05:31 GMT
+Content-Type: text/html
+Content-Length: 896
+Last-Modified: Tue, 15 Sep 2026 12:54:15 GMT
+Connection: keep-alive
+ETag: "6aa93ff7-380"
+Accept-Ranges: bytes
 
-root@k8s-master01:~# curl -I http://10.0.0.21:30265/
-HTTP/1.1 200 OK
-Server: nginx/1.21.6
-Date: Wed, 11 May 2022 07:01:54 GMT
-Content-Type: text/html
-Content-Length: 615
-Last-Modified: Tue, 25 Jan 2022 15:03:52 GMT
-Connection: keep-alive
-ETag: "61f01158-267"
-Accept-Ranges: bytes
+[root@k8s-master01 ~]# 
+[root@k8s-master01 ~]# curl -I http://[2409:8a10:6d7:b511:c46e:8678:944d:3ddb]:30249
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Tue, 29 Sep 2026 09:05:39 GMT
+Content-Type: text/html
+Content-Length: 896
+Last-Modified: Tue, 15 Sep 2026 12:54:15 GMT
+Connection: keep-alive
+ETag: "6aa93ff7-380"
+Accept-Ranges: bytes
+
+[root@k8s-master01 ~]# 
 
 ```
 
